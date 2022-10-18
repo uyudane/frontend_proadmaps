@@ -1,3 +1,18 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    // "plugin:prettier/recommended", 非推奨のため削除
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "prettier" // eslint-config-prettierに入れ替えたため追加
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off", //eslint-plugin-react を使用している場合、react/jsx-uses-react と react/react-in-jsx-scope のルールは不要になるそう。https://zenn.dev/ryuu/scraps/583dad79532879
+    "import/order": [2, { "alphabetize": { "order": "asc" } }] // // 2. "external" modulesのモジュールの順番をアルファベット昇順にしている??
+  }
 }
