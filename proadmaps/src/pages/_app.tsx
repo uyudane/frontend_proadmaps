@@ -1,3 +1,4 @@
+import { Auth0Provider } from '@auth0/auth0-react';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -12,6 +13,7 @@ interface MyAppProps extends AppProps {
 }
 
 function MyApp(props: MyAppProps) {
+  const redirectUri = `${process.env['NEXT_PUBLIC_BASE_URL']}/login`;
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <CacheProvider value={emotionCache}>
@@ -20,7 +22,14 @@ function MyApp(props: MyAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <Auth0Provider
+          domain={process.env['NEXT_PUBLIC_AUTH0_DOMAIN']!}
+          clientId={process.env['NEXT_PUBLIC_AUTH0_CLIENT_ID']!}
+          audience={process.env['NEXT_PUBLIC_AUTH0_AUDIENCE']!}
+          redirectUri={redirectUri}
+        >
+          <Component {...pageProps} />
+        </Auth0Provider>
       </ThemeProvider>
     </CacheProvider>
   );
