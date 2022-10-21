@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { Meta } from 'component/meta';
 import tokenState from 'recoil/atoms/tokenState';
 
 const LoginPage: NextPage = () => {
@@ -28,24 +29,27 @@ const LoginPage: NextPage = () => {
   }, []);
 
   return (
-    <div>
-      <h2>ログイン状態</h2>
-      {isAuthenticated ? (
-        <>
-          <p>ログイン中です</p>
-          <button onClick={() => logout({ returnTo: window.location.origin })}>ログアウト</button>
-          <button
-            onClick={() => {
-              router.push('/roadmap');
-            }}
-          >
-            記事投稿ページへ
-          </button>
-        </>
-      ) : (
-        <p>ログアウトしています</p>
-      )}
-    </div>
+    <>
+      <Meta pageTitle='ログイン状態' />
+      <div>
+        <h2>ログイン状態</h2>
+        {isAuthenticated ? (
+          <>
+            <p>ログイン中です</p>
+            <button onClick={() => logout({ returnTo: window.location.origin })}>ログアウト</button>
+            <button
+              onClick={() => {
+                router.push('/roadmap');
+              }}
+            >
+              記事投稿ページへ
+            </button>
+          </>
+        ) : (
+          <p>ログアウトしています</p>
+        )}
+      </div>
+    </>
   );
 };
 

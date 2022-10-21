@@ -2,8 +2,10 @@ import { NextPage } from 'next';
 
 import React, { useState } from 'react';
 
-// recoil
 import { useRecoilValue } from 'recoil';
+import { Meta } from 'component/meta';
+
+// recoil
 import tokenState from 'recoil/atoms/tokenState';
 
 import { fetchRoadmaps, postRoadmaps } from 'services/roadmaps';
@@ -37,29 +39,32 @@ const RoadmapPage: NextPage = () => {
   };
 
   return (
-    <div>
-      <label htmlFor=''>タイトル</label>
-      <input
-        type='text'
-        value={title}
-        onChange={(e) => {
-          onChange(e, setTitle);
-        }}
-      />
-      <br />
-      <label htmlFor=''>本文</label>
-      <input
-        type='text'
-        value={introduction}
-        onChange={(e) => {
-          onChange(e, setIntroduction);
-        }}
-      />
-      <br />
-      <button onClick={onClick_post}>新規投稿</button>
-      <br />
-      <button onClick={onClick_get}>投稿取得</button>
-    </div>
+    <>
+      <Meta pageTitle='ロードマップ' />
+      <div>
+        <label htmlFor=''>タイトル</label>
+        <input
+          type='text'
+          value={title}
+          onChange={(e) => {
+            onChange(e, setTitle);
+          }}
+        />
+        <br />
+        <label htmlFor=''>本文</label>
+        <input
+          type='text'
+          value={introduction}
+          onChange={(e) => {
+            onChange(e, setIntroduction);
+          }}
+        />
+        <br />
+        <button onClick={onClick_post}>新規投稿</button>
+        <br />
+        <button onClick={onClick_get}>投稿取得</button>
+      </div>
+    </>
   );
 };
 
