@@ -42,14 +42,14 @@ const RoadmapPage: NextPage = () => {
     setState(e.target.value);
   };
 
-  // // ログでgetの結果を出力
-  // useEffect(() => {
-  //   const getRoadmaps = async () => {
-  //     const res = await axios.get('http://localhost:3000/api/v1/roadmaps');
-  //     console.log(res);
-  //   };
-  //   getRoadmaps();
-  // });
+  // ログでgetの結果を出力
+  useEffect(() => {
+    const getRoadmaps = async () => {
+      const res = await axios.get('https://proadmaps.herokuapp.com/api/v1/roadmaps');
+      console.log(res);
+    };
+    getRoadmaps();
+  });
 
   return (
     <div>
