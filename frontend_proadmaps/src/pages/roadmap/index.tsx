@@ -8,6 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import tokenState from 'recoil/atoms/tokenState';
 
+import { postRoadmaps } from 'services/roadmaps';
+
 const RoadmapPage: NextPage = () => {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
 
@@ -15,24 +17,13 @@ const RoadmapPage: NextPage = () => {
   const [introduction, setIntroduction] = useState<string>('');
 
   const onClick = () => {
-    const params = {
-      title: title,
-      introduction: introduction,
-    };
-    console.log(token);
-
-    axios
-      .post('https://proadmaps.herokuapp.com/api/v1/roadmaps', params, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postRoadmaps(
+      {
+        title: title,
+        introduction: introduction,
+      },
+      token,
+    );
   };
 
   const onChange = (
@@ -45,7 +36,7 @@ const RoadmapPage: NextPage = () => {
   // ログでgetの結果を出力
   useEffect(() => {
     const getRoadmaps = async () => {
-      const res = await axios.get('https://proadmaps.herokuapp.com/api/v1/roadmaps');
+      const res = await axios.get('http://localhost:3000/api/v1/roadmaps');
       console.log(res);
     };
     getRoadmaps();
