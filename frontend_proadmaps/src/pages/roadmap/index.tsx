@@ -1,8 +1,6 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
 import { NextPage } from 'next';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // recoil
 import { useRecoilValue } from 'recoil';
