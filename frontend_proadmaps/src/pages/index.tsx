@@ -3,13 +3,17 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
+import { Meta } from 'component/meta';
 
 const Home: NextPage = () => {
   const { loginWithRedirect } = useAuth0();
   return (
-    <div>
-      <button onClick={() => loginWithRedirect()}>ログイン</button>
-    </div>
+    <>
+      <Meta pageTitle='トップ' />
+      <div>
+        <button onClick={() => loginWithRedirect()}>ログイン</button>
+      </div>
+    </>
   );
 };
 

@@ -2,11 +2,13 @@ import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionCache from '../createEmotionCache';
 import theme from '../theme';
+import { siteMeta } from 'lib/constants';
+const { siteLang } = siteMeta;
 
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang='ja'>
+      <Html lang={siteLang}>
         <Head>
           <meta name='theme-color' content={theme.palette.primary.main} />
           <link
