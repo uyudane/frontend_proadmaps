@@ -1,12 +1,12 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
 import { NextPage } from 'next';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // recoil
 import { useRecoilValue } from 'recoil';
 import tokenState from 'recoil/atoms/tokenState';
+
+import { fetchRoadmaps, postRoadmaps } from 'services/roadmaps';
 
 const RoadmapPage: NextPage = () => {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
@@ -14,25 +14,19 @@ const RoadmapPage: NextPage = () => {
   const [title, setTitle] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
 
-  const onClick = () => {
-    const params = {
-      title: title,
-      introduction: introduction,
-    };
-    console.log(token);
+  const onClick_post = () => {
+    postRoadmaps(
+      {
+        title: title,
+        introduction: introduction,
+      },
+      token,
+    );
+  };
 
-    axios
-      .post('https://proadmaps.herokuapp.com/api/v1/roadmaps', params, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // ログでgetの結果を出力
+  const onClick_get = () => {
+    fetchRoadmaps();
   };
 
   const onChange = (
@@ -41,15 +35,6 @@ const RoadmapPage: NextPage = () => {
   ) => {
     setState(e.target.value);
   };
-
-  // ログでgetの結果を出力
-  useEffect(() => {
-    const getRoadmaps = async () => {
-      const res = await axios.get('https://proadmaps.herokuapp.com/api/v1/roadmaps');
-      console.log(res);
-    };
-    getRoadmaps();
-  });
 
   return (
     <div>
@@ -71,7 +56,9 @@ const RoadmapPage: NextPage = () => {
         }}
       />
       <br />
-      <button onClick={onClick}>新規投稿</button>
+      <button onClick={onClick_post}>新規投稿</button>
+      <br />
+      <button onClick={onClick_get}>投稿取得</button>
     </div>
   );
 };
