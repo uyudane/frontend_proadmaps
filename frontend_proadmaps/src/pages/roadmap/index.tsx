@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import tokenState from 'recoil/atoms/tokenState';
 
-import { postRoadmaps } from 'services/roadmaps';
+import { fetchRoadmaps, postRoadmaps } from 'services/roadmaps';
 
 const RoadmapPage: NextPage = () => {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
@@ -16,7 +16,7 @@ const RoadmapPage: NextPage = () => {
   const [title, setTitle] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
 
-  const onClick = () => {
+  const onClick_post = () => {
     postRoadmaps(
       {
         title: title,
@@ -26,21 +26,17 @@ const RoadmapPage: NextPage = () => {
     );
   };
 
+  // ログでgetの結果を出力
+  const onClick_get = () => {
+    fetchRoadmaps();
+  };
+
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>,
   ) => {
     setState(e.target.value);
   };
-
-  // ログでgetの結果を出力
-  useEffect(() => {
-    const getRoadmaps = async () => {
-      const res = await axios.get('http://localhost:3000/api/v1/roadmaps');
-      console.log(res);
-    };
-    getRoadmaps();
-  });
 
   return (
     <div>
@@ -62,7 +58,9 @@ const RoadmapPage: NextPage = () => {
         }}
       />
       <br />
-      <button onClick={onClick}>新規投稿</button>
+      <button onClick={onClick_post}>新規投稿</button>
+      <br />
+      <button onClick={onClick_get}>投稿取得</button>
     </div>
   );
 };
