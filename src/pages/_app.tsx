@@ -3,10 +3,10 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
 import createEmotionCache from '../createEmotionCache';
 import theme from '../theme';
+import Layout from 'component/layout';
 
 const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
@@ -21,19 +21,21 @@ const MyApp = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Auth0Provider
-          domain={process.env['NEXT_PUBLIC_AUTH0_DOMAIN']!}
-          clientId={process.env['NEXT_PUBLIC_AUTH0_CLIENT_ID']!}
-          audience={process.env['NEXT_PUBLIC_AUTH0_AUDIENCE']!}
-          redirectUri={redirectUri}
-        >
-          <RecoilRoot>
-            <Component {...pageProps} />
-          </RecoilRoot>
-        </Auth0Provider>
-      </ThemeProvider>
+      <CssBaseline />
+      <Auth0Provider
+        domain={process.env['NEXT_PUBLIC_AUTH0_DOMAIN']!}
+        clientId={process.env['NEXT_PUBLIC_AUTH0_CLIENT_ID']!}
+        audience={process.env['NEXT_PUBLIC_AUTH0_AUDIENCE']!}
+        redirectUri={redirectUri}
+      >
+        <RecoilRoot>
+          <ThemeProvider theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </RecoilRoot>
+      </Auth0Provider>
     </CacheProvider>
   );
 };
