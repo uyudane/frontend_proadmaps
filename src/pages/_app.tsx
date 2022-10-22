@@ -13,7 +13,7 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-function MyApp(props: MyAppProps) {
+const MyApp = (props: MyAppProps) => {
   // auth0で使用
   const redirectUri = `${process.env['NEXT_PUBLIC_BASE_URL']}/login`;
 
@@ -36,6 +36,6 @@ function MyApp(props: MyAppProps) {
       </ThemeProvider>
     </CacheProvider>
   );
-}
+};
 
 export default MyApp;
