@@ -1,8 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import { Meta } from 'component/meta';
 
 const Home: NextPage = () => {

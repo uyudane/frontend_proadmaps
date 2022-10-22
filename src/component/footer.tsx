@@ -1,7 +1,11 @@
+import AppLogo from './atoms/app-logo';
+
 const Footer = () => {
   return (
     <>
-      <footer>ふっだぁ</footer>
+      <footer>
+        <AppLogo />
+      </footer>
     </>
   );
 };

@@ -1,7 +1,13 @@
+import AppLogo from './atoms/app-logo';
+import HeaderNav from './header_nav';
+
 const Header = () => {
   return (
     <>
-      <header>へっだぁ</header>
+      <header>
+        <AppLogo />
+        <HeaderNav />
+      </header>
     </>
   );
 };
