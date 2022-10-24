@@ -13,14 +13,32 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import * as React from 'react';
+import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
+import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import RequireLoginDialog from './RequireLoginDialog';
 
 function ResponsiveAppBar() {
+  const setToken = useSetRecoilState(tokenState);
   const router = useRouter();
-  const { isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, isLoading, getAccessTokenSilently } =
+    useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  // ログイン完了後にトークンを取得しRecoilへ格納
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({});
+        setToken(accessToken);
+      } catch (e: any) {
+        console.log(e.message);
+      }
+    };
+    getToken();
+  }, []);
 
   // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする。
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

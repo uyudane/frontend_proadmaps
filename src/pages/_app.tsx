@@ -28,7 +28,9 @@ const MyApp = (props: MyAppProps) => {
         audience={process.env['NEXT_PUBLIC_AUTH0_AUDIENCE']!}
         redirectUri={redirectUri}
       >
+        {/* Auth0の認証情報をRecoilを利用してグローバルステートで保存 */}
         <RecoilRoot>
+          {/* MaterialUIのテーマを提供 */}
           <ThemeProvider theme={theme}>
             <Layout>
               <Component {...pageProps} />
