@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { Meta } from 'component/meta';
 
 const Home: NextPage = () => {
@@ -7,9 +8,10 @@ const Home: NextPage = () => {
   return (
     <>
       <Meta pageTitle='トップ' />
-      <div>
-        <button onClick={() => loginWithRedirect()}>ログイン</button>
-      </div>
+      <div>記事一覧/検索画面</div>
+      <Link href='/'>
+        <a>Home</a>
+      </Link>
     </>
   );
 };

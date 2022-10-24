@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -10,13 +11,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
-// 左側メニューの
-const pages = ['MakeMap!', '○○○', '○○○'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function ResponsiveAppBar() {
+  const router = useRouter();
+  const { isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -40,6 +41,24 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
+  const logout_auth0 = () => logout({ returnTo: window.location.origin });
+
+  // 左側メニュー一覧
+  const pages = [
+    { name: 'ロードマップ/学習記録を作成', link: '/roadmap' },
+    { name: '○○○', link: '/' },
+    { name: '○○○', link: '/' },
+  ];
+
+  // 右側ユーザメニュ一覧
+  const settings = [
+    { name: 'Profile', action: handleOpenUserMenu },
+    { name: 'Account', action: handleCloseUserMenu },
+    // { name: 'login', action: loginWithRedirect },
+    { name: 'Logout', action: logout_auth0 },
+  ];
+
   return (
     // xsとmdで表示順序が変わる
     // xs: ハンバーガーメニュー、ロゴ、サービス名、アイコン(ユーザメニュー)
@@ -50,34 +69,43 @@ function ResponsiveAppBar() {
         {/* disableGutters→左右の余白を削除 */}
         <Toolbar disableGutters>
           {/* md以上ようのロゴ */}
-          <Box
-            component='img'
-            sx={{
-              height: 50,
-              width: 50,
-              display: { xs: 'none', md: 'flex' },
-              mr: 1,
-            }}
-            alt='ロゴ'
-            src='logo_unit.png'
-          />
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            ProadMaps
-          </Typography>
+          <Link href='/'>
+            <a>
+              <Box
+                component='img'
+                sx={{
+                  height: 50,
+                  width: 50,
+                  display: { xs: 'none', md: 'flex' },
+                  mr: 1,
+                }}
+                alt='ロゴ'
+                src='logo_unit.png'
+              />
+            </a>
+          </Link>
+          {/* Linkで囲む事でクライアント側でページ遷移ができる(リロードせずにすむ)
+          Link側とTyporaphyで両方"/"を指定するのが気持ち悪いが、カーソルが変わらなくなるため両方つける。
+          遷移は問題なさそう */}
+          <Link href='/'>
+            <Typography
+              variant='h6'
+              noWrap
+              component='a'
+              href='/'
+              sx={{
+                mr: 4,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.1rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              ProadMaps
+            </Typography>
+          </Link>
 
           {/* xsの時はハンバーガーメニュー */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -110,8 +138,17 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
+                <MenuItem
+                  key={page.name}
+                  onClick={
+                    isAuthenticated
+                      ? () => {
+                          router.push('/roadmap');
+                        }
+                      : loginWithRedirect
+                  }
+                >
+                  <Typography textAlign='center'>{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -151,44 +188,61 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.name}
+                onClick={
+                  isAuthenticated
+                    ? () => {
+                        router.push('/roadmap');
+                      }
+                    : loginWithRedirect
+                }
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
 
-          {/* アイコンとユーザメニュー */}
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {isAuthenticated ? (
+              <>
+                <Tooltip title='Open settings'>
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  </IconButton>
+                </Tooltip>
+
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id='menu-appbar'
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting.name} onClick={setting.action}>
+                      <Typography textAlign='center'>{setting.name}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : // ログイン確認中はローディングを出す
+            isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <MenuItem key='login' onClick={loginWithRedirect}>
+                <Typography textAlign='center'>Login</Typography>
+              </MenuItem>
+            )}
           </Box>
         </Toolbar>
       </Container>

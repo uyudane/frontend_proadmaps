@@ -15,7 +15,7 @@ interface MyAppProps extends AppProps {
 
 const MyApp = (props: MyAppProps) => {
   // auth0で使用
-  const redirectUri = `${process.env['NEXT_PUBLIC_BASE_URL']}/login`;
+  const redirectUri = `${process.env['NEXT_PUBLIC_BASE_URL']}`;
 
   // emotionのSSRで使用
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
