@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import AlertDialog from './AlertDialog';
+import RequireLoginDialog from './RequireLoginDialog';
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -59,6 +59,17 @@ function ResponsiveAppBar() {
     // { name: 'login', action: loginWithRedirect },
     { name: 'Logout', action: logout_auth0 },
   ];
+
+  // 未ログイン時のダイアログの開閉に使用
+  const [open, setOpen] = React.useState(false);
+
+  const dialogOpen = () => {
+    setOpen(true);
+  };
+
+  const dialogClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -146,7 +157,7 @@ function ResponsiveAppBar() {
                         ? () => {
                             router.push('/roadmap');
                           }
-                        : loginWithRedirect
+                        : dialogOpen
                     }
                   >
                     <Typography textAlign='center'>{page.name}</Typography>
@@ -195,7 +206,7 @@ function ResponsiveAppBar() {
                       ? () => {
                           router.push('/roadmap');
                         }
-                      : loginWithRedirect
+                      : dialogOpen
                   }
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
@@ -248,7 +259,7 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
-      <AlertDialog />
+      <RequireLoginDialog open={open} onClose={dialogClose} />
     </>
   );
 }
