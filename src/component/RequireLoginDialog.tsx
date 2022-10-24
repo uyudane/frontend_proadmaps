@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,42 +7,37 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
 
-export default function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
+export interface AlertDialogProps {
+  onClose: () => void;
+  open: boolean;
+}
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+const RequireLoginDialog = (props: AlertDialogProps) => {
+  const { onClose, open } = props;
+  const { loginWithRedirect } = useAuth0();
   return (
     <div>
-      <Button variant='outlined' onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={onClose}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>{"Use Google's location service?"}</DialogTitle>
+        {/* <DialogTitle id='alert-dialog-title'>{"Use Google's location service?"}</DialogTitle> */}
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+            この操作をするにはログインが必要です。
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={onClose}>キャンセル</Button>
+          <Button onClick={loginWithRedirect} autoFocus>
+            ログイン/ユーザ登録を行う
           </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
-}
+};
+
+export default RequireLoginDialog;
