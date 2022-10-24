@@ -60,6 +60,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
+  const toProfile = () => {
+    router.push('/profile');
+  };
+
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
   const logout_auth0 = () => logout({ returnTo: window.location.origin });
 
@@ -72,7 +77,7 @@ function ResponsiveAppBar() {
 
   // 右側ユーザメニュ一覧
   const settings = [
-    { name: 'Profile', action: handleOpenUserMenu },
+    { name: 'Profile', action: toProfile },
     { name: 'Account', action: handleCloseUserMenu },
     // { name: 'login', action: loginWithRedirect },
     { name: 'Logout', action: logout_auth0 },
