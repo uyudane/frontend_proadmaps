@@ -5,5 +5,5 @@ export const siteMeta = {
   siteLang: 'ja',
   siteLocale: 'ja_JP',
   siteType: 'website',
-  siteIcon: '/proad_icon.png',
+  siteIcon: '/logo_unit.png',
 };
