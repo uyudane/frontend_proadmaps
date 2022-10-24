@@ -21,6 +21,13 @@ const theme = createTheme({
       main: red.A400,
     },
   },
+  typography: {
+    fontFamily: ['Yu Gothic', 'Roboto', 'sans-serif'].join(','),
+    // ボタンの文字がデフォルトで大文字になっているため、小文字も許可
+    button: {
+      textTransform: 'none',
+    },
+  },
 });
 
 export default theme;

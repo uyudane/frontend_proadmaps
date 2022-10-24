@@ -47,8 +47,8 @@ function ResponsiveAppBar() {
   // 左側メニュー一覧
   const pages = [
     { name: 'ロードマップ/学習記録を作成', link: '/roadmap' },
-    { name: '○○○', link: '/' },
-    { name: '○○○', link: '/' },
+    // { name: '○○○', link: '/' },
+    // { name: '○○○', link: '/' },
   ];
 
   // 右側ユーザメニュ一覧
