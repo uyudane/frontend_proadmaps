@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import AlertDialog from './AlertDialog';
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -60,85 +61,134 @@ function ResponsiveAppBar() {
   ];
 
   return (
-    // xsとmdで表示順序が変わる
-    // xs: ハンバーガーメニュー、ロゴ、サービス名、アイコン(ユーザメニュー)
-    // md: ロゴ、サービス名、メニューボタン、アイコン(ユーザメニュー)
-
-    <AppBar position='static'>
-      <Container maxWidth='xl'>
-        {/* disableGutters→左右の余白を削除 */}
-        <Toolbar disableGutters>
-          {/* md以上ようのロゴ */}
-          <Link href='/'>
-            <a>
-              <Box
-                component='img'
-                sx={{
-                  height: 50,
-                  width: 50,
-                  display: { xs: 'none', md: 'flex' },
-                  mr: 1,
-                }}
-                alt='ロゴ'
-                src='logo_unit.png'
-              />
-            </a>
-          </Link>
-          {/* Linkで囲む事でクライアント側でページ遷移ができる(リロードせずにすむ)
+    <>
+      {/* xsとmdで表示順序が変わる
+      xs: ハンバーガーメニュー、ロゴ、サービス名、アイコン(ユーザメニュー)
+      md: ロゴ、サービス名、メニューボタン、アイコン(ユーザメニュー) */}
+      <AppBar position='static'>
+        <Container maxWidth='xl'>
+          {/* disableGutters→左右の余白を削除 */}
+          <Toolbar disableGutters>
+            {/* md以上ようのロゴ */}
+            <Link href='/'>
+              <a>
+                <Box
+                  component='img'
+                  sx={{
+                    height: 50,
+                    width: 50,
+                    display: { xs: 'none', md: 'flex' },
+                    mr: 1,
+                  }}
+                  alt='ロゴ'
+                  src='logo_unit.png'
+                />
+              </a>
+            </Link>
+            {/* Linkで囲む事でクライアント側でページ遷移ができる(リロードせずにすむ)
           Link側とTyporaphyで両方"/"を指定するのが気持ち悪いが、カーソルが変わらなくなるため両方つける。
           遷移は問題なさそう */}
-          <Link href='/'>
+            <Link href='/'>
+              <Typography
+                variant='h6'
+                noWrap
+                component='a'
+                href='/'
+                sx={{
+                  mr: 4,
+                  display: { xs: 'none', md: 'flex' },
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.1rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                ProadMaps
+              </Typography>
+            </Link>
+
+            {/* xsの時はハンバーガーメニュー */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleOpenNavMenu}
+                color='inherit'
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem
+                    key={page.name}
+                    onClick={
+                      isAuthenticated
+                        ? () => {
+                            router.push('/roadmap');
+                          }
+                        : loginWithRedirect
+                    }
+                  >
+                    <Typography textAlign='center'>{page.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+
+            {/* xs用(ハンバーガーメニュー、ロゴの順で表示) */}
+            <Box
+              component='img'
+              sx={{
+                height: 50,
+                width: 50,
+                display: { xs: 'flex', md: 'none' },
+                mr: 1,
+              }}
+              alt='ロゴ'
+              src='logo_unit.png'
+            />
             <Typography
-              variant='h6'
+              variant='h5'
               noWrap
               component='a'
-              href='/'
+              href=''
               sx={{
-                mr: 4,
-                display: { xs: 'none', md: 'flex' },
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
                 fontFamily: 'monospace',
                 fontWeight: 700,
-                letterSpacing: '.1rem',
+                letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
             >
               ProadMaps
             </Typography>
-          </Link>
-
-          {/* xsの時はハンバーガーメニュー */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
+            {/* md用メニューボタン */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
-                <MenuItem
+                <Button
                   key={page.name}
                   onClick={
                     isAuthenticated
@@ -147,106 +197,59 @@ function ResponsiveAppBar() {
                         }
                       : loginWithRedirect
                   }
+                  sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  <Typography textAlign='center'>{page.name}</Typography>
-                </MenuItem>
+                  {page.name}
+                </Button>
               ))}
-            </Menu>
-          </Box>
+            </Box>
 
-          {/* xs用(ハンバーガーメニュー、ロゴの順で表示) */}
-          <Box
-            component='img'
-            sx={{
-              height: 50,
-              width: 50,
-              display: { xs: 'flex', md: 'none' },
-              mr: 1,
-            }}
-            alt='ロゴ'
-            src='logo_unit.png'
-          />
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href=''
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            ProadMaps
-          </Typography>
-          {/* md用メニューボタン */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={
-                  isAuthenticated
-                    ? () => {
-                        router.push('/roadmap');
-                      }
-                    : loginWithRedirect
-                }
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
+            <Box sx={{ flexGrow: 0 }}>
+              {isAuthenticated ? (
+                <>
+                  <Tooltip title='Open settings'>
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                    </IconButton>
+                  </Tooltip>
 
-          <Box sx={{ flexGrow: 0 }}>
-            {isAuthenticated ? (
-              <>
-                <Tooltip title='Open settings'>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                  </IconButton>
-                </Tooltip>
-
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id='menu-appbar'
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting.name} onClick={setting.action}>
-                      <Typography textAlign='center'>{setting.name}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </>
-            ) : // ログイン確認中はローディングを出す
-            isLoading ? (
-              <div>Loading...</div>
-            ) : (
-              <MenuItem key='login' onClick={loginWithRedirect}>
-                <Typography textAlign='center'>Login</Typography>
-              </MenuItem>
-            )}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id='menu-appbar'
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting.name} onClick={setting.action}>
+                        <Typography textAlign='center'>{setting.name}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </>
+              ) : // ログイン確認中はローディングを出す
+              isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                <MenuItem key='login' onClick={loginWithRedirect}>
+                  <Typography textAlign='center'>Login</Typography>
+                </MenuItem>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <AlertDialog />
+    </>
   );
 }
 export default ResponsiveAppBar;
