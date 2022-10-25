@@ -1,4 +1,4 @@
-import { Auth0Provider } from '@auth0/auth0-react';
+import { UserProvider } from '@auth0/nextjs-auth0';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -22,12 +22,7 @@ const MyApp = (props: MyAppProps) => {
   return (
     <CacheProvider value={emotionCache}>
       <CssBaseline />
-      <Auth0Provider
-        domain={process.env['NEXT_PUBLIC_AUTH0_DOMAIN']!}
-        clientId={process.env['NEXT_PUBLIC_AUTH0_CLIENT_ID']!}
-        audience={process.env['NEXT_PUBLIC_AUTH0_AUDIENCE']!}
-        redirectUri={redirectUri}
-      >
+      <UserProvider>
         {/* Auth0の認証情報をRecoilを利用してグローバルステートで保存 */}
         <RecoilRoot>
           {/* MaterialUIのテーマを提供 */}
@@ -37,7 +32,7 @@ const MyApp = (props: MyAppProps) => {
             </Layout>
           </ThemeProvider>
         </RecoilRoot>
-      </Auth0Provider>
+      </UserProvider>
     </CacheProvider>
   );
 };

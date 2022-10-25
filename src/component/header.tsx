@@ -1,4 +1,4 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import { useUser } from '@auth0/nextjs-auth0';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -18,7 +18,7 @@ import RequireLoginDialog from './RequireLoginDialog';
 
 function ResponsiveAppBar() {
   const router = useRouter();
-  const { isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0();
+  const { user, isLoading } = useUser();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -42,14 +42,6 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
-  const toProfile = () => {
-    router.push('/profile');
-  };
-
-  // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
-  const logout_auth0 = () => logout({ returnTo: window.location.origin });
-
   // 左側メニュー一覧
   const pages = [
     { name: 'ロードマップ/学習記録を作成', link: '/roadmap' },
@@ -59,10 +51,8 @@ function ResponsiveAppBar() {
 
   // 右側ユーザメニュ一覧
   const settings = [
-    { name: 'Profile', action: toProfile },
-    { name: 'Account', action: handleCloseUserMenu },
-    // { name: 'login', action: loginWithRedirect },
-    { name: 'Logout', action: logout_auth0 },
+    { name: 'Profile', action: '/profile' },
+    { name: 'Logout', action: '/api/auth/logout' },
   ];
 
   // 未ログイン時のダイアログの開閉に使用
@@ -158,7 +148,7 @@ function ResponsiveAppBar() {
                   <MenuItem
                     key={page.name}
                     onClick={
-                      isAuthenticated
+                      user
                         ? () => {
                             router.push('/roadmap');
                           }
@@ -207,7 +197,7 @@ function ResponsiveAppBar() {
                 <Button
                   key={page.name}
                   onClick={
-                    isAuthenticated
+                    user
                       ? () => {
                           router.push('/roadmap');
                         }
@@ -221,14 +211,13 @@ function ResponsiveAppBar() {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              {isAuthenticated ? (
+              {user ? (
                 <>
                   <Tooltip title='Open settings'>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
                     </IconButton>
                   </Tooltip>
-
                   <Menu
                     sx={{ mt: '45px' }}
                     id='menu-appbar'
@@ -246,7 +235,12 @@ function ResponsiveAppBar() {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting) => (
-                      <MenuItem key={setting.name} onClick={setting.action}>
+                      <MenuItem
+                        key={setting.name}
+                        onClick={() => {
+                          router.push(setting.action);
+                        }}
+                      >
                         <Typography textAlign='center'>{setting.name}</Typography>
                       </MenuItem>
                     ))}
@@ -256,7 +250,12 @@ function ResponsiveAppBar() {
               isLoading ? (
                 <div>Loading...</div>
               ) : (
-                <MenuItem key='login' onClick={loginWithRedirect}>
+                <MenuItem
+                  key='login'
+                  onClick={() => {
+                    router.push('/api/auth/login');
+                  }}
+                >
                   <Typography textAlign='center'>Login</Typography>
                 </MenuItem>
               )}

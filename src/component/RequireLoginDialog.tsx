@@ -1,10 +1,9 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 export interface AlertDialogProps {
@@ -14,7 +13,7 @@ export interface AlertDialogProps {
 
 const RequireLoginDialog = (props: AlertDialogProps) => {
   const { onClose, open } = props;
-  const { loginWithRedirect } = useAuth0();
+  const router = useRouter();
   return (
     <div>
       <Dialog
@@ -31,7 +30,12 @@ const RequireLoginDialog = (props: AlertDialogProps) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>キャンセル</Button>
-          <Button onClick={loginWithRedirect} autoFocus>
+          <Button
+            onClick={() => {
+              router.push('/api/auth/login');
+            }}
+            autoFocus
+          >
             ログイン/ユーザ登録を行う
           </Button>
         </DialogActions>
