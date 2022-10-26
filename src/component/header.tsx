@@ -18,7 +18,7 @@ import RequireLoginDialog from './RequireLoginDialog';
 
 function ResponsiveAppBar() {
   const router = useRouter();
-  const { isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, isLoading, user } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -225,7 +225,7 @@ function ResponsiveAppBar() {
                 <>
                   <Tooltip title='Open settings'>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                      <Avatar alt='Remy Sharp' src={user!.picture} />
                     </IconButton>
                   </Tooltip>
 
