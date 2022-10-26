@@ -21,7 +21,6 @@ const MyApp = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <CacheProvider value={emotionCache}>
-      <CssBaseline />
       <Auth0Provider
         domain={process.env['NEXT_PUBLIC_AUTH0_DOMAIN']!}
         clientId={process.env['NEXT_PUBLIC_AUTH0_CLIENT_ID']!}
@@ -32,6 +31,7 @@ const MyApp = (props: MyAppProps) => {
         <RecoilRoot>
           {/* MaterialUIのテーマを提供 */}
           <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Layout>
               <Component {...pageProps} />
             </Layout>

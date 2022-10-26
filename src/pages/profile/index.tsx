@@ -1,66 +1,103 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
+import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Meta from 'component/meta';
+import UserIcon from 'component/user_icon';
 
-const ProfilePage = () => {
+// フォームの型
+interface SampleFormInput {
+  name: string;
+  github: string;
+  twitter: string;
+}
+
+function ProfilePage() {
+  const { register, handleSubmit } = useForm<SampleFormInput>();
+
+  // フォーム送信時の処理
+  const onSubmit: SubmitHandler<SampleFormInput> = (data) => {
+    // バリデーションチェックOK！なときに行う処理を追加
+    console.log(data);
+  };
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}></Grid>
-          <Grid item xs={3}>
-            プロフィール編集
-          </Grid>
-          <Grid item xs={9}>
-            <Box
-              component='form'
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '80%' },
-              }}
-              noValidate
-              autoComplete='off'
-            >
-              <TextField required id='name' label='名前' defaultValue='Hello World' />
-              <Stack direction='row' alignItems='center' spacing={2}>
-                <TextField required id='icon' label='アイコン' defaultValue='Hello World' />
-                <Button variant='contained' component='label'>
-                  Upload
-                  <input hidden accept='image/*' multiple type='file' />
-                </Button>
-              </Stack>
-              <TextField required id='email' label='メールアドレス' defaultValue='Hello World' />
-              <TextField
-                id='current_password'
-                label='現在のパスワード'
-                type='password'
-                autoComplete='current-password'
-              />
-              <TextField
-                id='password'
-                label='新しいパスワード'
-                type='password'
-                autoComplete='current-password'
-              />
-              <TextField
-                id='confirm_password'
-                label='新しいパスワード(確認用)'
-                type='password'
-                autoComplete='current-password'
-              />
-              <TextField id='github_id' label='公開用Githubアカウント' defaultValue='Hello World' />
-              <TextField
-                id='twitter_id'
-                label='公開用Twitterアカウント'
-                defaultValue='Hello World'
-              />
-            </Box>
-          </Grid>
+      <Meta pageTitle='プロフィール編集' />
+      <Grid container>
+        <Grid item xs={2} sx={{ p: 1 }}>
+          <Container>プロフィール編集</Container>
         </Grid>
-      </Box>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12}></Grid>
+        <Grid item xs={2}>
+          <Container>
+            <UserIcon />
+          </Container>
+        </Grid>
+        <Grid item xs={9} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
+          <Container maxWidth='md' sx={{ pt: 1 }}>
+            <Stack spacing={4}>
+              <Grid container>
+                <Grid item xs={12}>
+                  ・ユーザ名
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    // label='ユーザ名'
+                    sx={{ width: '100%', bgcolor: '#ffffff' }}
+                    {...register('name')}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  ・公開用Githubアカウント
+                </Grid>
+                <Grid item xs={3}>
+                  {/* <Typography component='span'>https://github.com/</Typography> */}
+                  <TextField
+                    disabled
+                    defaultValue='https://github.com/'
+                    sx={{ width: '100%', bgcolor: '#aaaaaa' }}
+                  />
+                </Grid>
+                <Grid item xs={9}>
+                  <TextField
+                    // label='GitHubID'
+                    sx={{ width: '100%', bgcolor: '#ffffff' }}
+                    {...register('github')}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  ・公開用Twitterアカウント
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    disabled
+                    defaultValue='https://twitter.com/'
+                    sx={{ width: '100%', bgcolor: '#aaaaaa' }}
+                  />
+                </Grid>
+                <Grid item xs={9}>
+                  <TextField sx={{ width: '100%', bgcolor: '#ffffff' }} {...register('twitter')} />
+                </Grid>
+              </Grid>
+              <Button
+                color='primary'
+                variant='contained'
+                size='large'
+                onClick={handleSubmit(onSubmit)}
+              >
+                更新する
+              </Button>
+            </Stack>
+          </Container>
+        </Grid>
+      </Grid>
     </>
   );
-};
+}
 
 export default ProfilePage;
