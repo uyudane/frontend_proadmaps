@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import React, { useState } from 'react';
 
 import { useRecoilValue } from 'recoil';
-import { Meta } from 'component/meta';
+import Meta from 'component/meta';
 
 // recoil
 import tokenState from 'recoil/atoms/tokenState';

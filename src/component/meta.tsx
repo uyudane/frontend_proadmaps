@@ -5,7 +5,7 @@ import { siteMeta } from 'lib/constants';
 
 const { siteTitle, siteDesc, siteUrl, siteLocale, siteType, siteIcon } = siteMeta;
 
-export const Meta = ({ pageTitle, pageDesc }: { pageTitle?: string; pageDesc?: string }) => {
+const Meta = ({ pageTitle, pageDesc }: { pageTitle?: string; pageDesc?: string }) => {
   // ページのタイトル
   const title = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
 
@@ -42,3 +42,5 @@ export const Meta = ({ pageTitle, pageDesc }: { pageTitle?: string; pageDesc?: s
     </Head>
   );
 };
+
+export default Meta;
