@@ -3,12 +3,15 @@ import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
+import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
 import Meta from 'component/meta';
-import { postProfiles } from 'services/profiles';
+import { getMyprofile } from 'services/profiles';
+import type { Profile } from 'types';
 
 const Home: NextPage = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
+  const setUser = useSetRecoilState(userState);
 
   // ログイン完了後にトークンを取得しRecoilへ格納
   useEffect(() => {
@@ -16,17 +19,11 @@ const Home: NextPage = () => {
       try {
         const accessToken = await getAccessTokenSilently({});
         setToken(accessToken);
-        if (isAuthenticated) {
-          postProfiles(
-            {
-              name: user!.name,
-            },
-            accessToken,
-          );
-        }
-        console.log(user);
+        const profile = await getMyprofile(accessToken);
+        setUser(profile.user_id);
       } catch (e: any) {
         console.log(e.message);
+        console.log('トークン格納しなかったよ');
       }
     };
     getToken();
