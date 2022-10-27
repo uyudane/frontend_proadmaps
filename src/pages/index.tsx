@@ -5,22 +5,26 @@ import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグロー�
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
 import Meta from 'component/meta';
-import { getMyprofile } from 'services/profiles';
-import type { Profile } from 'types';
+import { getMyUser } from 'services/users';
+import type { User } from 'types';
 
 const Home: NextPage = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
 
-  // ログイン完了後にトークンを取得しRecoilへ格納
   useEffect(() => {
     const getToken = async () => {
       try {
+        // ログイン完了後にトークンを取得しRecoilへ格納
         const accessToken = await getAccessTokenSilently({});
+        console.log(accessToken);
         setToken(accessToken);
-        const profile = await getMyprofile(accessToken);
-        setUser(profile.user_id);
+        const user = await getMyUser(accessToken);
+        // ログイン完了後に自身の情報をバックエンドから取得してrecoilへ格納
+        // ユーザ登録の場合は、このタイミングでバックエンドに情報が追加される
+        setUser(user.id);
+        console.log('トークン格納したZ');
       } catch (e: any) {
         console.log(e.message);
         console.log('トークン格納しなかったよ');

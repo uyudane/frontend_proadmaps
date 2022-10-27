@@ -7,35 +7,21 @@ import { useRecoilValue } from 'recoil';
 import Meta from 'component/meta';
 import UserIcon from 'component/user_icon';
 import tokenState from 'recoil/atoms/tokenState';
-import { updateProfile, getProfiles, getProfile } from 'services/profiles';
-import type { Profile, Profiles } from 'types';
+import { updateUser, getUsers, getUser } from 'services/users';
+import type { User, Users } from 'types';
 
-function ProfileUpdatePage({ profile }: any) {
-  const { register, handleSubmit } = useForm<Profile>();
+function UserUpdatePage({ user }: any) {
+  const { register, handleSubmit } = useForm<User>();
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
-  const router = useRouter();
-  const [path_id, setData] = useState<number>();
-  const fetchData = async () => {
-    if (router.isReady) {
-      const id = router.query.user_id;
-      const data = Number(id); // id を使ってデータフェッチする処理の代わり
-      setData(data);
-    }
-  };
-  // URL が変更される（id が変更される）たびにデータをフェッチする
-  useEffect(() => {
-    fetchData();
-  }, [router.query]);
-
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<Profile> = (data) => {
-    fetchData();
+  const onSubmit: SubmitHandler<User> = (data) => {
+    console.log('トークン出しまーす');
+    console.log(token);
     // バリデーションチェックOK！なときに行う処理を追加
-    updateProfile(path_id!, data, token);
+    updateUser(data, token);
   };
   return (
     <>
-      <p>{path_id}</p>
       <Meta pageTitle='プロフィール編集' />
       <Grid container>
         <Grid item xs={2} sx={{ p: 1 }}>
@@ -59,7 +45,7 @@ function ProfileUpdatePage({ profile }: any) {
                 <Grid item xs={12}>
                   <TextField
                     required
-                    defaultValue={profile.name}
+                    defaultValue={user.name}
                     // label='ユーザ名'
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
                     {...register('name')}
@@ -81,7 +67,7 @@ function ProfileUpdatePage({ profile }: any) {
                 <Grid item xs={9}>
                   <TextField
                     // label='GitHubID'
-                    defaultValue={profile.github_account}
+                    defaultValue={user.github_account}
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
                     {...register('github_account')}
                   />
@@ -100,7 +86,7 @@ function ProfileUpdatePage({ profile }: any) {
                 </Grid>
                 <Grid item xs={9}>
                   <TextField
-                    defaultValue={profile.twitter_account}
+                    defaultValue={user.twitter_account}
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
                     {...register('twitter_account')}
                   />
@@ -123,10 +109,10 @@ function ProfileUpdatePage({ profile }: any) {
 }
 
 export const getStaticPaths = async () => {
-  const result: Profiles = await getProfiles();
+  const result: Users = await getUsers();
   if (!result) return;
-  const paths = result.map((profile) => ({
-    params: { user_id: `${profile.user_id}` },
+  const paths = result.map((user) => ({
+    params: { id: `${user.id}` },
   }));
   return { paths, fallback: false };
 };
@@ -135,8 +121,8 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
     throw new Error('params is undefined');
   }
-  const result: Profile = await getProfile(Number(params.user_id));
-  return { props: { profile: result } };
+  const result: User = await getUser(Number(params.id));
+  return { props: { user: result } };
 };
 
-export default ProfileUpdatePage;
+export default UserUpdatePage;

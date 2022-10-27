@@ -21,9 +21,10 @@ const theme = createTheme({
       main: red.A400,
     },
     background: {
+      default: '#FFFFFF',
+      // 検討
       // default: '#F5FAFF',
       // default: '#eeeeee',
-      default: '#FFFFFF',
       // default: '#FFF0E7',
     },
   },
