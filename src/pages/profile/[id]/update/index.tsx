@@ -1,7 +1,6 @@
-import { Button, Container, Stack, TextField, Grid } from '@mui/material';
+import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import Meta from 'component/meta';
@@ -12,7 +11,11 @@ import { updateUser, getUsers, getUser } from 'services/users';
 import type { User, Users } from 'types';
 
 function UserUpdatePage({ user }: any) {
-  const { register, handleSubmit } = useForm<User>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<User>();
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
   const user_id = useRecoilValue(userState); // RecoilのTokneを取得する
   const router = useRouter();
@@ -56,8 +59,10 @@ function UserUpdatePage({ user }: any) {
                     defaultValue={user.name}
                     // label='ユーザ名'
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
-                    {...register('name')}
+                    {...register('name', { required: true })}
                   />
+                  {errors.name && <Box color='red'>入力が必須の項目です</Box>}
+                  <Container></Container>
                 </Grid>
               </Grid>
               <Grid container>
