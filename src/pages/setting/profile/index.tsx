@@ -1,22 +1,18 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
-import { GetStaticPropsContext } from 'next';
+import { Button, Container, Stack, TextField, Grid, Box, dividerClasses } from '@mui/material';
 import { useRouter } from 'next/router';
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
-import useSWR from 'swr';
 import Meta from 'component/meta';
 import UserIcon from 'component/user_icon';
-import useUserData from 'hooks/useUserData';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
-import { updateUser, getUsers, getMyUser } from 'services/users';
-import type { User, Users } from 'types';
-import { userWhoami } from 'urls/index';
+import { updateUser, useMyUser } from 'services/users';
+import type { User } from 'types';
 
 function SettingProfilePage() {
-  const { user, isLoading, isError } = useUserData();
+  const { user, isLoading, isError } = useMyUser();
   const {
     register,
     handleSubmit,
@@ -37,8 +33,8 @@ function SettingProfilePage() {
       });
     }
   };
-  if (isLoading) return 'ローディング';
-  if (isError) return 'エラー';
+  if (isLoading) return <div>ローディング</div>;
+  if (isError) return <div>エラー</div>;
   return (
     <>
       <Meta pageTitle='プロフィール編集' />
@@ -129,4 +125,6 @@ function SettingProfilePage() {
   );
 }
 
-export default SettingProfilePage;
+export default withAuthenticationRequired(SettingProfilePage, {
+  onRedirecting: () => <div>このページを開くにはログインが必要です。</div>,
+});

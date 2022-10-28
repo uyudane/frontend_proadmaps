@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import useSWR from 'swr';
+import tokenState from 'recoil/atoms/tokenState';
 import type { User } from 'types';
 import { usersIndex, usersShow, userWhoami } from 'urls/index';
 
@@ -21,17 +24,22 @@ export const getUsers = async () => {
 };
 
 // 自身のユーザ情報を取得
-export const getMyUser = async (token: any) => {
-  try {
-    const res = await axios.get(userWhoami, {
+export const useMyUser = () => {
+  const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
+  const fetcher = async (url: any) => {
+    const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return res.data;
-  } catch (error) {
-    console.log(error);
-  }
+  };
+  const { data, error } = useSWR(userWhoami, fetcher);
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
 };
 
 export const postUsers = async (params: User, token: any) => {

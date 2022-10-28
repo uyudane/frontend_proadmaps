@@ -6,15 +6,14 @@ import { userWhoami } from 'urls';
 
 const useUserData = () => {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
-  const fetcher = (url: any) =>
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res: any) => res.data);
-
+  const fetcher = async (url: any) => {
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  };
   const { data, error } = useSWR(userWhoami, fetcher);
   return {
     user: data,
