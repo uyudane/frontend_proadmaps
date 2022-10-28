@@ -23,7 +23,7 @@ export const getUsers = async () => {
   }
 };
 
-// 自身のユーザ情報を取得
+// 自身のユーザ情報を取得(SWRを利用して初回表示を制御する)
 export const useMyUser = () => {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
   const fetcher = async (url: any) => {
@@ -40,6 +40,21 @@ export const useMyUser = () => {
     isLoading: !error && !data,
     isError: error,
   };
+};
+
+// useMyUserと同様自身の情報方を取得するが、カスタムフックにしてしまうとuseEffectの中で使用できない。
+// 初回ログイン後の情報格納でuseEffectで使用したいため、こちらも残して使用する。
+export const getMyUser = async (token: any) => {
+  try {
+    const res = await axios.get(userWhoami, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const postUsers = async (params: User, token: any) => {
