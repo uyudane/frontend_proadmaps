@@ -1,6 +1,6 @@
 import { Button, Container, Stack, TextField, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
-import { useRouter } from 'next/router';
+
 import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
@@ -15,8 +15,6 @@ function UserUpdatePage({ user }: any) {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<User> = (data) => {
-    console.log('トークン出しまーす');
-    console.log(token);
     // バリデーションチェックOK！なときに行う処理を追加
     updateUser(data, token);
   };
@@ -110,7 +108,7 @@ function UserUpdatePage({ user }: any) {
 
 export const getStaticPaths = async () => {
   const result: Users = await getUsers();
-  if (!result) return;
+  if (!result) return { paths: [], fallback: false };
   const paths = result.map((user) => ({
     params: { id: `${user.id}` },
   }));

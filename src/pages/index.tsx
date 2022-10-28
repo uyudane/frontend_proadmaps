@@ -18,16 +18,13 @@ const Home: NextPage = () => {
       try {
         // ログイン完了後にトークンを取得しRecoilへ格納
         const accessToken = await getAccessTokenSilently({});
-        console.log(accessToken);
         setToken(accessToken);
-        const user = await getMyUser(accessToken);
+        const user_data = await getMyUser(accessToken);
         // ログイン完了後に自身の情報をバックエンドから取得してrecoilへ格納
         // ユーザ登録の場合は、このタイミングでバックエンドに情報が追加される
-        setUser(user.id);
-        console.log('トークン格納したZ');
+        setUser(user_data.id);
       } catch (e: any) {
         console.log(e.message);
-        console.log('トークン格納しなかったよ');
       }
     };
     getToken();

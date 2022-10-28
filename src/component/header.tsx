@@ -14,7 +14,9 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useRecoilValue } from 'recoil';
 import RequireLoginDialog from './RequireLoginDialog';
+import userState from 'recoil/atoms/userState';
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -42,9 +44,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const user_id = useRecoilValue(userState); // RecoilのTokneを取得する
+
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
   const toProfile = () => {
-    router.push('/profile');
+    router.push(`/profile/${user_id}`);
   };
 
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
@@ -61,7 +65,6 @@ function ResponsiveAppBar() {
   const settings = [
     { name: 'Profile', action: toProfile },
     { name: 'Account', action: handleCloseUserMenu },
-    // { name: 'login', action: loginWithRedirect },
     { name: 'Logout', action: logout_auth0 },
   ];
 
