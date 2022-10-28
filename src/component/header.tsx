@@ -48,7 +48,7 @@ function ResponsiveAppBar() {
 
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
   const toProfile = () => {
-    router.push(`/profile/${sub}`);
+    router.push(`/${sub}`);
   };
 
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義

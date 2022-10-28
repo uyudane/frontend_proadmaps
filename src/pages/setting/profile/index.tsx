@@ -28,7 +28,7 @@ function SettingProfilePage() {
     const result = await updateUser(data, token);
     if (result === 'OK') {
       router.push({
-        pathname: `/profile/${sub}`,
+        pathname: `/${sub}`,
         query: { message: 'プロフィールを更新しました' },
       });
     }

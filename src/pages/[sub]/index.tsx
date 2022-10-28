@@ -22,6 +22,7 @@ const UserPage = ({ user }: any) => {
       {user.github_account}
       <br />
       {user.twitter_account}
+      {/* 自分のプロフィールの時だけ、編集ページを表示する */}
       {user.sub == user_sub ? (
         <Button
           onClick={() => {
