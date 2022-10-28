@@ -2,9 +2,9 @@ import axios from 'axios';
 import type { User } from 'types';
 import { usersIndex, usersShow, userWhoami } from 'urls/index';
 
-export const getUser = async (userId: number) => {
+export const getUser = async (sub: string) => {
   try {
-    const res = await axios.get(usersShow(userId));
+    const res = await axios.get(usersShow(sub));
     return res.data;
   } catch (error) {
     console.log(error);

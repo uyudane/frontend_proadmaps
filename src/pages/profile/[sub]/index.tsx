@@ -9,13 +9,14 @@ import type { User, Users } from 'types';
 
 const UserPage = ({ user }: any) => {
   const router = useRouter();
-  const user_id = useRecoilValue(userState); // RecoilのTokneを取得する
+  const user_sub = useRecoilValue(userState); // RecoilのTokneを取得する
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
   const toProfileUpdate = () => {
-    router.push(`/profile/${user_id}/update`);
+    router.push(`/profile/${user_sub}/update`);
   };
 
   const message = router.query.message;
+  console.log(user);
 
   return (
     <>
@@ -25,7 +26,7 @@ const UserPage = ({ user }: any) => {
       {user.github_account}
       <br />
       {user.twitter_account}
-      {user.id == user_id ? (
+      {user.sub == user_sub ? (
         <Button
           onClick={() => {
             toProfileUpdate();
@@ -44,7 +45,7 @@ export const getStaticPaths = async () => {
   const result: Users = await getUsers();
   if (!result) return { paths: [], fallback: false };
   const paths = result.map((user) => ({
-    params: { id: `${user.id}` },
+    params: { sub: `${user.sub}` },
   }));
   return { paths, fallback: false };
 };
@@ -53,7 +54,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
     throw new Error('params is undefined');
   }
-  const result: User = await getUser(Number(params.id));
+  const result: User = await getUser(String(params.sub));
   return { props: { user: result } };
 };
 

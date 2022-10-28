@@ -6,7 +6,7 @@ export type Roadmap = {
 
 // プロフィールデータ
 export type User = {
-  id?: number;
+  sub?: string;
   name: string;
   github_account: string;
   twitter_account: string;

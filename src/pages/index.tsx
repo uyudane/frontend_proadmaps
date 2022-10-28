@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         const user_data = await getMyUser(accessToken);
         // ログイン完了後に自身の情報をバックエンドから取得してrecoilへ格納
         // ユーザ登録の場合は、このタイミングでバックエンドに情報が追加される
-        setUser(user_data.id);
+        setUser(user_data.sub);
       } catch (e: any) {
         console.log(e.message);
       }

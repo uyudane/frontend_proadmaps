@@ -44,11 +44,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const user_id = useRecoilValue(userState); // RecoilのTokneを取得する
+  const sub = useRecoilValue(userState); // RecoilのTokneを取得する
 
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
   const toProfile = () => {
-    router.push(`/profile/${user_id}`);
+    router.push(`/profile/${sub}`);
   };
 
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義

@@ -1,3 +1,4 @@
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
@@ -17,7 +18,7 @@ function UserUpdatePage({ user }: any) {
     formState: { errors },
   } = useForm<User>();
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
-  const user_id = useRecoilValue(userState); // RecoilのTokneを取得する
+  const sub = useRecoilValue(userState); // RecoilのTokneを取得する
   const router = useRouter();
 
   // フォーム送信時の処理
@@ -26,7 +27,7 @@ function UserUpdatePage({ user }: any) {
     const result = await updateUser(data, token);
     if (result === 'OK') {
       router.push({
-        pathname: `/profile/${user_id}`,
+        pathname: `/profile/${sub}`,
         query: { message: 'プロフィールを更新しました' },
       });
     }
@@ -125,7 +126,7 @@ export const getStaticPaths = async () => {
   const result: Users = await getUsers();
   if (!result) return { paths: [], fallback: false };
   const paths = result.map((user) => ({
-    params: { id: `${user.id}` },
+    params: { sub: `${user.sub}` },
   }));
   return { paths, fallback: false };
 };
@@ -134,8 +135,8 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
     throw new Error('params is undefined');
   }
-  const result: User = await getUser(Number(params.id));
+  const result: User = await getUser(String(params.sub));
   return { props: { user: result } };
 };
 
-export default UserUpdatePage;
+export default withAuthenticationRequired(UserUpdatePage);
