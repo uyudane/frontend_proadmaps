@@ -11,10 +11,6 @@ const UserPage = ({ user }: any) => {
   const router = useRouter();
   const user_sub = useRecoilValue(userState); // RecoilのTokneを取得する
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
-  const toProfileUpdate = () => {
-    router.push(`/profile/${user_sub}/update`);
-  };
-
   const message = router.query.message;
   console.log(user);
 
@@ -29,7 +25,7 @@ const UserPage = ({ user }: any) => {
       {user.sub == user_sub ? (
         <Button
           onClick={() => {
-            toProfileUpdate();
+            router.push(`/setting/profile`);
           }}
         >
           編集する
