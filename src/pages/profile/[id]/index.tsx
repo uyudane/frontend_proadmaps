@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
@@ -14,14 +15,16 @@ const UserPage = ({ user }: any) => {
     router.push(`/profile/${user_id}/update`);
   };
 
+  const message = router.query.message;
+
   return (
     <>
+      {message && <Alert severity='success'>{message}</Alert>}
       {user.name}
       <br />
       {user.github_account}
       <br />
       {user.twitter_account}
-      {/* {user.id == user_id ? <button onClick={() => toProfileUpdate()}>編集する</button> : ''} */}
       {user.id == user_id ? (
         <Button
           onClick={() => {

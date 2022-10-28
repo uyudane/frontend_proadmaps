@@ -1,22 +1,32 @@
 import { Button, Container, Stack, TextField, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
-
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import Meta from 'component/meta';
 import UserIcon from 'component/user_icon';
 import tokenState from 'recoil/atoms/tokenState';
+import userState from 'recoil/atoms/userState';
 import { updateUser, getUsers, getUser } from 'services/users';
 import type { User, Users } from 'types';
 
 function UserUpdatePage({ user }: any) {
   const { register, handleSubmit } = useForm<User>();
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
+  const user_id = useRecoilValue(userState); // RecoilのTokneを取得する
+  const router = useRouter();
+
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<User> = (data) => {
+  const onSubmit: SubmitHandler<User> = async (data) => {
     // バリデーションチェックOK！なときに行う処理を追加
-    updateUser(data, token);
+    const result = await updateUser(data, token);
+    if (result === 'OK') {
+      router.push({
+        pathname: `/profile/${user_id}`,
+        query: { message: 'プロフィールを更新しました' },
+      });
+    }
   };
   return (
     <>

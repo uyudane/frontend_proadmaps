@@ -49,13 +49,13 @@ export const postUsers = async (params: User, token: any) => {
 export const updateUser = async (params: User, token: any) => {
   try {
     // 0はURLをRailsに合わせるための念の為のダミーで、パラメータは使わず、自身の情報しか修正できないようにしている。
-    const res = await axios.put(usersShow(0), params, {
+    await axios.put(usersShow(0), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
+    return 'OK';
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
