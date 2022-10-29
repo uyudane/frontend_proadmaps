@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
-import Meta from 'component/meta';
+import Meta from 'component/Meta';
 import { getMyUser } from 'services/users';
 import type { User } from 'types';
 

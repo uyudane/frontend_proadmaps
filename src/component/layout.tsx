@@ -1,7 +1,7 @@
 import { Container, Alert } from '@mui/material';
 import { useRouter } from 'next/router';
-import Footer from './footer';
-import Header from './header';
+import Footer from './Footer';
+import Header from './Header';
 
 const Layout = ({ children }: any) => {
   // フラッシュメッセージを表示

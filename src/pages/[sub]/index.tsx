@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
+import Meta from 'component/Meta';
 import ProfileEditButton from 'component/ProfileEditButton';
 import SocialButton from 'component/SocialButton';
 import UserIcon from 'component/UserIcon';
-import Meta from 'component/meta';
 import { getUsers, getUser } from 'services/users';
 import type { User, Users } from 'types';
 

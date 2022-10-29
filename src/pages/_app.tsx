@@ -6,7 +6,7 @@ import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import createEmotionCache from '../createEmotionCache';
 import theme from '../theme';
-import Layout from 'component/layout';
+import Layout from 'component/Layout';
 
 const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
@@ -28,15 +28,16 @@ const MyApp = (props: MyAppProps) => {
         redirectUri={redirectUri}
       >
         {/* Auth0の認証情報をRecoilを利用してグローバルステートで保存 */}
-        <RecoilRoot>
-          {/* MaterialUIのテーマを提供 */}
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
+
+        {/* MaterialUIのテーマを提供 */}
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <RecoilRoot>
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </ThemeProvider>
-        </RecoilRoot>
+          </RecoilRoot>
+        </ThemeProvider>
       </Auth0Provider>
     </CacheProvider>
   );
