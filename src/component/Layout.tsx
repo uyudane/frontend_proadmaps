@@ -4,7 +4,7 @@ import Footer from './Footer';
 import Header from './Header';
 
 const Layout = ({ children }: any) => {
-  // フラッシュメッセージを表示
+  // フラッシュメッセージを表示する。
   const router = useRouter();
   const message = router.query.message || null;
   return (

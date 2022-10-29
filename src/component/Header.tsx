@@ -24,7 +24,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする。
+  // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };

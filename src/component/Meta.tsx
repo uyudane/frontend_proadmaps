@@ -6,7 +6,7 @@ import { siteMeta } from 'lib/constants';
 const { siteTitle, siteDesc, siteUrl, siteLocale, siteType, siteIcon } = siteMeta;
 
 const Meta = ({ pageTitle, pageDesc }: { pageTitle?: string; pageDesc?: string }) => {
-  // ページのタイトル
+  // ページタイトル
   const title = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
 
   // ページの説明
