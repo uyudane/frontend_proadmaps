@@ -1,10 +1,12 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { Button, Container, Stack, TextField, Grid, Box, dividerClasses } from '@mui/material';
+import { ResetTv } from '@mui/icons-material';
+import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
+import SocialButton from 'component/SocialButton';
 import UserIcon from 'component/UserIcon';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
@@ -16,8 +18,16 @@ function SettingProfilePage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<User>();
+  } = useForm<User>({ defaultValues: { name: '', github_account: '', twitter_account: '' } });
+
+  useEffect(() => {
+    reset({
+      ...user,
+    });
+  }, [user, reset]);
+
   const sub = useRecoilValue(userState); // RecoilのTokneを取得する
   const router = useRouter();
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
@@ -45,6 +55,10 @@ function SettingProfilePage() {
             <Grid item>
               <UserIcon />
             </Grid>
+            <Typography variant='h6'>{user.name}</Typography>
+            <Grid item>
+              <SocialButton profileUser={user} />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
@@ -57,13 +71,12 @@ function SettingProfilePage() {
                 <Grid item xs={12}>
                   <TextField
                     required
-                    defaultValue={user.name}
+                    // defaultValue={user.name}
                     // label='ユーザ名'
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
                     {...register('name', { required: true })}
                   />
                   {errors.name && <Box color='red'>入力が必須の項目です</Box>}
-                  <Container></Container>
                 </Grid>
               </Grid>
               <Grid container>
@@ -81,7 +94,7 @@ function SettingProfilePage() {
                 <Grid item xs={9}>
                   <TextField
                     // label='GitHubID'
-                    defaultValue={user.github_account}
+                    // defaultValue={user.github_account}
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
                     {...register('github_account')}
                   />
@@ -100,7 +113,7 @@ function SettingProfilePage() {
                 </Grid>
                 <Grid item xs={9}>
                   <TextField
-                    defaultValue={user.twitter_account}
+                    // defaultValue={user.twitter_account}
                     sx={{ width: '100%', bgcolor: '#ffffff' }}
                     {...register('twitter_account')}
                   />

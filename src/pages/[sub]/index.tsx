@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import Meta from 'component/Meta';
 import ProfileEditButton from 'component/ProfileEditButton';
@@ -18,10 +18,10 @@ const UserPage = ({ user }: any) => {
             <Grid item>
               <UserIcon />
             </Grid>
+            <Typography variant='h6'>{user.name}</Typography>
             <Grid item>
               <SocialButton profileUser={user} />
             </Grid>
-            <br />
             <Grid item>
               <ProfileEditButton profileUser={user} />
             </Grid>
