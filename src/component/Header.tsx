@@ -14,15 +14,17 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useRecoilValue } from 'recoil';
 import RequireLoginDialog from './RequireLoginDialog';
+import userState from 'recoil/atoms/userState';
 
 function ResponsiveAppBar() {
   const router = useRouter();
-  const { isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, isLoading, user } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする。
+  // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,9 +44,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const sub = useRecoilValue(userState); // RecoilのTokneを取得する
+
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
   const toProfile = () => {
-    router.push('/profile');
+    router.push(`/${sub}`);
   };
 
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
@@ -61,7 +65,6 @@ function ResponsiveAppBar() {
   const settings = [
     { name: 'Profile', action: toProfile },
     { name: 'Account', action: handleCloseUserMenu },
-    // { name: 'login', action: loginWithRedirect },
     { name: 'Logout', action: logout_auth0 },
   ];
 
@@ -225,7 +228,7 @@ function ResponsiveAppBar() {
                 <>
                   <Tooltip title='Open settings'>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                      <Avatar alt='Remy Sharp' src={user!.picture} />
                     </IconButton>
                   </Tooltip>
 

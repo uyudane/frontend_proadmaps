@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --dir src",
+    "export": "next export",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'"
   },
   "dependencies": {
@@ -22,7 +23,10 @@
     "next-intercept-stdout": "^1.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "recoil": "^0.7.6"
+    "react-hook-form": "^7.38.0",
+    "recoil": "^0.7.6",
+    "recoil-persist": "^4.2.0",
+    "swr": "^1.3.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.2",

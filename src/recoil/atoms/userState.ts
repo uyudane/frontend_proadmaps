@@ -6,10 +6,10 @@ const { persistAtom } = recoilPersist({
   storage: typeof window === 'undefined' ? undefined : sessionStorage,
 });
 
-const tokenState = atom({
-  key: 'tokenState',
+const userState = atom({
+  key: 'userState',
   default: '',
   effects_UNSTABLE: [persistAtom],
 });
 
-export default tokenState;
+export default userState;

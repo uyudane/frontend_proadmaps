@@ -20,6 +20,13 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    background: {
+      default: '#FFFFFF',
+      // 検討
+      // default: '#F5FAFF',
+      // default: '#eeeeee',
+      // default: '#FFF0E7',
+    },
   },
   typography: {
     fontFamily: ['Yu Gothic', 'Roboto', 'sans-serif'].join(','),
