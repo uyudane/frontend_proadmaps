@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
+import UserIcon from 'component/UserIcon';
 import Meta from 'component/meta';
-import UserIcon from 'component/user_icon';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 import { updateUser, useMyUser } from 'services/users';
@@ -39,18 +39,15 @@ function SettingProfilePage() {
     <>
       <Meta pageTitle='プロフィール編集' />
       <Grid container>
-        <Grid item xs={2} sx={{ p: 1 }}>
-          <Container>プロフィール編集</Container>
-        </Grid>
-      </Grid>
-      <Grid container>
         <Grid item xs={12}></Grid>
         <Grid item xs={2}>
-          <Container>
-            <UserIcon />
-          </Container>
+          <Grid container alignItems='center' justifyContent='center' direction='column'>
+            <Grid item>
+              <UserIcon />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={9} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
+        <Grid item xs={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
           <Container maxWidth='md' sx={{ pt: 1 }}>
             <Stack spacing={4}>
               <Grid container>

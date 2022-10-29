@@ -1,39 +1,34 @@
-import { Button } from '@mui/material';
-import Alert from '@mui/material/Alert';
+import { Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
-import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
-import userState from 'recoil/atoms/userState';
+import ProfileEditButton from 'component/ProfileEditButton';
+import SocialButton from 'component/SocialButton';
+import UserIcon from 'component/UserIcon';
+import Meta from 'component/meta';
 import { getUsers, getUser } from 'services/users';
 import type { User, Users } from 'types';
 
 const UserPage = ({ user }: any) => {
-  const router = useRouter();
-  const user_sub = useRecoilValue(userState); // RecoilのTokneを取得する
-  // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
-  const message = router.query.message;
-  console.log(user);
-
   return (
     <>
-      {message && <Alert severity='success'>{message}</Alert>}
-      {user.name}
-      <br />
-      {user.github_account}
-      <br />
-      {user.twitter_account}
-      {/* 自分のプロフィールの時だけ、編集ページを表示する */}
-      {user.sub == user_sub ? (
-        <Button
-          onClick={() => {
-            router.push(`/setting/profile`);
-          }}
-        >
-          編集する
-        </Button>
-      ) : (
-        ''
-      )}
+      <Meta pageTitle='プロフィール' />
+      <Grid container>
+        <Grid item xs={12}></Grid>
+        <Grid item xs={2}>
+          <Grid container alignItems='center' justifyContent='center' direction='column'>
+            <Grid item>
+              <UserIcon />
+            </Grid>
+            <Grid item>
+              <SocialButton profileUser={user} />
+            </Grid>
+            <br />
+            <Grid item>
+              <ProfileEditButton profileUser={user} />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}></Grid>
+      </Grid>
     </>
   );
 };

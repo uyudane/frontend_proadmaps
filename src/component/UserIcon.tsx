@@ -1,14 +1,15 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Tooltip, Box, IconButton, Avatar } from '@mui/material';
+import { Container, Avatar } from '@mui/material';
 
 const UserIcon = () => {
-  const { isAuthenticated, loginWithRedirect, logout, isLoading, user } = useAuth0();
+  const { isAuthenticated, isLoading, user } = useAuth0();
+
   return (
     <>
-      <Box sx={{ flexGrow: 0 }}>
+      <Container sx={{ flexGrow: 0 }}>
         {isAuthenticated ? (
           <>
-            <Avatar alt='Remy Sharp' src={user!.picture} sx={{ width: '90%', height: '90%' }} />
+            <Avatar alt='Remy Sharp' src={user!.picture} sx={{ width: '100%', height: '100%' }} />
           </>
         ) : // ログイン確認中はローディングを出す
         isLoading ? (
@@ -16,7 +17,7 @@ const UserIcon = () => {
         ) : (
           <Avatar alt='Remy Sharp' src='' />
         )}
-      </Box>
+      </Container>
     </>
   );
 };
