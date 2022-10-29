@@ -7,6 +7,9 @@ import Typography from '@mui/material/Typography';
 import { NextPage } from 'next';
 import { useState, ReactNode } from 'react';
 import { useRecoilValue } from 'recoil';
+import ConfirmRoadMap from 'component/ConfirmRoadMap';
+import MakeRoadMap from 'component/MakeRoadMap';
+import MakeSteps from 'component/MakeSteps';
 import Meta from 'component/Meta';
 
 // recoil
@@ -50,6 +53,11 @@ const RoadmapPage: NextPage = () => {
           );
         })}
       </Stepper>
+      <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+      {activeStep === 0 && <MakeRoadMap></MakeRoadMap>}
+      {activeStep === 1 && <MakeSteps></MakeSteps>}
+      {activeStep === 2 && <ConfirmRoadMap></ConfirmRoadMap>}
+
       {activeStep === steps.length ? (
         <>
           {/* muiの例だとリセットが出るようになっているが、ここにFinish後の処理を書けば良いと踏んだ。 */}
@@ -61,7 +69,6 @@ const RoadmapPage: NextPage = () => {
         </>
       ) : (
         <>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button color='inherit' disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
               Back
