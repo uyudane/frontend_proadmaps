@@ -9,7 +9,11 @@ const UserIcon = () => {
       <Container sx={{ flexGrow: 0 }}>
         {isAuthenticated ? (
           <>
-            <Avatar alt='Remy Sharp' src={user!.picture} sx={{ width: '100%', height: '100%' }} />
+            <Avatar
+              alt='Remy Sharp'
+              src={user!.picture}
+              sx={{ width: { md: 100, lg: 150 }, height: { md: 100, lg: 150 } }}
+            />
           </>
         ) : // ログイン確認中はローディングを出す
         isLoading ? (
