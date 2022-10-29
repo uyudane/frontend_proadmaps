@@ -15,7 +15,7 @@ const SocialButton = ({ profileUser }: { profileUser: User }) => {
           <GitHubIcon />
         </Link>
       ) : (
-        <GitHubIcon sx={{ color: '#aaaaaa' }} />
+        <GitHubIcon sx={{ color: '#dddddd' }} />
       )}
       {profileUser.twitter_account ? (
         <Link
@@ -26,7 +26,7 @@ const SocialButton = ({ profileUser }: { profileUser: User }) => {
           <TwitterIcon sx={{ color: 'rgb(25, 118, 210);' }} />
         </Link>
       ) : (
-        <TwitterIcon sx={{ color: '#aaaaaa' }} />
+        <TwitterIcon sx={{ color: '#dddddd' }} />
       )}
     </>
   );
