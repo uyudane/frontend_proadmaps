@@ -5,7 +5,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import { NextPage } from 'next';
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode, createContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import ConfirmRoadMap from 'component/ConfirmRoadMap';
 import MakeRoadMap from 'component/MakeRoadMap';
@@ -15,11 +15,24 @@ import Meta from 'component/Meta';
 // recoil
 import tokenState from 'recoil/atoms/tokenState';
 
-import { fetchRoadmaps, postRoadmaps } from 'services/roadmaps';
+import { fetchRoadmaps } from 'services/roadmaps';
+import { Roadmap } from 'types';
 
+export const UserInputData = createContext(
+  {} as {
+    currentState: Roadmap;
+    setCurrentState: React.Dispatch<React.SetStateAction<Roadmap>>;
+  },
+);
 const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
 
 const RoadmapPage: NextPage = () => {
+  const [currentState, setCurrentState] = useState({
+    title: '',
+    introduction: '',
+    start_skill: '',
+    end_skill: '',
+  });
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -46,10 +59,19 @@ const RoadmapPage: NextPage = () => {
         })}
       </Stepper>
       <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-
-      {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
-      {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
-      {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
+      {currentState.title}
+      <br />
+      {currentState.introduction}
+      <br />
+      {currentState.start_skill}
+      <br />
+      {currentState.end_skill}
+      <br />
+      <UserInputData.Provider value={{ currentState, setCurrentState }}>
+        {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
+        {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
+        {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
+      </UserInputData.Provider>
     </Box>
   );
 };

@@ -32,7 +32,7 @@ export const useGetRoadMap = (id: string) => {
   };
 };
 
-export const postRoadmaps = async (params: Roadmap, token: any) => {
+export const postRoadmap = async (params: Roadmap, token: any) => {
   try {
     const res = await axios.post(roadmapsIndex, params, {
       headers: {

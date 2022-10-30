@@ -2,12 +2,13 @@ import { withAuthenticationRequired } from '@auth0/auth0-react';
 import { ResetTv } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
 import SocialButton from 'component/SocialButton';
 import UserIcon from 'component/UserIcon';
+import { UserInputData } from 'pages/roadmap';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 import { useGetRoadMap } from 'services/roadmaps';
@@ -16,6 +17,7 @@ import type { Roadmap } from 'types';
 const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
+  const { currentState, setCurrentState } = useContext(UserInputData);
 
   const {
     register,
@@ -33,14 +35,11 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   //   });
   // }, [user, reset]);
 
-  const sub = useRecoilValue(userState); // RecoilのTokneを取得する
-  const router = useRouter();
-  const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
-
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Roadmap> = async (data) => {
     // バリデーションチェックOK！なときに行う処理を追加
     console.log(data);
+    setCurrentState(data);
     handleNext();
   };
   // if (isLoading) return <div>ローディング</div>;
