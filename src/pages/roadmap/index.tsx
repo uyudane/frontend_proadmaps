@@ -27,12 +27,6 @@ export const UserInputData = createContext(
 const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
 
 const RoadmapPage: NextPage = () => {
-  const [currentState, setCurrentState] = useState({
-    title: '',
-    introduction: '',
-    start_skill: '',
-    end_skill: '',
-  });
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -59,19 +53,9 @@ const RoadmapPage: NextPage = () => {
         })}
       </Stepper>
       <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-      {currentState.title}
-      <br />
-      {currentState.introduction}
-      <br />
-      {currentState.start_skill}
-      <br />
-      {currentState.end_skill}
-      <br />
-      <UserInputData.Provider value={{ currentState, setCurrentState }}>
-        {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
-        {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
-        {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
-      </UserInputData.Provider>
+      {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
+      {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
+      {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
     </Box>
   );
 };

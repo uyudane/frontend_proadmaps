@@ -39,8 +39,8 @@ export const postRoadmap = async (params: Roadmap, token: any) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
+    return 'OK';
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

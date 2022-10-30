@@ -1,23 +1,22 @@
-import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { ResetTv } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
 import SocialButton from 'component/SocialButton';
 import UserIcon from 'component/UserIcon';
 import { UserInputData } from 'pages/roadmap';
-import tokenState from 'recoil/atoms/tokenState';
-import userState from 'recoil/atoms/userState';
+import roadmapState from 'recoil/atoms/roadmapState';
 import { useGetRoadMap } from 'services/roadmaps';
 import type { Roadmap } from 'types';
 
 const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
-  const { currentState, setCurrentState } = useContext(UserInputData);
+
+  const setRoadmap = useSetRecoilState(roadmapState);
+  const roadmap = useRecoilValue(roadmapState);
 
   const {
     register,
@@ -25,7 +24,12 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
     reset,
     formState: { errors },
   } = useForm<Roadmap>({
-    defaultValues: { title: '', introduction: '', start_skill: '', end_skill: '' },
+    defaultValues: {
+      title: roadmap.title,
+      introduction: roadmap.introduction,
+      start_skill: roadmap.start_skill,
+      end_skill: roadmap.end_skill,
+    },
   });
 
   // (あとでデフォルト値を設定するために使用する)
@@ -39,7 +43,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   const onSubmit: SubmitHandler<Roadmap> = async (data) => {
     // バリデーションチェックOK！なときに行う処理を追加
     console.log(data);
-    setCurrentState(data);
+    setRoadmap(data);
     handleNext();
   };
   // if (isLoading) return <div>ローディング</div>;
