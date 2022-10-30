@@ -3,10 +3,9 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
   key: 'recoil-persist',
-  storage: typeof window === 'undefined' ? undefined : sessionStorage,
 });
 
-const userState = atom({
+const userState = atom<string>({
   key: 'userState',
   default: '',
   effects_UNSTABLE: [persistAtom],
