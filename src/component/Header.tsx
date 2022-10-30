@@ -14,8 +14,9 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import RequireLoginDialog from './RequireLoginDialog';
+import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 
 function ResponsiveAppBar() {
@@ -23,6 +24,8 @@ function ResponsiveAppBar() {
   const { isAuthenticated, loginWithRedirect, logout, isLoading, user } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const resetToken = useResetRecoilState(tokenState);
+  const resetUser = useResetRecoilState(userState);
 
   // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -52,7 +55,11 @@ function ResponsiveAppBar() {
   };
 
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
-  const logout_auth0 = () => logout({ returnTo: window.location.origin });
+  const logout_auth0 = () => {
+    resetToken();
+    resetUser();
+    logout({ returnTo: window.location.origin });
+  };
 
   // 左側メニュー一覧
   const pages = [

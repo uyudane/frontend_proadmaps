@@ -2,6 +2,8 @@
 export type Roadmap = {
   title: string;
   introduction: text;
+  start_skill: text;
+  end_skill: text;
 };
 
 // プロフィールデータ

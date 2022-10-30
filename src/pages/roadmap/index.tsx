@@ -1,70 +1,62 @@
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import Typography from '@mui/material/Typography';
 import { NextPage } from 'next';
-
-import React, { useState } from 'react';
-
+import { useState, ReactNode, createContext } from 'react';
 import { useRecoilValue } from 'recoil';
+import ConfirmRoadMap from 'component/ConfirmRoadMap';
+import MakeRoadMap from 'component/MakeRoadMap';
+import MakeSteps from 'component/MakeSteps';
 import Meta from 'component/Meta';
 
 // recoil
 import tokenState from 'recoil/atoms/tokenState';
 
-import { fetchRoadmaps, postRoadmaps } from 'services/roadmaps';
+import { fetchRoadmaps } from 'services/roadmaps';
+import { Roadmap } from 'types';
+
+export const UserInputData = createContext(
+  {} as {
+    currentState: Roadmap;
+    setCurrentState: React.Dispatch<React.SetStateAction<Roadmap>>;
+  },
+);
+const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
 
 const RoadmapPage: NextPage = () => {
-  const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
+  const [activeStep, setActiveStep] = useState(0);
 
-  const [title, setTitle] = useState<string>('');
-  const [introduction, setIntroduction] = useState<string>('');
-
-  const onClick_post = () => {
-    postRoadmaps(
-      {
-        title: title,
-        introduction: introduction,
-      },
-      token,
-    );
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  // ログでgetの結果を出力
-  const onClick_get = () => {
-    fetchRoadmaps();
-  };
-
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>,
-  ) => {
-    setState(e.target.value);
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   return (
-    <>
-      <Meta pageTitle='ロードマップ' />
-      <div>
-        <label htmlFor=''>タイトル</label>
-        <input
-          type='text'
-          value={title}
-          onChange={(e) => {
-            onChange(e, setTitle);
-          }}
-        />
-        <br />
-        <label htmlFor=''>本文</label>
-        <input
-          type='text'
-          value={introduction}
-          onChange={(e) => {
-            onChange(e, setIntroduction);
-          }}
-        />
-        <br />
-        <button onClick={onClick_post}>新規投稿</button>
-        <br />
-        <button onClick={onClick_get}>投稿取得</button>
-      </div>
-    </>
+    <Box sx={{ width: '100%' }}>
+      {/* 上部のステップ表示部分 */}
+      {/* Stepperでアクティブの所まで色がつく */}
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label) => {
+          const stepProps: { completed?: boolean } = {};
+
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+      {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
+      {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
+      {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
+    </Box>
   );
 };
 
