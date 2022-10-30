@@ -22,10 +22,6 @@ const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確�
 const RoadmapPage: NextPage = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -34,16 +30,12 @@ const RoadmapPage: NextPage = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <Box sx={{ width: '100%' }}>
       {/* 上部のステップ表示部分 */}
       {/* Stepperでアクティブの所まで色がつく */}
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label) => {
           const stepProps: { completed?: boolean } = {};
 
           return (
@@ -54,32 +46,10 @@ const RoadmapPage: NextPage = () => {
         })}
       </Stepper>
       <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-      {activeStep === 0 && <MakeRoadMap></MakeRoadMap>}
-      {activeStep === 1 && <MakeSteps></MakeSteps>}
-      {activeStep === 2 && <ConfirmRoadMap></ConfirmRoadMap>}
 
-      {activeStep === steps.length ? (
-        <>
-          {/* muiの例だとリセットが出るようになっているが、ここにFinish後の処理を書けば良いと踏んだ。 */}
-          <Typography sx={{ mt: 2, mb: 1 }}>All steps completed - you&apos;re finished</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </>
-      ) : (
-        <>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Button color='inherit' disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
-              Back
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
-          </Box>
-        </>
-      )}
+      {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
+      {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
+      {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
     </Box>
   );
 };
