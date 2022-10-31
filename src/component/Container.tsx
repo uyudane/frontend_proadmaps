@@ -1,11 +1,10 @@
+import { List, Grid } from '@mui/material';
 import update from 'immutability-helper';
-import type { FC } from 'react';
 import { useCallback, useState } from 'react';
-
-import { Card } from './Card';
+import Card from './Card';
 
 const style = {
-  width: 400,
+  width: 800,
 };
 
 export interface Item {
@@ -17,7 +16,7 @@ export interface ContainerState {
   cards: Item[];
 }
 
-export const Container: FC = () => {
+const Container = () => {
   {
     const [cards, setCards] = useState([
       {
@@ -67,8 +66,16 @@ export const Container: FC = () => {
 
     return (
       <>
-        <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
+        <Grid container alignItems='center' justifyContent='center' direction='column'>
+          <Grid item>
+            <List sx={{ width: '100%', maxWidth: 'md', p: 1 }}>
+              <div>{cards.map((card, i) => renderCard(card, i))}</div>
+            </List>
+          </Grid>
+        </Grid>
       </>
     );
   }
 };
+
+export default Container;

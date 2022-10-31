@@ -1,7 +1,7 @@
 import { Button, Box } from '@mui/material';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Container } from './Container';
+import Container from './Container';
 
 const MakeSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
   return (

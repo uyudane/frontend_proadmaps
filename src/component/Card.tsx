@@ -1,3 +1,5 @@
+import DragHandleIcon from '@mui/icons-material/DragHandle';
+import { Grid, ListItem, ListItemText } from '@mui/material';
 import type { Identifier, XYCoord } from 'dnd-core';
 import type { FC } from 'react';
 import { useRef } from 'react';
@@ -5,16 +7,8 @@ import { useDrag, useDrop } from 'react-dnd';
 
 // import { ItemTypes } from './ItemTypes';
 
-export const ItemTypes = {
+const ItemTypes = {
   CARD: 'card',
-};
-
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
 };
 
 export interface CardProps {
@@ -30,7 +24,7 @@ interface DragItem {
   type: string;
 }
 
-export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
+const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
     accept: ItemTypes.CARD,
@@ -101,8 +95,34 @@ export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      {text}
-    </div>
+    <>
+      <ListItem sx={{ p: 1, m: 1, bgcolor: '#eeeeee' }}>
+        <Grid container alignItems='center' direction='row'>
+          <Grid
+            item
+            style={{
+              padding: '0.5rem 1rem',
+              marginBottom: '.5rem',
+              // backgroundColor: 'white',
+              cursor: 'move',
+              opacity,
+            }}
+            ref={ref}
+            data-handler-id={handlerId}
+          >
+            <DragHandleIcon color='primary' />
+          </Grid>
+          <Grid item>
+            <ListItemText
+              primary={text}
+              style={{ padding: '0.5rem 1rem', marginBottom: '.5rem' }}
+            />
+          </Grid>
+          {index}
+        </Grid>
+      </ListItem>
+    </>
   );
 };
+
+export default Card;
