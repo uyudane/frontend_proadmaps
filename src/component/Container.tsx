@@ -1,11 +1,8 @@
-import { List, Grid } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { IconButton, List, Grid } from '@mui/material';
 import update from 'immutability-helper';
 import { useCallback, useState } from 'react';
 import Card from './Card';
-
-const style = {
-  width: 800,
-};
 
 export interface Item {
   id: number;
@@ -71,6 +68,14 @@ const Container = () => {
             <List sx={{ width: '100%', maxWidth: 'md', p: 1 }}>
               <div>{cards.map((card, i) => renderCard(card, i))}</div>
             </List>
+          </Grid>
+          <Grid item>
+            <IconButton aria-label='AddStep'>
+              <AddIcon
+                fontSize='large'
+                sx={{ color: 'white', backgroundColor: '#E8630A', borderRadius: '20%' }}
+              />
+            </IconButton>
           </Grid>
         </Grid>
       </>

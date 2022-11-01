@@ -1,11 +1,9 @@
 import DragHandleIcon from '@mui/icons-material/DragHandle';
-import { Grid, ListItem, ListItemText } from '@mui/material';
+import { Grid, ListItem, ListItemText, Typography } from '@mui/material';
 import type { Identifier, XYCoord } from 'dnd-core';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-
-// import { ItemTypes } from './ItemTypes';
 
 const ItemTypes = {
   CARD: 'card',
@@ -25,14 +23,20 @@ interface DragItem {
 }
 
 const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
+  // ドラッグ対象のrefを取得(DOMを操作していくためのもの)
   const ref = useRef<HTMLDivElement>(null);
+
+  // ドラックしているアイテムによって、影響を受けるアイテムの挙動をコントロールしているぽい
   const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
     accept: ItemTypes.CARD,
+    // ドロップされると影響を受けるアイテムのIDを取得している?
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
+
+    // ドラッグしているアイテムのIDと、通過しているアイテム(場所)を判別して、挙動をコントロールしている
     hover(item: DragItem, monitor) {
       if (!ref.current) {
         return;
@@ -82,7 +86,8 @@ const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  // ドラッグしているアイテムの挙動をコントロール
+  const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.CARD,
     item: () => {
       return { id, index };
@@ -92,17 +97,24 @@ const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
     }),
   });
 
+  // ドラッグされている間は透明になる。
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
     <>
-      <ListItem sx={{ p: 1, m: 1, bgcolor: '#eeeeee' }}>
-        <Grid container alignItems='center' direction='row'>
+      <ListItem sx={{ p: 3, m: 1, bgcolor: '#eeeeee' }}>
+        <Grid
+          container
+          alignItems='center'
+          direction='row'
+          ref={preview}
+          style={{
+            opacity,
+          }}
+        >
           <Grid
             item
             style={{
-              padding: '0.5rem 1rem',
-              marginBottom: '.5rem',
               // backgroundColor: 'white',
               cursor: 'move',
               opacity,
@@ -110,15 +122,17 @@ const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
             ref={ref}
             data-handler-id={handlerId}
           >
-            <DragHandleIcon color='primary' />
-          </Grid>
-          <Grid item>
-            <ListItemText
-              primary={text}
-              style={{ padding: '0.5rem 1rem', marginBottom: '.5rem' }}
+            <DragHandleIcon
+              sx={{ color: 'white', backgroundColor: '#143F6B', borderRadius: '20%', m: 1 }}
             />
           </Grid>
-          {index}
+          <Grid item>
+            <Typography variant='h6' sx={{ m: 2 }}>{`step${index + 1}`}</Typography>
+          </Grid>
+          <Grid item>
+            <ListItemText primary={text} />
+          </Grid>
+          <DragHandleIcon color='primary' />
         </Grid>
       </ListItem>
     </>
