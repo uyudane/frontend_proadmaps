@@ -13,7 +13,7 @@ export interface ContainerState {
   cards: Item[];
 }
 
-const Container = () => {
+const Container = ({ handleClickOpen }: { handleClickOpen: any }) => {
   {
     const [cards, setCards] = useState([
       {
@@ -70,7 +70,7 @@ const Container = () => {
             </List>
           </Grid>
           <Grid item>
-            <IconButton aria-label='AddStep'>
+            <IconButton aria-label='AddStep' onClick={handleClickOpen}>
               <AddIcon
                 fontSize='large'
                 sx={{ color: 'white', backgroundColor: '#E8630A', borderRadius: '20%' }}
