@@ -16,7 +16,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
 import SocialButton from 'component/SocialButton';
 import UserIcon from 'component/UserIcon';
-import stepState from 'recoil/atoms/stepState';
+import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
 
 const MakeStepDialog = ({
@@ -28,8 +28,8 @@ const MakeStepDialog = ({
   open: any;
   getStepId: any;
 }) => {
-  const setStep = useSetRecoilState(stepState);
-  const step = useRecoilValue(stepState);
+  const setStep = useSetRecoilState(stepsState);
+  const step = useRecoilValue(stepsState);
   const [dateValue, setDateValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
 
   const {
@@ -61,8 +61,8 @@ const MakeStepDialog = ({
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
-    setStep((oldTodoList) => [
-      ...oldTodoList,
+    setStep((oldSteps) => [
+      ...oldSteps,
       {
         id: getStepId(),
         url: data.url,

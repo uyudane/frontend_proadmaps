@@ -4,6 +4,7 @@ import { useEffect, useContext } from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { UserInputData } from 'pages/roadmap';
 import roadmapState from 'recoil/atoms/roadmapState';
+import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
 import { postRoadmap } from 'services/roadmaps';
 
@@ -12,6 +13,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: any }) => {
   const token = useRecoilValue(tokenState);
   const roadmap = useRecoilValue(roadmapState);
   const resetRoadmap = useResetRecoilState(roadmapState);
+  const resetSteps = useResetRecoilState(stepsState);
   const execPostRoadmap = async () => {
     const result = await postRoadmap(
       {
@@ -41,6 +43,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: any }) => {
       {roadmap.start_skill}
       <br />
       {roadmap.end_skill}
+      <br />
       <br />
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button color='primary' variant='contained' onClick={handleBack} sx={{ mr: 1 }}>

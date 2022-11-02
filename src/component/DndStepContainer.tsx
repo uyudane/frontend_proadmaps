@@ -4,12 +4,12 @@ import update from 'immutability-helper';
 import { useCallback, useState } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import DndStep from './DndStep';
-import stepState from 'recoil/atoms/stepState';
+import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
 
 const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: any }) => {
-  const setSteps = useSetRecoilState(stepState);
-  const steps = useRecoilValue(stepState);
+  const setSteps = useSetRecoilState(stepsState);
+  const steps = useRecoilValue(stepsState);
 
   const moveStep = useCallback((dragIndex: number, hoverIndex: number) => {
     setSteps((prevSteps: Step[]) =>

@@ -5,12 +5,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import DndStepContainer from './DndStepContainer';
 import MakeStepDialog from './MakeStepDialog';
-import stepState from 'recoil/atoms/stepState';
+import stepsState from 'recoil/atoms/stepsState';
 
 const MakeSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
   // MakeStepDialogでステップを作成する際に使用する内部的なIDの設定に使用。
   // リロードしても連番になるように、配列のIDで一番大きいID+1の値になるように設定。
-  const step = useRecoilValue(stepState);
+  const step = useRecoilValue(stepsState);
   let stepId = step ? Math.max(...step.map((s) => s.id)) + 1 : 0;
   const getStepId = () => {
     return stepId++;

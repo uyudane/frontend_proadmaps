@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist({
   key: 'recoil-persist',
 });
 
-const stepState = atom<Step[]>({
+const stepsState = atom<Step[]>({
   // const stepState = atom({
   key: 'stepsState',
   // default: [{ url: '', title: '', introduction: '', required_time: '', date: '' }],
@@ -14,4 +14,4 @@ const stepState = atom<Step[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export default stepState;
+export default stepsState;
