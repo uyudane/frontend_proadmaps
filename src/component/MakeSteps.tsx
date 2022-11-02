@@ -3,16 +3,15 @@ import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import Container from './Container';
 import DndStepContainer from './DndStepContainer';
 import MakeStepDialog from './MakeStepDialog';
 import stepState from 'recoil/atoms/stepState';
 
 const MakeSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
   // MakeStepDialogでステップを作成する際に使用する内部的なIDの設定に使用。
-  // リロードしても連番になるように、最終ID+1の値になるように設定。
+  // リロードしても連番になるように、配列のIDで一番大きいID+1の値になるように設定。
   const step = useRecoilValue(stepState);
-  let stepId = step.slice(-1)[0] ? step.slice(-1)[0].id + 1 : 0;
+  let stepId = step ? Math.max(...step.map((s) => s.id)) + 1 : 0;
   const getStepId = () => {
     return stepId++;
   };
