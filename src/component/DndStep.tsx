@@ -1,19 +1,18 @@
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import { Grid, ListItem, ListItemText, Typography } from '@mui/material';
 import type { Identifier, XYCoord } from 'dnd-core';
-import type { FC } from 'react';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
 const ItemTypes = {
-  CARD: 'card',
+  STEP: 'step',
 };
 
-export interface CardProps {
-  id: any;
-  text: string;
+export interface StepProps {
+  id: number;
+  url: string;
   index: number;
-  moveCard: (dragIndex: number, hoverIndex: number) => void;
+  moveStep: (dragIndex: number, hoverIndex: number) => void;
 }
 
 interface DragItem {
@@ -22,13 +21,13 @@ interface DragItem {
   type: string;
 }
 
-const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
+const DndStep = ({ id, url, index, moveStep }: StepProps) => {
   // ドラッグ対象のrefを取得(DOMを操作していくためのもの)
   const ref = useRef<HTMLDivElement>(null);
 
   // ドラックしているアイテムによって、影響を受けるアイテムの挙動をコントロールしているぽい
   const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
-    accept: ItemTypes.CARD,
+    accept: ItemTypes.STEP,
     // ドロップされると影響を受けるアイテムのIDを取得している?
     collect(monitor) {
       return {
@@ -76,7 +75,7 @@ const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
       }
 
       // Time to actually perform the action
-      moveCard(dragIndex, hoverIndex);
+      moveStep(dragIndex, hoverIndex);
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
@@ -88,7 +87,7 @@ const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
 
   // ドラッグしているアイテムの挙動をコントロール
   const [{ isDragging }, drag, preview] = useDrag({
-    type: ItemTypes.CARD,
+    type: ItemTypes.STEP,
     item: () => {
       return { id, index };
     },
@@ -130,13 +129,12 @@ const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
             <Typography variant='h6' sx={{ m: 2 }}>{`step${index + 1}`}</Typography>
           </Grid>
           <Grid item>
-            <ListItemText primary={text} />
+            <ListItemText primary={url} />
           </Grid>
-          <DragHandleIcon color='primary' />
         </Grid>
       </ListItem>
     </>
   );
 };
 
-export default Card;
+export default DndStep;

@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import Container from './Container';
+import DndStepContainer from './DndStepContainer';
 import MakeStepDialog from './MakeStepDialog';
 import stepState from 'recoil/atoms/stepState';
 
@@ -31,7 +32,7 @@ const MakeSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: an
       ステップの作成
       <MakeStepDialog open={open} handleClose={handleClose} getStepId={getStepId} />
       <DndProvider backend={HTML5Backend}>
-        <Container handleClickOpen={handleClickOpen} />
+        <DndStepContainer handleClickOpen={handleClickOpen} />
       </DndProvider>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button color='primary' variant='contained' onClick={handleBack} sx={{ mr: 1 }}>
