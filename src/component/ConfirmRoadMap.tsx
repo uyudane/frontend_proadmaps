@@ -25,6 +25,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: any }) => {
       token,
     );
     resetRoadmap();
+    resetSteps();
     if (result === 'OK') {
       router.push({
         pathname: `/`,

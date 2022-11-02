@@ -93,7 +93,6 @@ const MakeStepDialog = ({
                         sx={{ width: '100%', bgcolor: '#ffffff' }}
                         {...register('url', { required: true })}
                       />
-                      {errors.title && <Box color='red'>入力が必須の項目です</Box>}
                     </Grid>
                   </Grid>
                   <Grid container>
@@ -140,11 +139,6 @@ const MakeStepDialog = ({
                     </Grid>
                     <Grid item xs={12}>
                       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ja}>
-                        {/* <TextField
-                          // defaultValue={user.twitter_account}
-                          sx={{ width: '100%', bgcolor: '#ffffff' }}
-                          {...register('date')}
-                        /> */}
                         <DatePicker
                           views={['year', 'month']}
                           // label='Year and Month'

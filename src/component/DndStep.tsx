@@ -3,6 +3,7 @@ import { Grid, ListItem, ListItemText, Typography } from '@mui/material';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import DeleteStepButton from './DeleteStepButton';
 
 const ItemTypes = {
   STEP: 'step',
@@ -131,6 +132,7 @@ const DndStep = ({ id, url, index, moveStep }: StepProps) => {
           <Grid item>
             <ListItemText primary={url} />
           </Grid>
+          <DeleteStepButton itemId={id} />
         </Grid>
       </ListItem>
     </>
