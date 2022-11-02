@@ -4,6 +4,7 @@ import type { Identifier, XYCoord } from 'dnd-core';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import DeleteStepButton from './DeleteStepButton';
+import EditStepButton from './EditStepButton';
 
 const ItemTypes = {
   STEP: 'step',
@@ -92,7 +93,7 @@ const DndStep = ({ id, url, index, moveStep }: StepProps) => {
     item: () => {
       return { id, index };
     },
-    collect: (monitor: any) => ({
+    collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -133,6 +134,7 @@ const DndStep = ({ id, url, index, moveStep }: StepProps) => {
             <ListItemText primary={url} />
           </Grid>
           <DeleteStepButton itemId={id} />
+          <EditStepButton itemId={id} />
         </Grid>
       </ListItem>
     </>

@@ -1,36 +1,41 @@
-import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
+import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ja from 'date-fns/locale/ja';
 import dayjs, { Dayjs } from 'dayjs';
-import { useRouter } from 'next/router';
-import React, { useEffect, useContext, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import Meta from 'component/Meta';
-import SocialButton from 'component/SocialButton';
-import UserIcon from 'component/UserIcon';
+import { useRecoilState } from 'recoil';
 import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
+
+const replaceItemAtIndex = (arr: Step[], index: number, newValue: Step) => {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+};
 
 const MakeStepDialog = ({
   handleClose,
   open,
-  getStepId,
+  getStepId = undefined,
+  itemId = undefined,
 }: {
-  handleClose: any;
-  open: any;
-  getStepId: any;
+  handleClose: () => void;
+  open: boolean;
+  getStepId?: () => number;
+  itemId?: number;
 }) => {
-  const setStep = useSetRecoilState(stepsState);
-  const step = useRecoilValue(stepsState);
-  const [dateValue, setDateValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
+  const [steps, setSteps] = useRecoilState(stepsState);
+  const [dateValue, setDateValue] = useState<Dayjs | null>(dayjs());
+
+  // IDを渡された場合(編集の場合)はデフォルト値がもとの値になり、新規作成の場合は空にする
+  const currentStep =
+    typeof itemId !== 'undefined'
+      ? steps.find((step) => step.id === itemId)
+      : { url: '', title: '', introduction: '', required_time: '', date: '' };
 
   const {
     register,
@@ -39,39 +44,42 @@ const MakeStepDialog = ({
     formState: { errors },
   } = useForm<Step>({
     defaultValues: {
-      // url: step.url,
-      // title: step.title,
-      // introduction: step.introduction,
-      // required_time: step.required_time,
-      // date: step.date,
-      url: '',
-      title: '',
-      introduction: '',
-      required_time: '',
-      date: '',
+      url: currentStep?.url,
+      title: currentStep?.title,
+      introduction: currentStep?.introduction,
+      required_time: currentStep?.required_time,
+      date: currentStep?.date,
     },
   });
 
-  // (あとでデフォルト値を設定するために使用する)
-  // useEffect(() => {
-  //   reset({
-  //     ...user,
-  //   });
-  // }, [user, reset]);
-
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
-    setStep((oldSteps) => [
-      ...oldSteps,
-      {
-        id: getStepId(),
+    // 新規作成時の処理(配列に新しいオブジェクトを追加)
+    if (typeof itemId === 'undefined') {
+      setSteps((oldSteps) => [
+        ...oldSteps,
+        {
+          id: getStepId!(),
+          url: data.url,
+          title: data.title,
+          introduction: data.introduction,
+          required_time: data.required_time,
+          date: data.date,
+        },
+      ]);
+    } else {
+      // 編集時の処理(配列の指定の値を変更する)
+      const newList = replaceItemAtIndex(steps, itemId, {
+        id: itemId,
         url: data.url,
         title: data.title,
         introduction: data.introduction,
         required_time: data.required_time,
         date: data.date,
-      },
-    ]);
+      });
+      setSteps(newList);
+    }
+    handleClose();
   };
   return (
     <div>
