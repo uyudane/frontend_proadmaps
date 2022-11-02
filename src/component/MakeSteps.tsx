@@ -11,7 +11,7 @@ const MakeSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: an
   // MakeStepDialogでステップを作成する際に使用する内部的なIDの設定に使用。
   // リロードしても連番になるように、配列のIDで一番大きいID+1の値になるように設定。
   const step = useRecoilValue(stepsState);
-  let stepId = step ? Math.max(...step.map((s) => s.id)) + 1 : 0;
+  let stepId = step.length === 0 ? 0 : Math.max(...step.map((s) => s.id)) + 1;
   const getStepId = () => {
     return stepId++;
   };
