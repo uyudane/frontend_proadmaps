@@ -1,17 +1,17 @@
 // ロードマップデータ
 export type Roadmap = {
   title: string;
-  introduction: text;
-  start_skill: text;
-  end_skill: text;
+  introduction: string;
+  start_skill: string;
+  end_skill: string;
 };
 
 // ステップデータ
 export type Step = {
   id: number;
-  url: text;
+  url: string;
   title: string;
-  introduction: text;
+  introduction: string;
   required_time: string;
   date: string;
 };
