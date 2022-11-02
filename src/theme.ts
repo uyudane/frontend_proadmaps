@@ -1,15 +1,18 @@
-// import { createTheme } from '@mui/material/styles';
-
-// const theme = createTheme({
-//   // TODO:テーマ設定を行います
-// });
-
-// export default theme;
 import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 // Create a theme instance.
 const theme = createTheme({
+  components: {
+    MuiDatePicker: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'red',
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#143F6B',

@@ -6,6 +6,15 @@ export type Roadmap = {
   end_skill: text;
 };
 
+// ステップデータ
+export type Step = {
+  url: text;
+  title: string;
+  introduction: text;
+  required_time: string;
+  date: string;
+};
+
 // プロフィールデータ
 export type User = {
   sub?: string;
