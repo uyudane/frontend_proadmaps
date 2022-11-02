@@ -10,7 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ja from 'date-fns/locale/ja';
 import dayjs, { Dayjs } from 'dayjs';
 import { useRouter } from 'next/router';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
@@ -19,10 +19,18 @@ import UserIcon from 'component/UserIcon';
 import stepState from 'recoil/atoms/stepState';
 import type { Step } from 'types';
 
-const MakeStepDialog = ({ handleClose, open }: { handleClose: any; open: any }) => {
+const MakeStepDialog = ({
+  handleClose,
+  open,
+  getStepId,
+}: {
+  handleClose: any;
+  open: any;
+  getStepId: any;
+}) => {
   const setStep = useSetRecoilState(stepState);
   const step = useRecoilValue(stepState);
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
+  const [dateValue, setDateValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
 
   const {
     register,
@@ -31,11 +39,16 @@ const MakeStepDialog = ({ handleClose, open }: { handleClose: any; open: any }) 
     formState: { errors },
   } = useForm<Step>({
     defaultValues: {
-      url: step.url,
-      title: step.title,
-      introduction: step.introduction,
-      required_time: step.required_time,
-      date: step.date,
+      // url: step.url,
+      // title: step.title,
+      // introduction: step.introduction,
+      // required_time: step.required_time,
+      // date: step.date,
+      url: '',
+      title: '',
+      introduction: '',
+      required_time: '',
+      date: '',
     },
   });
 
@@ -48,8 +61,17 @@ const MakeStepDialog = ({ handleClose, open }: { handleClose: any; open: any }) 
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
-    // バリデーションチェックOK！なときに行う処理を追加
-    setStep(data);
+    setStep((oldTodoList) => [
+      ...oldTodoList,
+      {
+        id: getStepId(),
+        url: data.url,
+        title: data.title,
+        introduction: data.introduction,
+        required_time: data.required_time,
+        date: data.date,
+      },
+    ]);
   };
   return (
     <div>
@@ -128,9 +150,9 @@ const MakeStepDialog = ({ handleClose, open }: { handleClose: any; open: any }) 
                           // label='Year and Month'
                           minDate={dayjs('1990-01-01')}
                           maxDate={dayjs('2030-12-01')}
-                          value={value}
+                          value={dateValue}
                           onChange={(newValue) => {
-                            setValue(newValue);
+                            setDateValue(newValue);
                           }}
                           inputFormat='YYYY年MM月'
                           mask='____年__月'

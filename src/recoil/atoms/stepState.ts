@@ -6,9 +6,11 @@ const { persistAtom } = recoilPersist({
   key: 'recoil-persist',
 });
 
-const stepState = atom<Step>({
-  key: 'stepState',
-  default: { url: '', title: '', introduction: '', required_time: '', date: '' },
+const stepState = atom<Step[]>({
+  // const stepState = atom({
+  key: 'stepsState',
+  // default: [{ url: '', title: '', introduction: '', required_time: '', date: '' }],
+  default: [],
   effects_UNSTABLE: [persistAtom],
 });
 

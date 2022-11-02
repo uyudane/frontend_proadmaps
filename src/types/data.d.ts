@@ -8,6 +8,7 @@ export type Roadmap = {
 
 // ステップデータ
 export type Step = {
+  id: number;
   url: text;
   title: string;
   introduction: text;
