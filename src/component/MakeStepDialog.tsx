@@ -7,7 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ja from 'date-fns/locale/ja';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import stepsState from 'recoil/atoms/stepsState';
@@ -29,7 +29,7 @@ const MakeStepDialog = ({
   itemId?: number;
 }) => {
   const [steps, setSteps] = useRecoilState(stepsState);
-  const [dateValue, setDateValue] = useState<Dayjs | null>(dayjs());
+  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
 
   // IDを渡された場合(編集の場合)はデフォルト値がもとの値になり、新規作成の場合は空にする
   const currentStep =
@@ -44,6 +44,11 @@ const MakeStepDialog = ({
     formState: { errors },
   } = useForm<Step>({
     defaultValues: {
+      // url: '',
+      // title: '',
+      // introduction: '',
+      // required_time: '',
+      // date: '',
       url: currentStep?.url,
       title: currentStep?.title,
       introduction: currentStep?.introduction,
@@ -51,6 +56,23 @@ const MakeStepDialog = ({
       date: currentStep?.date,
     },
   });
+
+  // const currentStep = useMemo(
+  //   () =>
+  //     typeof itemId !== 'undefined'
+  //       ? steps.find((step) => step.id === itemId)
+  //       : { url: '', title: '', introduction: '', required_time: '', date: '' },
+  //   [itemId!],
+  // );
+  // useEffect(() => {
+  //   reset({
+  //     url: currentStep?.url,
+  //     title: currentStep?.title,
+  //     introduction: currentStep?.introduction,
+  //     required_time: currentStep?.required_time,
+  //     date: currentStep?.date,
+  //   });
+  // }, [currentStep, reset]);
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
@@ -67,6 +89,7 @@ const MakeStepDialog = ({
           date: data.date,
         },
       ]);
+      reset();
     } else {
       // 編集時の処理(配列の指定の値を変更する)
       const newList = replaceItemAtIndex(steps, itemId, {
@@ -99,7 +122,7 @@ const MakeStepDialog = ({
                         // defaultValue={user.title}
                         // label='ユーザ名'
                         sx={{ width: '100%', bgcolor: '#ffffff' }}
-                        {...register('url', { required: true })}
+                        {...register('url')}
                       />
                     </Grid>
                   </Grid>
@@ -153,6 +176,7 @@ const MakeStepDialog = ({
                           minDate={dayjs('1990-01-01')}
                           maxDate={dayjs('2030-12-01')}
                           value={dateValue}
+                          openTo='year'
                           onChange={(newValue) => {
                             setDateValue(newValue);
                           }}
