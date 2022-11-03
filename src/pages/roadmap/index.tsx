@@ -18,12 +18,6 @@ import tokenState from 'recoil/atoms/tokenState';
 import { fetchRoadmaps } from 'services/roadmaps';
 import { Roadmap } from 'types';
 
-export const UserInputData = createContext(
-  {} as {
-    currentState: Roadmap;
-    setCurrentState: React.Dispatch<React.SetStateAction<Roadmap>>;
-  },
-);
 const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
 
 const RoadmapPage: NextPage = () => {
