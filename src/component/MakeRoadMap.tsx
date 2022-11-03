@@ -1,14 +1,8 @@
-import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
-import React, { useEffect, useContext } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button, Container, Stack, TextField, Grid, Box, Autocomplete } from '@mui/material';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
-import SocialButton from 'component/SocialButton';
-import UserIcon from 'component/UserIcon';
-import { UserInputData } from 'pages/roadmap';
 import roadmapState from 'recoil/atoms/roadmapState';
-import { useGetRoadMap } from 'services/roadmaps';
 import type { Roadmap } from 'types';
 
 const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
@@ -19,9 +13,8 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   const roadmap = useRecoilValue(roadmapState);
 
   const {
-    register,
+    control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<Roadmap>({
     defaultValues: {
@@ -42,12 +35,9 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Roadmap> = async (data) => {
     // バリデーションチェックOK！なときに行う処理を追加
-    console.log(data);
     setRoadmap(data);
     handleNext();
   };
-  // if (isLoading) return <div>ローディング</div>;
-  // if (isError) return <div>エラー</div>;
   return (
     <>
       <Meta pageTitle='プロフィール編集' />
@@ -60,50 +50,106 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
                   ・タイトル(必須)
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    // defaultValue={user.title}
-                    // label='ユーザ名'
-                    sx={{ width: '100%', bgcolor: '#ffffff' }}
-                    {...register('title', { required: true })}
+                  <Controller
+                    name='title'
+                    rules={{ required: true }}
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        sx={{ width: '100%', bgcolor: '#ffffff' }}
+                        placeholder='ポートフォリオ作成までの学習記録、○○脱初心者ロードマップ、○○の資格を取るまでにやったこと　等'
+                      />
+                    )}
                   />
                   {errors.title && <Box color='red'>入力が必須の項目です</Box>}
                 </Grid>
               </Grid>
               <Grid container>
                 <Grid item xs={12}>
-                  ・概要、前書き(任意)
+                  ・概要、前書き
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    // label='GitHubID'
-                    // defaultValue={user.github_account}
-                    sx={{ width: '100%', bgcolor: '#ffffff' }}
-                    {...register('introduction')}
+                  <Controller
+                    name='introduction'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        sx={{ width: '100%', bgcolor: '#ffffff' }}
+                        multiline
+                        rows={4}
+                        placeholder='ご自由にお書きください'
+                      />
+                    )}
                   />
                 </Grid>
               </Grid>
               <Grid container>
                 <Grid item xs={12}>
-                  ・開始時スキル(任意)
+                  ・開始時スキル
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    // defaultValue={user.twitter_account}
-                    sx={{ width: '100%', bgcolor: '#ffffff' }}
-                    {...register('start_skill')}
+                  <Controller
+                    render={({ field }) => (
+                      <Autocomplete
+                        sx={{ width: '50%', bgcolor: '#ffffff' }}
+                        freeSolo
+                        autoSelect
+                        disableClearable
+                        {...field}
+                        options={[
+                          'プログラミング完全未経験',
+                          '別の言語を学習した経験あり',
+                          '○○の学習経験あり',
+                          'ポートフォリオ作成後',
+                          '実務で少し使用経験あり',
+                          '実務で使用経験がありより知識を深める',
+                          '会社の研修で○○を少し学習した程度',
+                          'その他(自由記述)',
+                        ]}
+                        renderInput={(params) => (
+                          <TextField {...params} placeholder='選択/自由記述' />
+                        )}
+                        onChange={(_, data) => field.onChange(data)}
+                      />
+                    )}
+                    name='start_skill'
+                    control={control}
                   />
                 </Grid>
               </Grid>
               <Grid container>
                 <Grid item xs={12}>
-                  ・終了時スキル(任意)
+                  ・終了時スキル
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    // defaultValue={user.twitter_account}
-                    sx={{ width: '100%', bgcolor: '#ffffff' }}
-                    {...register('end_skill')}
+                  <Controller
+                    render={({ field }) => (
+                      <Autocomplete
+                        sx={{ width: '50%', bgcolor: '#ffffff' }}
+                        freeSolo
+                        autoSelect
+                        disableClearable
+                        {...field}
+                        options={[
+                          '入門脱出！',
+                          '基礎はOK',
+                          'ポートフォリオに取り掛かれる',
+                          '実務に取り掛かれる',
+                          '実務で自信を持って開発できる',
+                          '第一人者★',
+                          'その他(自由記述)',
+                          '',
+                        ]}
+                        renderInput={(params) => (
+                          <TextField {...params} placeholder='選択/自由記述' />
+                        )}
+                        onChange={(_, data) => field.onChange(data)}
+                      />
+                    )}
+                    name='end_skill'
+                    control={control}
                   />
                 </Grid>
               </Grid>
