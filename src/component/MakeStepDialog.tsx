@@ -1,14 +1,7 @@
-import { SignalCellularNull } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import ja from 'date-fns/locale/ja';
-import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import stepsState from 'recoil/atoms/stepsState';
@@ -38,19 +31,6 @@ const MakeStepDialog = ({
       ? steps.find((step) => step.id === itemId)
       : { url: '', title: '', introduction: '', required_time: '', date: '' };
 
-  // 実施日時の設定で使用(実施年月の情報が新規作成の際に前の情報を持ってしまう際の対処)
-  // const defaultDate = dayjs(currentStep?.date.replace('年', '-').replace('月', ''));
-  // console.log(`実験${defaultDate}`);
-  // const [dateValue, setDateValue] = useState<Dayjs | null>(itemId === 0 ? defaultDate : null);
-
-  // const [dateValue, setDateValue] = useState<Dayjs | null>(null);
-
-  const [value, setValue] = useState<Date | null>(null);
-
-  const handleChange = (newValue: Date | null) => {
-    setValue(newValue);
-  };
-
   const {
     register,
     handleSubmit,
@@ -62,7 +42,7 @@ const MakeStepDialog = ({
       title: currentStep?.title,
       introduction: currentStep?.introduction,
       required_time: currentStep?.required_time,
-      date: '',
+      date: currentStep?.date,
     },
   });
 
@@ -160,18 +140,14 @@ const MakeStepDialog = ({
                     <Grid item xs={12}>
                       ・実施年月(任意)
                     </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ja}>
-                        <DatePicker
-                          views={['year', 'month']}
-                          value={value}
-                          openTo='year'
-                          onChange={handleChange}
-                          inputFormat='YYYY年MM月'
-                          mask='____年__月'
-                          renderInput={(params) => <TextField {...params} {...register('date')} />}
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <TextField
+                          // defaultValue={user.twitter_account}
+                          sx={{ width: '100%', bgcolor: '#ffffff' }}
+                          {...register('date')}
                         />
-                      </LocalizationProvider>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Stack>
