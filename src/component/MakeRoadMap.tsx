@@ -1,16 +1,21 @@
 import { Button, Container, Stack, TextField, Grid, Box, Autocomplete } from '@mui/material';
+import { useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
+import MakeRoadMapInfo from './MakeRoadMapInfo';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
 import type { Roadmap } from 'types';
 
-const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
+const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
 
   const setRoadmap = useSetRecoilState(roadmapState);
   const roadmap = useRecoilValue(roadmapState);
+
+  const [Infoopen, setInfoOpen] = useState(true);
+  const handleInfoClose = () => setInfoOpen(false);
 
   const {
     control,
@@ -41,6 +46,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: any }) => {
   return (
     <>
       <Meta pageTitle='プロフィール編集' />
+      <MakeRoadMapInfo open={Infoopen} handleClose={handleInfoClose} />
       <Grid container>
         <Grid item xs={12} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
           <Container maxWidth='md' sx={{ pt: 1 }}>
