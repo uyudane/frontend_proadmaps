@@ -7,7 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ja from 'date-fns/locale/ja';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import stepsState from 'recoil/atoms/stepsState';
@@ -44,11 +44,6 @@ const MakeStepDialog = ({
     formState: { errors },
   } = useForm<Step>({
     defaultValues: {
-      // url: '',
-      // title: '',
-      // introduction: '',
-      // required_time: '',
-      // date: '',
       url: currentStep?.url,
       title: currentStep?.title,
       introduction: currentStep?.introduction,
@@ -56,23 +51,6 @@ const MakeStepDialog = ({
       date: currentStep?.date,
     },
   });
-
-  // const currentStep = useMemo(
-  //   () =>
-  //     typeof itemId !== 'undefined'
-  //       ? steps.find((step) => step.id === itemId)
-  //       : { url: '', title: '', introduction: '', required_time: '', date: '' },
-  //   [itemId!],
-  // );
-  // useEffect(() => {
-  //   reset({
-  //     url: currentStep?.url,
-  //     title: currentStep?.title,
-  //     introduction: currentStep?.introduction,
-  //     required_time: currentStep?.required_time,
-  //     date: currentStep?.date,
-  //   });
-  // }, [currentStep, reset]);
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
