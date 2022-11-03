@@ -98,6 +98,13 @@ const MakeStepDialog = ({
     }
     handleClose();
   };
+
+  // キャンセル時の処理
+  const cancel = () => {
+    reset();
+    handleClose();
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
@@ -145,7 +152,11 @@ const MakeStepDialog = ({
                         name='introduction'
                         control={control}
                         render={({ field }) => (
-                          <TextField {...field} sx={{ width: '100%', bgcolor: '#ffffff' }} />
+                          <TextField
+                            {...field}
+                            rows={3}
+                            sx={{ width: '100%', bgcolor: '#ffffff' }}
+                          />
                         )}
                       />
                     </Grid>
@@ -201,7 +212,7 @@ const MakeStepDialog = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={cancel}>Cancel</Button>
           <Button onClick={handleSubmit(onSubmit)}>Subscribe</Button>
         </DialogActions>
       </Dialog>
