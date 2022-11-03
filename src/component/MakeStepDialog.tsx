@@ -1,3 +1,4 @@
+import { SignalCellularNull } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,6 +14,7 @@ import { useRecoilState } from 'recoil';
 import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
 
+// 編集時に使用する関数。編集するオブジェクトの値を変更して、前後は元の値で上書く。
 const replaceItemAtIndex = (arr: Step[], index: number, newValue: Step) => {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 };
@@ -29,13 +31,25 @@ const MakeStepDialog = ({
   itemId?: number;
 }) => {
   const [steps, setSteps] = useRecoilState(stepsState);
-  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
 
   // IDを渡された場合(編集の場合)はデフォルト値がもとの値になり、新規作成の場合は空にする
   const currentStep =
     typeof itemId !== 'undefined'
       ? steps.find((step) => step.id === itemId)
       : { url: '', title: '', introduction: '', required_time: '', date: '' };
+
+  // 実施日時の設定で使用(実施年月の情報が新規作成の際に前の情報を持ってしまう際の対処)
+  // const defaultDate = dayjs(currentStep?.date.replace('年', '-').replace('月', ''));
+  // console.log(`実験${defaultDate}`);
+  // const [dateValue, setDateValue] = useState<Dayjs | null>(itemId === 0 ? defaultDate : null);
+
+  // const [dateValue, setDateValue] = useState<Dayjs | null>(null);
+
+  const [value, setValue] = useState<Date | null>(null);
+
+  const handleChange = (newValue: Date | null) => {
+    setValue(newValue);
+  };
 
   const {
     register,
@@ -48,7 +62,7 @@ const MakeStepDialog = ({
       title: currentStep?.title,
       introduction: currentStep?.introduction,
       required_time: currentStep?.required_time,
-      date: currentStep?.date,
+      date: '',
     },
   });
 
@@ -150,19 +164,12 @@ const MakeStepDialog = ({
                       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ja}>
                         <DatePicker
                           views={['year', 'month']}
-                          // label='Year and Month'
-                          minDate={dayjs('1990-01-01')}
-                          maxDate={dayjs('2030-12-01')}
-                          value={dateValue}
+                          value={value}
                           openTo='year'
-                          onChange={(newValue) => {
-                            setDateValue(newValue);
-                          }}
+                          onChange={handleChange}
                           inputFormat='YYYY年MM月'
                           mask='____年__月'
-                          renderInput={(params) => (
-                            <TextField {...params} helperText={null} {...register('date')} />
-                          )}
+                          renderInput={(params) => <TextField {...params} {...register('date')} />}
                         />
                       </LocalizationProvider>
                     </Grid>
