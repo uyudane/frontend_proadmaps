@@ -1,8 +1,8 @@
-import { Button, Container, Stack, TextField, Grid, Box } from '@mui/material';
+import { Button, Container, Stack, TextField, Grid, Box, Select, MenuItem } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
@@ -29,10 +29,10 @@ const MakeStepDialog = ({
   const currentStep =
     typeof itemId !== 'undefined'
       ? steps.find((step) => step.id === itemId)
-      : { url: '', title: '', introduction: '', required_time: '', date: '' };
+      : { url: '', title: '', introduction: '', required_time: '', year: '', month: '' };
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
@@ -42,9 +42,29 @@ const MakeStepDialog = ({
       title: currentStep?.title,
       introduction: currentStep?.introduction,
       required_time: currentStep?.required_time,
-      date: currentStep?.date,
+      year: currentStep?.year,
+      month: currentStep?.month,
     },
   });
+
+  // 実施年月の年の部分の選択肢を作成
+  const setYearOption = () => {
+    const list = [];
+    for (let i = 1990; i <= new Date().getFullYear(); i++) {
+      list.push(<MenuItem value={i}>{i}年</MenuItem>);
+    }
+    return list;
+  };
+
+  // 実施年月の月の部分の選択肢を作成
+  const setMonthOption = () => {
+    const list = [];
+    for (let i = 1; i <= 12; i++) {
+      list.push(<MenuItem value={i}>{i}月</MenuItem>);
+    }
+    list.push(<MenuItem value={13}>頃</MenuItem>);
+    return list;
+  };
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
@@ -58,7 +78,8 @@ const MakeStepDialog = ({
           title: data.title,
           introduction: data.introduction,
           required_time: data.required_time,
-          date: data.date,
+          year: data.year,
+          month: data.month,
         },
       ]);
       reset();
@@ -70,7 +91,8 @@ const MakeStepDialog = ({
         title: data.title,
         introduction: data.introduction,
         required_time: data.required_time,
-        date: data.date,
+        year: data.year,
+        month: data.month,
       });
       setSteps(newList);
     }
@@ -86,15 +108,15 @@ const MakeStepDialog = ({
                 <Stack spacing={4}>
                   <Grid container>
                     <Grid item xs={12}>
-                      ・URL(任意)
+                      ・URL
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        required
-                        // defaultValue={user.title}
-                        // label='ユーザ名'
-                        sx={{ width: '100%', bgcolor: '#ffffff' }}
-                        {...register('url')}
+                      <Controller
+                        name='url'
+                        control={control}
+                        render={({ field }) => (
+                          <TextField {...field} sx={{ width: '100%', bgcolor: '#ffffff' }} />
+                        )}
                       />
                     </Grid>
                   </Grid>
@@ -103,49 +125,72 @@ const MakeStepDialog = ({
                       ・タイトル(必須)
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        // label='GitHubID'
-                        // defaultValue={user.github_account}
-                        sx={{ width: '100%', bgcolor: '#ffffff' }}
-                        {...register('title', { required: true })}
+                      <Controller
+                        name='title'
+                        rules={{ required: true }}
+                        control={control}
+                        render={({ field }) => (
+                          <TextField {...field} sx={{ width: '100%', bgcolor: '#ffffff' }} />
+                        )}
                       />
                       {errors.title && <Box color='red'>入力が必須の項目です</Box>}
                     </Grid>
                   </Grid>
                   <Grid container>
                     <Grid item xs={12}>
-                      ・コメント(任意)
+                      ・コメント
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        // defaultValue={user.twitter_account}
-                        sx={{ width: '100%', bgcolor: '#ffffff' }}
-                        {...register('introduction')}
+                      <Controller
+                        name='introduction'
+                        control={control}
+                        render={({ field }) => (
+                          <TextField {...field} sx={{ width: '100%', bgcolor: '#ffffff' }} />
+                        )}
                       />
                     </Grid>
                   </Grid>
                   <Grid container>
                     <Grid item xs={12}>
-                      ・所要時間(任意)
+                      ・所要時間
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        // defaultValue={user.twitter_account}
-                        sx={{ width: '100%', bgcolor: '#ffffff' }}
-                        {...register('required_time')}
+                      <Controller
+                        render={({ field }) => (
+                          <Select {...field} sx={{ width: '50%', bgcolor: '#ffffff' }}>
+                            <MenuItem value={10}>低 (丸1日あれば実施可能)</MenuItem>
+                            <MenuItem value={20}>中 (丸1週間あれば(10h-30h)実施可能)</MenuItem>
+                            <MenuItem value={30}>高 (30h以上)</MenuItem>
+                          </Select>
+                        )}
+                        name='required_time'
+                        control={control}
                       />
                     </Grid>
                   </Grid>
                   <Grid container>
                     <Grid item xs={12}>
-                      ・実施年月(任意)
+                      ・実施年月
                     </Grid>
                     <Grid container>
                       <Grid item xs={12}>
-                        <TextField
-                          // defaultValue={user.twitter_account}
-                          sx={{ width: '100%', bgcolor: '#ffffff' }}
-                          {...register('date')}
+                        <Controller
+                          render={({ field }) => (
+                            <Select {...field} sx={{ width: '20%', bgcolor: '#ffffff' }}>
+                              {setYearOption()}
+                            </Select>
+                          )}
+                          name='year'
+                          control={control}
+                        />
+                        <Controller
+                          render={({ field }) => (
+                            <Select {...field} sx={{ width: '20%', bgcolor: '#ffffff' }}>
+                              {setMonthOption()}
+                            </Select>
+                          )}
+                          name='month'
+                          control={control}
                         />
                       </Grid>
                     </Grid>

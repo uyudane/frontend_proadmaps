@@ -13,7 +13,8 @@ export type Step = {
   title: string;
   introduction: string;
   required_time: string;
-  date: string;
+  year: string;
+  month: string;
 };
 
 // プロフィールデータ
