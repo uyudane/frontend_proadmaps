@@ -122,7 +122,11 @@ const MakeStepDialog = ({
                         name='url'
                         control={control}
                         render={({ field }) => (
-                          <TextField {...field} sx={{ width: '100%', bgcolor: '#ffffff' }} />
+                          <TextField
+                            {...field}
+                            sx={{ width: '100%', bgcolor: '#ffffff' }}
+                            placeholder='https://...'
+                          />
                         )}
                       />
                     </Grid>
@@ -137,7 +141,11 @@ const MakeStepDialog = ({
                         rules={{ required: true }}
                         control={control}
                         render={({ field }) => (
-                          <TextField {...field} sx={{ width: '100%', bgcolor: '#ffffff' }} />
+                          <TextField
+                            {...field}
+                            sx={{ width: '100%', bgcolor: '#ffffff' }}
+                            placeholder='例.「書籍名」、「サイト名」、「エンジニアと喋る」等、「【今後やりたい】〇〇」'
+                          />
                         )}
                       />
                       {errors.title && <Box color='red'>入力が必須の項目です</Box>}
@@ -154,8 +162,10 @@ const MakeStepDialog = ({
                         render={({ field }) => (
                           <TextField
                             {...field}
+                            multiline
                             rows={3}
                             sx={{ width: '100%', bgcolor: '#ffffff' }}
+                            placeholder='ご自由にお書きください'
                           />
                         )}
                       />
@@ -170,7 +180,7 @@ const MakeStepDialog = ({
                         render={({ field }) => (
                           <Select {...field} sx={{ width: '50%', bgcolor: '#ffffff' }}>
                             <MenuItem value={10}>低 (丸1日あれば実施可能)</MenuItem>
-                            <MenuItem value={20}>中 (丸1週間あれば(10h-30h)実施可能)</MenuItem>
+                            <MenuItem value={20}>中 (丸1週間あれば実施可能)(10h〜30h程度)</MenuItem>
                             <MenuItem value={30}>高 (30h以上)</MenuItem>
                           </Select>
                         )}
