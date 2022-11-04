@@ -2,14 +2,13 @@ import AddIcon from '@mui/icons-material/Add';
 import { IconButton, List, Grid } from '@mui/material';
 import update from 'immutability-helper';
 import { useCallback, useState } from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import DndStep from './DndStep';
 import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
 
-const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: any }) => {
-  const setSteps = useSetRecoilState(stepsState);
-  const steps = useRecoilValue(stepsState);
+const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: () => void }) => {
+  const [steps, setSteps] = useRecoilState(stepsState);
 
   const moveStep = useCallback((dragIndex: number, hoverIndex: number) => {
     setSteps((prevSteps: Step[]) =>
@@ -22,7 +21,7 @@ const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: any }) => {
     );
   }, []);
 
-  const renderStep = useCallback((step: { id: number; url: string }, index: number) => {
+  const renderStep = useCallback((step: Step, index: number) => {
     return <DndStep key={step.id} index={index} id={step.id} url={step.url} moveStep={moveStep} />;
   }, []);
 
@@ -31,6 +30,7 @@ const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: any }) => {
       <Grid container alignItems='center' justifyContent='center' direction='column'>
         <Grid item>
           <List sx={{ width: '100%', maxWidth: 'md', p: 1 }}>
+            {/* stepの内容とi(stepの並び順になるIndex)を渡している。 */}
             <div>{steps.map((step, i) => renderStep(step, i))}</div>
           </List>
         </Grid>
