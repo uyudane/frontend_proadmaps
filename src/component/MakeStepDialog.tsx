@@ -4,6 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
+import MakeStepTitleTooltip from './MakeStepTitleTooltip';
 import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
 
@@ -134,6 +135,7 @@ const MakeStepDialog = ({
                   <Grid container>
                     <Grid item xs={12}>
                       ・タイトル(必須)
+                      <MakeStepTitleTooltip />
                     </Grid>
                     <Grid item xs={12}>
                       <Controller
@@ -144,7 +146,7 @@ const MakeStepDialog = ({
                           <TextField
                             {...field}
                             sx={{ width: '100%', bgcolor: '#ffffff' }}
-                            placeholder='例.「書籍名」、「サイト名」、「エンジニアと喋る」等、「【今後やりたい】〇〇」'
+                            placeholder='例.「書籍名」、「サイト名」、「簡単なアプリを作る」、「【実施予定】〇〇」等'
                           />
                         )}
                       />
@@ -173,15 +175,15 @@ const MakeStepDialog = ({
                   </Grid>
                   <Grid container>
                     <Grid item xs={12}>
-                      ・所要時間
+                      ・所要時間/ボリューム
                     </Grid>
                     <Grid item xs={12}>
                       <Controller
                         render={({ field }) => (
                           <Select {...field} sx={{ width: '50%', bgcolor: '#ffffff' }}>
-                            <MenuItem value={10}>低 (丸1日あれば実施可能)</MenuItem>
-                            <MenuItem value={20}>中 (丸1週間あれば実施可能)(10h〜30h程度)</MenuItem>
-                            <MenuItem value={30}>高 (30h以上)</MenuItem>
+                            <MenuItem value={10}>小 (10h以内)</MenuItem>
+                            <MenuItem value={20}>中 (10h〜40h程度)</MenuItem>
+                            <MenuItem value={30}>大 (40h以上)</MenuItem>
                           </Select>
                         )}
                         name='required_time'

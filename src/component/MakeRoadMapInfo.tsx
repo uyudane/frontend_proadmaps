@@ -32,7 +32,7 @@ const MakeRoadMapInfo = ({ open, handleClose }: { open: boolean; handleClose: ()
             ②ロードマップだけでなく、学習記録、今後の学習スケジュール等も歓迎です!
           </Typography>
           <Typography id='modal-modal-description2' sx={{ mt: 1 }} variant='h6'>
-            ③言語等、題材が被っているものも、みんなが使っている教材や別の勉強法を知るためにぜひ投稿をお願いします！
+            ③言語等、題材が被っているものでも、みんなが使っている教材や別の勉強法を知るために、ぜひ投稿をお願いします！
           </Typography>
         </Box>
       </Modal>

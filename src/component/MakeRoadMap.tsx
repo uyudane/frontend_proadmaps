@@ -64,7 +64,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
                       <TextField
                         {...field}
                         sx={{ width: '100%', bgcolor: '#ffffff' }}
-                        placeholder='ポートフォリオ作成までの学習記録、○○脱初心者ロードマップ、○○の資格を取るまでにやったこと　等'
+                        placeholder='ポートフォリオ作成/エンジニア転職までの学習記録、○○脱初心者ロードマップ、○○の資格取得までにやったこと　等'
                       />
                     )}
                   />
