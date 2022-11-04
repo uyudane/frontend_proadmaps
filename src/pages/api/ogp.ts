@@ -5,9 +5,15 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const ogp = async (req: NextApiRequest, res: NextApiResponse) => {
   const targetUrl = req.query.url as string;
 
-  if (!targetUrl) return;
+  const metaData = {
+    site_name: '',
+    title: '',
+    description: '',
+    image: '',
+    url: targetUrl,
+  };
 
-  const ogps: any = {};
+  if (!targetUrl) return;
 
   // URLに含まれる幾つかの文字がaxiosの中でエンコードされないため、事前にurlをエンコードしている??
   const encodedUri = encodeURI(targetUrl);
@@ -18,50 +24,22 @@ const ogp = async (req: NextApiRequest, res: NextApiResponse) => {
     const res = await axios.get(encodedUri, { headers: headers });
     const html = res.data;
     const dom = new JSDOM(html);
-    const meta = dom.window.document.head.querySelectorAll('meta');
-    const ogp = extractOgp([...meta]);
-
-    // URLをキーとして、取得したOGPをまとめて返す
-    ogps[targetUrl] = ogp;
+    const metas = dom.window.document.head.querySelectorAll('meta');
+    // 必要なデータのみを抽出
+    for (let i = 0; i < metas.length; i++) {
+      const pro = metas[i].getAttribute('property');
+      if (typeof pro == 'string') {
+        if (pro.match('site_name')) metaData.site_name = metas[i].getAttribute('content') as string;
+        if (pro.match('title')) metaData.title = metas[i].getAttribute('content') as string;
+        if (pro.match('description'))
+          metaData.description = metas[i].getAttribute('content') as string;
+        if (pro.match('image')) metaData.image = metas[i].getAttribute('content') as string;
+      }
+    }
   } catch (error) {
-    console.error(error);
     res.status(400).send('error');
   }
-
-  res.status(200).json(ogps);
+  res.status(200).json(metaData);
 };
-
-// HTMLのmetaタグからogpを抽出
-const extractOgp = (metaElements: HTMLMetaElement[]): object => {
-  const ogp = metaElements
-    // "property"の含む行でフィルタリングし、
-    .filter((element: Element) => element.hasAttribute('property'))
-    // meta要素がキーで、バリューがその中身の配列を作成
-    .reduce((previous: any, current: Element) => {
-      const property = current.getAttribute('property')?.trim();
-      if (!property) return;
-      const content = current.getAttribute('content');
-      previous[property] = content;
-      return previous;
-    }, {});
-
-  return ogp;
-};
-
-// const sendErrorResponse = (res: any, message: string): void => {
-//   res.status(400).send(message);
-// };
 
 export default ogp;
-
-// fetch(url)
-//   .then((res) => res.text())
-//   .then((text) => {
-//     const el = new DOMParser().parseFromString(text, 'text/html');
-//     const headEls = el.head.children;
-//     Array.from(headEls).map((v) => {
-//       const prop = v.getAttribute('property');
-//       if (!prop) return;
-//       console.log(prop, v.getAttribute('content'));
-//     });
-//   });
