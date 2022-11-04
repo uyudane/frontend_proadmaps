@@ -134,7 +134,7 @@ const DndStep = ({ id, url, index, moveStep }: StepProps) => {
             <ListItemText primary={url} />
           </Grid>
           <DeleteStepButton index={index} />
-          <EditStepButton itemId={id} />
+          <EditStepButton index={index} />
         </Grid>
       </ListItem>
     </>

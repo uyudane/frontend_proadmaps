@@ -17,21 +17,30 @@ const MakeStepDialog = ({
   handleClose,
   open,
   getStepId = undefined,
-  itemId = undefined,
+  index = undefined,
 }: {
   handleClose: () => void;
   open: boolean;
   getStepId?: () => number;
-  itemId?: number;
+  index?: number;
 }) => {
   const [steps, setSteps] = useRecoilState(stepsState);
 
   // IDを渡された場合(編集の場合)はデフォルト値がもとの値になり、新規作成の場合は空にする
   const currentStep =
-    typeof itemId !== 'undefined'
-      ? steps.find((step) => step.id === itemId)
-      : { url: '', title: '', introduction: '', required_time: '', year: '', month: '' };
+    typeof index !== 'undefined'
+      ? steps[index]
+      : {
+          id: undefined,
+          url: '',
+          title: '',
+          introduction: '',
+          required_time: '',
+          year: '',
+          month: '',
+        };
 
+  // フォームで使用するライブラリの取得。編集時に使用するデフォルトの値の設定
   const {
     control,
     handleSubmit,
@@ -70,7 +79,7 @@ const MakeStepDialog = ({
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<Step> = async (data) => {
     // 新規作成時の処理(配列に新しいオブジェクトを追加)
-    if (typeof itemId === 'undefined') {
+    if (typeof index === 'undefined') {
       setSteps((oldSteps) => [
         ...oldSteps,
         {
@@ -86,8 +95,8 @@ const MakeStepDialog = ({
       reset();
     } else {
       // 編集時の処理(配列の指定の値を変更する)
-      const newList = replaceItemAtIndex(steps, itemId, {
-        id: itemId,
+      const newList = replaceItemAtIndex(steps, index, {
+        id: currentStep.id as number, //index === 'undefined出ない時点で、idに値が入っている想定
         url: data.url,
         title: data.title,
         introduction: data.introduction,
