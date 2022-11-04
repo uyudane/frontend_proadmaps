@@ -14,7 +14,9 @@ const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: () => void }) 
     setSteps((prevSteps: Step[]) =>
       update(prevSteps, {
         $splice: [
+          // ドラッグしたindexの値を削除
           [dragIndex, 1],
+          // ホバーした先のインデックスに挿入する
           [hoverIndex, 0, prevSteps[dragIndex] as Step],
         ],
       }),

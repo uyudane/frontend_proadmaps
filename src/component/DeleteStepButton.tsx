@@ -7,10 +7,10 @@ const removeItemAtIndex = (arr: Step[], index: number) => {
   return [...arr.slice(0, index), ...arr.slice(index + 1)];
 };
 
-const DeleteStepButton = ({ itemId }: { itemId: number }) => {
+const DeleteStepButton = ({ index }: { index: number }) => {
   const [steps, setSteps] = useRecoilState(stepsState);
   const deleteItem = () => {
-    const newList = removeItemAtIndex(steps, itemId);
+    const newList = removeItemAtIndex(steps, index);
     setSteps(newList);
   };
   return (
