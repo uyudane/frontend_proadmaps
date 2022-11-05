@@ -6,12 +6,12 @@ import userState from 'recoil/atoms/userState';
 import type { User } from 'types';
 
 const ProfileEditButton = ({ profileUser }: { profileUser: User }) => {
-  const user_sub = useRecoilValue(userState); // RecoilのTokneを取得する
+  const current_user = useRecoilValue(userState); // RecoilのTokneを取得する
   const [edit, setEdit] = useState<boolean>(false); // 自分のプロフィールの場合のみプロフィール編集ボタンを作成する
   const router = useRouter();
 
   useEffect(() => {
-    setEdit(profileUser.sub == user_sub);
+    setEdit(profileUser.sub == current_user.sub);
   }, []);
 
   return (

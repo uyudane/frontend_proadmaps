@@ -25,5 +25,11 @@ export type User = {
   twitter_account: string;
 };
 
+// userStateで使用する型
+export type UserState = {
+  sub: string;
+  name: string;
+};
+
 // プロフィール一覧データ
 export type Users = User[];

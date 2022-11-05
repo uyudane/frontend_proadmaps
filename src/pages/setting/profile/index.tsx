@@ -30,7 +30,7 @@ function SettingProfilePage() {
     });
   }, [user, reset]);
 
-  const sub = useRecoilValue(userState);
+  const current_user = useRecoilValue(userState);
   const router = useRouter();
   const token = useRecoilValue(tokenState);
 
@@ -40,7 +40,7 @@ function SettingProfilePage() {
     const result = await updateUser(data, token);
     if (result === 'OK') {
       router.push({
-        pathname: `/${sub}`,
+        pathname: `/${current_user.sub}`,
         query: { message: 'プロフィールを更新しました' },
       });
     }
