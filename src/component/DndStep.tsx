@@ -102,6 +102,13 @@ const DndStep = ({ index, step, id, moveStep }: StepProps) => {
   // ドラッグされている間は透明になる。
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
+  const stepDescription =
+    `URL:${step.url.slice(0, 18)}...  ` +
+    `コメント:${step.introduction.slice(0, 5)}...  ` +
+    `所要時間:${step.required_time.slice(0, 5)}...  ` +
+    `実施年月:${step.year}${step.month}`;
+
   return (
     <>
       <ListItem sx={{ p: 3, m: 1, bgcolor: '#eeeeee' }}>
@@ -123,19 +130,19 @@ const DndStep = ({ index, step, id, moveStep }: StepProps) => {
             }}
             ref={ref}
             data-handler-id={handlerId}
+            xs={1}
           >
             <DragHandleIcon
               sx={{ color: 'white', backgroundColor: '#143F6B', borderRadius: '20%', m: 1 }}
             />
           </Grid>
-          <Grid item>
-            <Typography variant='h6' sx={{ m: 2 }}>{`step${index + 1}`}</Typography>
+          <Grid item xs={10}>
+            <ListItemText primary={step.title} secondary={stepDescription} />
           </Grid>
-          <Grid item>
-            <ListItemText primary={step.title} />
+          <Grid item xs={1}>
+            <EditStepButton index={index} />
+            <DeleteStepButton index={index} />
           </Grid>
-          <DeleteStepButton index={index} />
-          <EditStepButton index={index} />
         </Grid>
       </ListItem>
     </>
