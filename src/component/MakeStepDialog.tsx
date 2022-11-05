@@ -64,7 +64,11 @@ const MakeStepDialog = ({
   const setYearOption = () => {
     const list = [];
     for (let i = 1990; i <= new Date().getFullYear(); i++) {
-      list.push(<MenuItem value={i}>{i}年</MenuItem>);
+      list.push(
+        <MenuItem key={`year${i}`} value={`${i}年`}>
+          {i}年
+        </MenuItem>,
+      );
     }
     return list;
   };
@@ -73,9 +77,17 @@ const MakeStepDialog = ({
   const setMonthOption = () => {
     const list = [];
     for (let i = 1; i <= 12; i++) {
-      list.push(<MenuItem value={i}>{i}月</MenuItem>);
+      list.push(
+        <MenuItem key={`month${i}`} value={`${i}月`}>
+          {i}月
+        </MenuItem>,
+      );
     }
-    list.push(<MenuItem value={13}>頃</MenuItem>);
+    list.push(
+      <MenuItem key={`month13`} value={'頃'}>
+        頃
+      </MenuItem>,
+    );
     return list;
   };
 
@@ -211,9 +223,15 @@ const MakeStepDialog = ({
                       <Controller
                         render={({ field }) => (
                           <Select {...field} sx={{ width: '50%', bgcolor: '#ffffff' }}>
-                            <MenuItem value={10}>小 (10h以内)</MenuItem>
-                            <MenuItem value={20}>中 (10h〜40h程度)</MenuItem>
-                            <MenuItem value={30}>大 (40h以上)</MenuItem>
+                            <MenuItem key={'time1'} value={'小 (10h以内)'}>
+                              小 (10h以内)
+                            </MenuItem>
+                            <MenuItem key={'time2'} value={'中 (10h〜40h程度)'}>
+                              中 (10h〜40h程度)
+                            </MenuItem>
+                            <MenuItem key={'time3'} value={'大 (40h以上)'}>
+                              大 (40h以上)
+                            </MenuItem>
                           </Select>
                         )}
                         name='required_time'

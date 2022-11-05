@@ -24,14 +24,14 @@ const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: () => void }) 
   }, []);
 
   const renderStep = useCallback((step: Step, index: number) => {
-    return <DndStep key={step.id} index={index} id={step.id} url={step.url} moveStep={moveStep} />;
+    return <DndStep key={step.id} index={index} step={step} id={step.id} moveStep={moveStep} />;
   }, []);
 
   return (
     <>
       <Grid container alignItems='center' justifyContent='center' direction='column'>
         <Grid item>
-          <List sx={{ width: '100%', maxWidth: 'md', p: 1 }}>
+          <List sx={{ width: '100%', maxWidth: 'md' }}>
             {/* stepの内容とi(stepの並び順になるIndex)を渡している。 */}
             <div>{steps.map((step, i) => renderStep(step, i))}</div>
           </List>

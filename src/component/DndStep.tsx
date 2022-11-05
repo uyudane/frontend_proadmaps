@@ -5,15 +5,16 @@ import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import DeleteStepButton from './DeleteStepButton';
 import EditStepButton from './EditStepButton';
+import { Step } from 'types';
 
 const ItemTypes = {
   STEP: 'step',
 };
 
 export interface StepProps {
-  id: number;
-  url: string;
   index: number;
+  step: Step;
+  id: number;
   moveStep: (dragIndex: number, hoverIndex: number) => void;
 }
 
@@ -23,7 +24,7 @@ interface DragItem {
   type: string;
 }
 
-const DndStep = ({ id, url, index, moveStep }: StepProps) => {
+const DndStep = ({ index, step, id, moveStep }: StepProps) => {
   // ドラッグ対象のrefを取得(DOMを操作していくためのもの)
   const ref = useRef<HTMLDivElement>(null);
 
@@ -131,7 +132,7 @@ const DndStep = ({ id, url, index, moveStep }: StepProps) => {
             <Typography variant='h6' sx={{ m: 2 }}>{`step${index + 1}`}</Typography>
           </Grid>
           <Grid item>
-            <ListItemText primary={url} />
+            <ListItemText primary={step.title} />
           </Grid>
           <DeleteStepButton index={index} />
           <EditStepButton index={index} />
