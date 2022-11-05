@@ -6,6 +6,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import MakeStepTitleTooltip from './MakeStepTitleTooltip';
 import stepsState from 'recoil/atoms/stepsState';
+import { getURLData } from 'services/roadmaps';
 import type { Step } from 'types';
 
 // 編集時に使用する関数。編集するオブジェクトの値を変更して、前後は元の値で上書く。
@@ -43,6 +44,8 @@ const MakeStepDialog = ({
   // フォームで使用するライブラリの取得。編集時に使用するデフォルトの値の設定
   const {
     control,
+    getValues,
+    setValue,
     handleSubmit,
     reset,
     formState: { errors },
@@ -115,6 +118,21 @@ const MakeStepDialog = ({
     handleClose();
   };
 
+  // URLからOGP情報を読み出して、タイトルを自動的に埋める
+  const getURL = async () => {
+    const url = getValues('url');
+    if (!url) {
+      return;
+    }
+    const urlData = await getURLData({ url });
+    const title = `【${urlData.site_name}】 ${urlData.title}`;
+    if (title === '【undefined】 undefined' || title === '【】 ') {
+      setValue('title', '【】');
+    } else {
+      setValue('title', title);
+    }
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
@@ -134,11 +152,14 @@ const MakeStepDialog = ({
                         render={({ field }) => (
                           <TextField
                             {...field}
-                            sx={{ width: '100%', bgcolor: '#ffffff' }}
+                            sx={{ width: '80%', bgcolor: '#ffffff' }}
                             placeholder='https://...'
                           />
                         )}
                       />
+                      <Button variant='outlined' onClick={getURL} sx={{ width: '20%' }}>
+                        タイトルを読み込む
+                      </Button>
                     </Grid>
                   </Grid>
                   <Grid container>

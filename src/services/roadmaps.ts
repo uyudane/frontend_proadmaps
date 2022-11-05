@@ -44,3 +44,12 @@ export const postRoadmap = async (params: Roadmap, token: any) => {
     return error;
   }
 };
+
+export const getURLData = async ({ url }: { url: string }) => {
+  try {
+    const res = await axios.get('http://localhost:9000/api/ogp', { params: { url: url } });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};

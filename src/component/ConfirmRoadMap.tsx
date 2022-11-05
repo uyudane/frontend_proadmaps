@@ -1,14 +1,12 @@
 import { Button, Box } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useEffect, useContext } from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { UserInputData } from 'pages/roadmap';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
 import { postRoadmap } from 'services/roadmaps';
 
-const ConfirmRoadMap = ({ handleBack }: { handleBack: any }) => {
+const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   const router = useRouter();
   const token = useRecoilValue(tokenState);
   const roadmap = useRecoilValue(roadmapState);
