@@ -4,13 +4,14 @@ import { Grid, Link } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import OgpCard from './OgpCard';
 import { Step } from 'types';
 
 const StepCard = ({ step, index }: { step: Step; index: string }) => {
   return (
     <>
       <Box sx={{ maxWidth: 'lg', m: 2, border: 2 }}>
-        <Grid container>
+        <Grid container alignItems='center' justifyContent='center'>
           <Grid container sx={{ bgcolor: '#143F6B' }}>
             <Grid item xs={12}>
               <Typography variant='subtitle1' component='div' color='white'>
@@ -34,6 +35,8 @@ const StepCard = ({ step, index }: { step: Step; index: string }) => {
                 {step.introduction}
               </Typography>
             </Grid>
+          </Grid>
+          <Grid container xs={5}>
             <Grid item xs={12}>
               <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
                 所要時間
@@ -65,6 +68,11 @@ const StepCard = ({ step, index }: { step: Step; index: string }) => {
               <IconButton aria-label='share'>
                 <ShareIcon fontSize='small' />
               </IconButton>
+            </Grid>
+          </Grid>
+          <Grid container xs={7}>
+            <Grid item xs={12}>
+              <OgpCard url={step.url} />
             </Grid>
           </Grid>
         </Grid>

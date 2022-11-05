@@ -13,7 +13,10 @@ const ogp = async (req: NextApiRequest, res: NextApiResponse) => {
     url: targetUrl,
   };
 
-  if (!targetUrl) return;
+  if (!targetUrl) {
+    res.status(400).send('error');
+    return;
+  }
 
   // URLに含まれる幾つかの文字がaxiosの中でエンコードされないため、事前にurlをエンコードしている??
   const encodedUri = encodeURI(targetUrl);

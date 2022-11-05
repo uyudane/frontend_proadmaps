@@ -13,7 +13,7 @@ import userState from 'recoil/atoms/userState';
 import { updateUser, useMyUser } from 'services/users';
 import type { User } from 'types';
 
-function SettingProfilePage() {
+const SettingProfilePage = () => {
   const { user, isLoading, isError } = useMyUser();
   const {
     register,
@@ -135,7 +135,7 @@ function SettingProfilePage() {
       </Grid>
     </>
   );
-}
+};
 
 export default withAuthenticationRequired(SettingProfilePage, {
   onRedirecting: () => <div>このページを開くにはログインが必要です。</div>,
