@@ -1,9 +1,20 @@
 // ロードマップデータ
 export type Roadmap = {
   title: string;
-  introduction: text;
-  start_skill: text;
-  end_skill: text;
+  introduction: string;
+  start_skill: string;
+  end_skill: string;
+};
+
+// ステップデータ
+export type Step = {
+  id: number;
+  url: string;
+  title: string;
+  introduction: string;
+  required_time: string;
+  year: string;
+  month: string;
 };
 
 // プロフィールデータ
@@ -12,6 +23,12 @@ export type User = {
   name: string;
   github_account: string;
   twitter_account: string;
+};
+
+// userStateで使用する型
+export type UserState = {
+  sub: string;
+  name: string;
 };
 
 // プロフィール一覧データ

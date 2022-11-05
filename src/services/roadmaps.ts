@@ -44,3 +44,27 @@ export const postRoadmap = async (params: Roadmap, token: any) => {
     return error;
   }
 };
+
+export const getURLData = async ({ url }: { url: string }) => {
+  try {
+    const res = await axios.get('http://localhost:9000/api/ogp', { params: { url: url } });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// ロードマップ確認画面で、ローディング画面を出すために、SWRでの取得版を作成
+// ボタン押下の時はカスタムフックじゃない方が都合が良いのだけれど、うまいこと統合できないか後日調べる
+export const useURLData = (url: string) => {
+  const fetcher = async (apiURL: string, url: string) => {
+    const res = await axios.get(apiURL, { params: { url } });
+    return res.data;
+  };
+  const { data, error } = useSWR(['http://localhost:9000/api/ogp', url], fetcher);
+  return {
+    urlData: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};

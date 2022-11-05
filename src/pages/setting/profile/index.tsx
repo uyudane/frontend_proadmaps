@@ -13,7 +13,7 @@ import userState from 'recoil/atoms/userState';
 import { updateUser, useMyUser } from 'services/users';
 import type { User } from 'types';
 
-function SettingProfilePage() {
+const SettingProfilePage = () => {
   const { user, isLoading, isError } = useMyUser();
   const {
     register,
@@ -22,15 +22,17 @@ function SettingProfilePage() {
     formState: { errors },
   } = useForm<User>({ defaultValues: { name: '', github_account: '', twitter_account: '' } });
 
+  // SWRの前のキャッシュが残って編集後に最新化されない事象への対応
+  // useFormのreset機能を使用して、その後与えた値をdefaultに設定する。
   useEffect(() => {
     reset({
       ...user,
     });
   }, [user, reset]);
 
-  const sub = useRecoilValue(userState); // RecoilのTokneを取得する
+  const current_user = useRecoilValue(userState);
   const router = useRouter();
-  const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
+  const token = useRecoilValue(tokenState);
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<User> = async (data) => {
@@ -38,7 +40,7 @@ function SettingProfilePage() {
     const result = await updateUser(data, token);
     if (result === 'OK') {
       router.push({
-        pathname: `/${sub}`,
+        pathname: `/${current_user.sub}`,
         query: { message: 'プロフィールを更新しました' },
       });
     }
@@ -133,7 +135,7 @@ function SettingProfilePage() {
       </Grid>
     </>
   );
-}
+};
 
 export default withAuthenticationRequired(SettingProfilePage, {
   onRedirecting: () => <div>このページを開くにはログインが必要です。</div>,

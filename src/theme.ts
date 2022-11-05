@@ -1,10 +1,3 @@
-// import { createTheme } from '@mui/material/styles';
-
-// const theme = createTheme({
-//   // TODO:テーマ設定を行います
-// });
-
-// export default theme;
 import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
@@ -22,10 +15,6 @@ const theme = createTheme({
     },
     background: {
       default: '#FFFFFF',
-      // 検討
-      // default: '#F5FAFF',
-      // default: '#eeeeee',
-      // default: '#FFF0E7',
     },
   },
   typography: {

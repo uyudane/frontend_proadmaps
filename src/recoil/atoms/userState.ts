@@ -1,13 +1,14 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { UserState } from 'types';
 
 const { persistAtom } = recoilPersist({
   key: 'recoil-persist',
 });
 
-const userState = atom<string>({
+const userState = atom<UserState>({
   key: 'userState',
-  default: '',
+  default: { sub: '', name: '' },
   effects_UNSTABLE: [persistAtom],
 });
 
