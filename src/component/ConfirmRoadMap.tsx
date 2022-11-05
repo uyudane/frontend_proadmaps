@@ -1,15 +1,19 @@
-import { Button, Box } from '@mui/material';
+import { Button, Box, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
+import RoadMapCard from './RoadMapCard';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
+import userState from 'recoil/atoms/userState';
 import { postRoadmap } from 'services/roadmaps';
 
 const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   const router = useRouter();
   const token = useRecoilValue(tokenState);
   const roadmap = useRecoilValue(roadmapState);
+  const steps = useRecoilValue(stepsState);
+  const current_user = useRecoilValue(userState);
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
   const execPostRoadmap = async () => {
@@ -33,16 +37,11 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   };
   return (
     <>
-      最終確認
-      <br />
-      {roadmap.title}
-      <br />
-      {roadmap.introduction}
-      <br />
-      {roadmap.start_skill}
-      <br />
-      {roadmap.end_skill}
-      <br />
+      <Grid container alignItems='center' justifyContent='center' direction='column'>
+        <Grid item>
+          <RoadMapCard roadmap={roadmap} steps={steps} user={current_user} />
+        </Grid>
+      </Grid>
       <br />
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button color='primary' variant='contained' onClick={handleBack} sx={{ mr: 1 }}>
