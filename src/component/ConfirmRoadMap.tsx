@@ -2,6 +2,7 @@ import { Button, Box, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import RoadMapCard from './RoadMapCard';
+import StepCard from './StepCard';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
@@ -40,6 +41,13 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
       <Grid container alignItems='center' justifyContent='center' direction='column'>
         <Grid item>
           <RoadMapCard roadmap={roadmap} steps={steps} user={current_user} />
+        </Grid>
+      </Grid>
+      <Grid container alignItems='center' justifyContent='center' direction='column'>
+        <Grid item>
+          {steps.map((step, i) => (
+            <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
+          ))}
         </Grid>
       </Grid>
       <br />
