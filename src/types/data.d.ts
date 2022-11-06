@@ -1,5 +1,6 @@
 // ロードマップデータ
 export type Roadmap = {
+  id?: number;
   title: string;
   tags: string[];
   introduction: string;

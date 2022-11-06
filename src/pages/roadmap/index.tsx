@@ -15,7 +15,6 @@ import Meta from 'component/Meta';
 // recoil
 import tokenState from 'recoil/atoms/tokenState';
 
-import { fetchRoadmaps } from 'services/roadmaps';
 import { Roadmap } from 'types';
 
 const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
@@ -32,25 +31,28 @@ const RoadmapPage: NextPage = () => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      {/* 上部のステップ表示部分 */}
-      {/* Stepperでアクティブの所まで色がつく */}
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => {
-          const stepProps: { completed?: boolean } = {};
+    <>
+      <Meta pageTitle='ロードマップ作成' />
+      <Box sx={{ width: '100%' }}>
+        {/* 上部のステップ表示部分 */}
+        {/* Stepperでアクティブの所まで色がつく */}
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label) => {
+            const stepProps: { completed?: boolean } = {};
 
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-      {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
-      {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
-      {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
-    </Box>
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+        {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
+        {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
+        {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
+      </Box>
+    </>
   );
 };
 
