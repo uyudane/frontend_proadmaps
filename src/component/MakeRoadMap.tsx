@@ -1,4 +1,4 @@
-import { Button, Container, Stack, TextField, Grid, Box, Autocomplete } from '@mui/material';
+import { Button, Container, Stack, TextField, Grid, Box, Autocomplete, Chip } from '@mui/material';
 import { useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
@@ -24,6 +24,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   } = useForm<Roadmap>({
     defaultValues: {
       title: roadmap.title,
+      tags: roadmap.tags,
       introduction: roadmap.introduction,
       start_skill: roadmap.start_skill,
       end_skill: roadmap.end_skill,
@@ -43,6 +44,24 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
     setRoadmap(data);
     handleNext();
   };
+
+  const top100Films = [
+    'Ruby',
+    'Rails',
+    'PHP',
+    'Laravel',
+    'Python',
+    'Django',
+    'データベース',
+    'Vue.js',
+    'Nuxt.js',
+    'React',
+    'Next.js',
+    'HTML',
+    'CSS',
+    'JavaScript',
+  ];
+
   return (
     <>
       <Meta pageTitle='プロフィール編集' />
@@ -69,6 +88,46 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
                     )}
                   />
                   {errors.title && <Box color='red'>入力が必須の項目です</Box>}
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  ・タグ(必須)
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name='tags'
+                    rules={{ required: true }}
+                    control={control}
+                    render={({ field }) => (
+                      <Autocomplete
+                        sx={{ bgcolor: '#FFFFFF' }}
+                        {...field}
+                        multiple
+                        // id='tags-filled'
+                        options={top100Films.map((option) => option)}
+                        freeSolo
+                        renderTags={(value: readonly string[], getTagProps) =>
+                          value.map((option: string, index: number) => (
+                            <Chip
+                              variant='filled'
+                              label={option}
+                              {...getTagProps({ index })}
+                              key={`tag${index}`}
+                              sx={{ bgcolor: '#F2DF3A' }}
+                            />
+                          ))
+                        }
+                        autoSelect
+                        disableClearable
+                        renderInput={(params) => (
+                          <TextField {...params} placeholder='選択/自由記述' />
+                        )}
+                        onChange={(_, data) => field.onChange(data)}
+                      />
+                    )}
+                  />
+                  {errors.tags && <Box color='red'>入力が必須の項目です</Box>}
                 </Grid>
               </Grid>
               <Grid container>

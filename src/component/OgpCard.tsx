@@ -3,8 +3,8 @@ import { useURLData } from 'services/roadmaps';
 
 const OgpCard = ({ url }: { url: string }) => {
   const { urlData, isLoading, isError } = useURLData(url);
-  if (isLoading) return <div>{url}</div>;
-  if (isError) return <div>{url}</div>;
+  if (isLoading) return <div></div>;
+  if (isError) return <div></div>;
   return (
     <>
       <Box sx={{ maxWidth: 'sm', border: 1 }}>
