@@ -19,7 +19,7 @@ const StepCard = ({ step, index }: { step: Step; index: string }) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Link href={step.url} target='_blank' rel='noopener noreferrer'>
+              <Link href={step.url} target='_blank' rel='noopener noreferrer' underline='hover'>
                 <Typography variant='h6' component='div' color='white'>
                   {step.title}
                 </Typography>
@@ -53,27 +53,19 @@ const StepCard = ({ step, index }: { step: Step; index: string }) => {
                 {`${step.year}${step.month}`}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
-                タグ
-              </Typography>
-              <Typography variant='body1' component='div' sx={{ mb: 1 }} lineHeight={1.5}>
-                dummy,dummy,dummy,dummy,dummy,dummy
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <IconButton aria-label='add to favorites'>
-                <FavoriteIcon fontSize='small' />
-              </IconButton>
-              <IconButton aria-label='share'>
-                <ShareIcon fontSize='small' />
-              </IconButton>
-            </Grid>
           </Grid>
-          <Grid container xs={7}>
+          <Grid container xs={6}>
             <Grid item xs={12}>
               <OgpCard url={step.url} />
             </Grid>
+          </Grid>
+          <Grid container xs={1} direction='column' justifyContent='center' alignItems='center'>
+            <IconButton aria-label='add to favorites'>
+              <FavoriteIcon fontSize='small' />
+            </IconButton>
+            <IconButton aria-label='share'>
+              <ShareIcon fontSize='small' />
+            </IconButton>
           </Grid>
         </Grid>
       </Box>

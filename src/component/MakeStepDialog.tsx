@@ -63,7 +63,7 @@ const MakeStepDialog = ({
   // 実施年月の年の部分の選択肢を作成
   const setYearOption = () => {
     const list = [];
-    for (let i = 1990; i <= new Date().getFullYear(); i++) {
+    for (let i = 2000; i <= new Date().getFullYear(); i++) {
       list.push(
         <MenuItem key={`year${i}`} value={`${i}年`}>
           {i}年
@@ -197,7 +197,7 @@ const MakeStepDialog = ({
                   </Grid>
                   <Grid container>
                     <Grid item xs={12}>
-                      ・コメント
+                      ・紹介文/コメント
                     </Grid>
                     <Grid item xs={12}>
                       <Controller

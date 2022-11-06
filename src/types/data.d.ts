@@ -1,6 +1,7 @@
 // ロードマップデータ
 export type Roadmap = {
   title: string;
+  tags: string[];
   introduction: string;
   start_skill: string;
   end_skill: string;

@@ -8,7 +8,7 @@ const { persistAtom } = recoilPersist({
 
 const roadmapState = atom<Roadmap>({
   key: 'roadmapState',
-  default: { title: '', introduction: '', start_skill: '', end_skill: '' },
+  default: { title: '', tags: [], introduction: '', start_skill: '', end_skill: '' },
   effects_UNSTABLE: [persistAtom],
 });
 

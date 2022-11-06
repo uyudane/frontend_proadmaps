@@ -1,7 +1,8 @@
-import { Button, Box, Grid } from '@mui/material';
+import { Button, Box, Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import RoadMapCard from './RoadMapCard';
+import RoadMapIntroduction from './RoadMapIntroduction';
 import StepCard from './StepCard';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
@@ -21,6 +22,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
     const result = await postRoadmap(
       {
         title: roadmap.title,
+        tags: roadmap.tags,
         introduction: roadmap.introduction,
         start_skill: roadmap.start_skill,
         end_skill: roadmap.end_skill,
@@ -38,12 +40,32 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   };
   return (
     <>
+      <Grid
+        container
+        sx={{
+          bgcolor: '#F2DF3A',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography variant='h6' component='div'>
+          まだ投稿は完了していません!
+        </Typography>
+      </Grid>
+      <Typography variant='h6' component='div'>
+        ①概要プレビュー(一覧ページで表示)
+      </Typography>
       <Grid container alignItems='center' justifyContent='center' direction='column'>
         <Grid item>
           <RoadMapCard roadmap={roadmap} steps={steps} user={current_user} />
         </Grid>
       </Grid>
+      <Typography variant='h6' component='div'>
+        ②詳細プレビュー(詳細ページで表示)
+      </Typography>
       <Grid container alignItems='center' justifyContent='center' direction='column'>
+        <Grid item>
+          <RoadMapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
+        </Grid>
         <Grid item>
           {steps.map((step, i) => (
             <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
