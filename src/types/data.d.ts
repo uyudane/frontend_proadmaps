@@ -18,6 +18,9 @@ export type Step = {
   month: string;
 };
 
+// ロードマップ&ステップス(ロードマップの作成、修正時に使用)
+export type RoadmapAndSteps = Roadmap & { steps: Step[] };
+
 // プロフィールデータ
 export type User = {
   sub?: string;

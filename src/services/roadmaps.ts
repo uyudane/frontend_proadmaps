@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
-import type { Roadmap } from 'types';
+import type { RoadmapAndSteps } from 'types';
 import { roadmapsIndex, roadmapsShow } from 'urls/index';
 
 export const fetchRoadmaps = async () => {
@@ -15,8 +15,8 @@ export const fetchRoadmaps = async () => {
 };
 
 export const useGetRoadMap = (id: string) => {
-  const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
-  const fetcher = async (url: any) => {
+  const token = useRecoilValue(tokenState);
+  const fetcher = async (url: string) => {
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export const useGetRoadMap = (id: string) => {
   };
 };
 
-export const postRoadmap = async (params: Roadmap, token: any) => {
+export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
   try {
     const res = await axios.post(roadmapsIndex, params, {
       headers: {

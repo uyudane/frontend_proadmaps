@@ -19,6 +19,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
   const execPostRoadmap = async () => {
+    console.log(steps);
     const result = await postRoadmap(
       {
         title: roadmap.title,
@@ -26,12 +27,13 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
         introduction: roadmap.introduction,
         start_skill: roadmap.start_skill,
         end_skill: roadmap.end_skill,
+        steps: steps,
       },
       token,
     );
-    resetRoadmap();
-    resetSteps();
     if (result === 'OK') {
+      resetRoadmap();
+      resetSteps();
       router.push({
         pathname: `/`,
         query: { message: 'ロードマップを投稿しました' },
