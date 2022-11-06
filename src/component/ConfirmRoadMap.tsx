@@ -21,6 +21,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
     const result = await postRoadmap(
       {
         title: roadmap.title,
+        tags: roadmap.tags,
         introduction: roadmap.introduction,
         start_skill: roadmap.start_skill,
         end_skill: roadmap.end_skill,

@@ -7,7 +7,7 @@ const OgpCard = ({ url }: { url: string }) => {
   if (isError) return <div></div>;
   return (
     <>
-      <Box sx={{ maxWidth: 'sm', border: 1 }}>
+      <Box sx={{ maxWidth: 'sm', border: 1, m: 1 }}>
         <Grid container>
           <Grid item xs={12}>
             <Link href={url} target='_blank' rel='noopener noreferrer' underline='hover'>
@@ -25,7 +25,7 @@ const OgpCard = ({ url }: { url: string }) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <img src={urlData.image} height={120} width={200} />
+                  <img src={urlData.image} height={100} width={150} />
                 </Grid>
               </Grid>
             </Link>
