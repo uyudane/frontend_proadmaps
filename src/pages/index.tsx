@@ -44,9 +44,9 @@ const Home: NextPage = ({ roadmaps }: any) => {
             // <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
             <RoadMapCard
               key={`roadmap${i}`}
-              roadmap={roadmap['roadmap']}
-              steps={roadmap['steps']}
-              user={roadmap['user']}
+              roadmap={roadmap}
+              steps={roadmap.steps}
+              user={roadmap.user}
             />
           ))}
         </Grid>
