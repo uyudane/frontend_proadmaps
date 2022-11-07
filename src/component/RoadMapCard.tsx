@@ -1,7 +1,6 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Grid, Paper } from '@mui/material';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Roadmap, Step, UserState } from 'types';
@@ -16,7 +15,7 @@ const RoadMapCard = ({
   user: UserState;
 }) => {
   return (
-    <Paper sx={{ border: 0.5, p: 1, width: '30%', maxWidth: 'md', borderRadius: '16px' }}>
+    <Paper sx={{ border: 0.5, p: 1, width: '500px', borderRadius: '16px' }}>
       <Grid container>
         <Grid item xs={12}>
           <Typography variant='body1' color='text.secondary'>
@@ -30,13 +29,13 @@ const RoadMapCard = ({
         </Grid>
         <Grid item xs={12}>
           <Typography variant='body2' sx={{ mb: 1 }} color='text.secondary' lineHeight={1.5}>
-            開始時スキル: {roadmap.start_skill}
+            開始時スキル: {roadmap.start_skill.slice(0, 50)}
             <br />
-            終了時スキル: {roadmap.end_skill}
+            終了時スキル: {roadmap.end_skill.slice(0, 50)}
             <br />
             総ステップ数: {steps.length}
             <br />
-            概要: {roadmap.introduction.slice(0, 60)}...
+            概要: {roadmap.introduction.slice(0, 100)}...
           </Typography>
         </Grid>
         <Grid item xs={12}>

@@ -1,4 +1,4 @@
-import { Button, Box, Grid, Typography, List } from '@mui/material';
+import { Button, Box, Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import RoadMapCard from './RoadMapCard';
@@ -60,9 +60,7 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
       <Typography variant='h6' component='div'>
         ②詳細プレビュー(詳細ページで表示)
       </Typography>
-      <Box display='flex' justifyContent='center' alignItems='center'>
-        <RoadMapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
-      </Box>
+      <RoadMapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
       <Grid container alignItems='center' justifyContent='center'>
         {steps.map((step, i) => (
           <StepCard key={`step${i}`} step={step} index={String(i + 1)} />

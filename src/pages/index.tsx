@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { getStepUtilityClass, Grid } from '@mui/material';
+import { getStepUtilityClass, Grid, Box } from '@mui/material';
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
@@ -37,18 +37,14 @@ const Home: NextPage = ({ roadmaps }: any) => {
     <>
       <Meta pageTitle='トップ' />
       <div>記事一覧/検索画面</div>
-      <Grid container alignItems='center' justifyContent='center' direction='column'>
-        <Grid item>
-          {roadmaps.map((roadmap: any, i: any) => (
-            // <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
-            <RoadMapCard
-              key={`roadmap${i}`}
-              roadmap={roadmap}
-              steps={roadmap.steps}
-              user={roadmap.user}
-            />
-          ))}
-        </Grid>
+      <Grid container direction='row' spacing={2}>
+        {roadmaps.map((roadmap: any, i: any) => (
+          <Grid item xs={6} key={`roadmap-card${i}`}>
+            <Box display='flex' justifyContent='center'>
+              <RoadMapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
+            </Box>
+          </Grid>
+        ))}
       </Grid>
     </>
   );
