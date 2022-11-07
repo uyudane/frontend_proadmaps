@@ -1,5 +1,5 @@
 import { Button, Container, Stack, TextField, Grid, Box, Autocomplete, Chip } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import MakeRoadMapInfo from './MakeRoadMapInfo';
@@ -11,6 +11,17 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
 
+  // tagの初期値の設定について、MUIのAutocompleteのmultipleを使用していたところ、
+  // リロードすると「Hydration failed because the initial UI does not match what was rendered on the server」のエラーが出力。
+  // おそらく、タグを表現しているチップが原因でサーバ側とクライアントでレンダリング結果が不一致となっているため、
+  // useEffectで設定するようにする。
+  useEffect(() => {
+    setValue(
+      'tags',
+      roadmap.tags.map((tag: Tag) => tag.name),
+    );
+  }, []);
+
   const setRoadmap = useSetRecoilState(roadmapState);
   const roadmap = useRecoilValue(roadmapState);
 
@@ -20,11 +31,13 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<RoadmapWhenMaking>({
     defaultValues: {
       ...roadmap,
-      tags: roadmap.tags.map((tag: Tag) => tag.name),
+      tags: [],
+      // tags: roadmap.tags.map((tag: Tag) => tag.name),
     },
   });
   // (あとでデフォルト値を設定するために使用する)
