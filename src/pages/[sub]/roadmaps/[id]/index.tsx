@@ -31,8 +31,10 @@ export const getStaticPaths = async () => {
   if (!users) return { paths: [], fallback: false };
   const paths = [];
   for (const user of users) {
-    for (const roadmap of user.roadmaps) {
-      paths.push({ params: { sub: `${user.sub}`, id: `${roadmap.id}` } });
+    if (typeof user.roadmaps !== 'undefined' && user.roadmaps.length > 0) {
+      for (const roadmap of user.roadmaps) {
+        paths.push({ params: { sub: `${user.sub}`, id: `${roadmap.id}` } });
+      }
     }
   }
   return { paths, fallback: false };
