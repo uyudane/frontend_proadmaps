@@ -34,9 +34,9 @@ const UserPage = ({ user }: any) => {
 };
 
 export const getStaticPaths = async () => {
-  const result: Users = await getUsers();
-  if (!result) return { paths: [], fallback: false };
-  const paths = result.map((user) => ({
+  const users: Users = await getUsers();
+  if (!users) return { paths: [], fallback: false };
+  const paths = users.map((user) => ({
     params: { sub: `${user.sub}` },
   }));
   return { paths, fallback: false };

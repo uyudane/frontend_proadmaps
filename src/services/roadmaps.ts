@@ -5,6 +5,15 @@ import tokenState from 'recoil/atoms/tokenState';
 import type { RoadmapAndSteps } from 'types';
 import { roadmapsIndex, roadmapsShow } from 'urls/index';
 
+export const getRoadmap = async (id: string) => {
+  try {
+    const res = await axios.get(roadmapsShow(id));
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getRoadmaps = async () => {
   try {
     const res = await axios.get(roadmapsIndex);

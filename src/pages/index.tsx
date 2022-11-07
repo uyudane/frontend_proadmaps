@@ -56,10 +56,9 @@ const Home: NextPage = ({ roadmaps }: any) => {
 };
 
 export const getStaticProps = async () => {
-  const result = await getRoadmaps();
-  console.log(result);
+  const roadmaps = await getRoadmaps();
 
-  return { props: { roadmaps: result } };
+  return { props: { roadmaps: roadmaps } };
 };
 
 export default Home;
