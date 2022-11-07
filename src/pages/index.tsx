@@ -12,7 +12,6 @@ import { getMyUser } from 'services/users';
 import type { User, Roadmap } from 'types';
 
 const Home: NextPage = ({ roadmaps }: any) => {
-  console.log(roadmaps);
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
