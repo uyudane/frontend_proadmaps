@@ -1,6 +1,6 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import { Grid, Link } from '@mui/material';
+import { Grid, Link, List, ListItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -10,33 +10,34 @@ import { Step } from 'types';
 const StepCard = ({ step, index }: { step: Step; index: string }) => {
   return (
     <>
-      <Box sx={{ maxWidth: 'lg', m: 2, border: 2 }}>
-        <Grid container alignItems='center' justifyContent='center'>
-          <Grid container sx={{ bgcolor: '#143F6B' }}>
-            <Grid item xs={12}>
-              <Typography variant='subtitle1' component='div' color='white'>
-                {`ステップ${index}`}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Link href={step.url} target='_blank' rel='noopener noreferrer' underline='hover'>
-                <Typography variant='h6' component='div' color='white'>
-                  {step.title}
-                </Typography>
-              </Link>
-            </Grid>
+      {/* <ListItem sx={{ width: '100%', p: 3, m: 1, bgcolor: '#eeeeee' }}> */}
+      <Box sx={{ width: '80%', m: 2, border: 2 }}>
+        <Grid container sx={{ bgcolor: '#143F6B' }}>
+          <Grid item xs={12}>
+            <Typography variant='subtitle1' component='div' color='white'>
+              {`ステップ${index}`}
+            </Typography>
           </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
-                紹介文/コメント
+          <Grid item xs={12}>
+            <Link href={step.url} target='_blank' rel='noopener noreferrer' underline='hover'>
+              <Typography variant='h6' component='div' color='white'>
+                {step.title}
               </Typography>
-              <Typography variant='body1' component='div' sx={{ mb: 1 }} lineHeight={1.5}>
-                {step.introduction}
-              </Typography>
-            </Grid>
+            </Link>
           </Grid>
-          <Grid container xs={5}>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
+              紹介文/コメント
+            </Typography>
+            <Typography variant='body1' component='div' sx={{ mb: 1 }} lineHeight={1.5}>
+              {step.introduction}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={5}>
             <Grid item xs={12}>
               <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
                 所要時間
@@ -54,21 +55,28 @@ const StepCard = ({ step, index }: { step: Step; index: string }) => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid container xs={6}>
+          <Grid item xs={6}>
             <Grid item xs={12}>
               <OgpCard url={step.url} />
             </Grid>
           </Grid>
-          <Grid container xs={1} direction='column' justifyContent='center' alignItems='center'>
-            <IconButton aria-label='add to favorites'>
-              <FavoriteIcon fontSize='small' />
-            </IconButton>
-            <IconButton aria-label='share'>
-              <ShareIcon fontSize='small' />
-            </IconButton>
+          <Grid item xs={1}>
+            <Grid container direction='column' justifyContent='center' alignItems='flex-end'>
+              <Grid item>
+                <IconButton aria-label='add to favorites'>
+                  <FavoriteIcon fontSize='small' />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton aria-label='share'>
+                  <ShareIcon fontSize='small' />
+                </IconButton>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
+      {/* </ListItem> */}
     </>
   );
 };

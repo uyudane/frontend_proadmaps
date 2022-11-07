@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import Meta from 'component/Meta';
 import RoadMapIntroduction from 'component/RoadMapIntroduction';
@@ -11,16 +11,16 @@ const UserPage = ({ roadmap }: any) => {
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
-      <Grid container alignItems='center' justifyContent='center' direction='column'>
-        <Grid item>
+      <Box sx={{ width: '100%' }}>
+        <Box display='flex' justifyContent='center' alignItems='center'>
           <RoadMapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
-        </Grid>
-        <Grid item>
+        </Box>
+        <Grid container alignItems='center' justifyContent='center'>
           {roadmap.steps.map((step: any, i: any) => (
             <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
           ))}
         </Grid>
-      </Grid>
+      </Box>
     </>
   );
 };

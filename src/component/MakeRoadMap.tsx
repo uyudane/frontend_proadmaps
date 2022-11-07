@@ -120,6 +120,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
                         // id='tags-filled'
                         options={top100Films.map((option) => option)}
                         freeSolo
+                        // 自由記述をタグのChipにする処理
                         renderTags={(value: readonly string[], getTagProps) =>
                           value.map((option: string, index: number) => (
                             <Chip
