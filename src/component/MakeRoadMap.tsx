@@ -5,7 +5,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import MakeRoadMapInfo from './MakeRoadMapInfo';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
-import type { Roadmap } from 'types';
+import type { Tag, RoadmapWhenMaking } from 'types';
 
 const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
@@ -21,16 +21,12 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Roadmap>({
+  } = useForm<RoadmapWhenMaking>({
     defaultValues: {
-      title: roadmap.title,
-      tags: roadmap.tags,
-      introduction: roadmap.introduction,
-      start_skill: roadmap.start_skill,
-      end_skill: roadmap.end_skill,
+      ...roadmap,
+      tags: roadmap.tags.map((tag: Tag) => tag.name),
     },
   });
-
   // (あとでデフォルト値を設定するために使用する)
   // useEffect(() => {
   //   reset({
@@ -39,9 +35,13 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // }, [user, reset]);
 
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<Roadmap> = async (data) => {
-    // バリデーションチェックOK！なときに行う処理を追加
-    setRoadmap(data);
+  const onSubmit: SubmitHandler<RoadmapWhenMaking> = async (data) => {
+    // バリデーションチェックOKなときに行う処理を追加
+    setRoadmap({
+      ...data,
+      // tagのデータについて、DBの設定に合わせてnameプロパティのオブジェクトに変換する
+      tags: data.tags.map((tag) => ({ name: tag })),
+    });
     handleNext();
   };
 

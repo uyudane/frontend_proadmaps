@@ -29,7 +29,9 @@ const RoadMapIntroduction = ({
               </Typography>
             </Grid>
             <Grid container>
-              <Typography variant='body1'>タグ: {roadmap.tags.join(',')}</Typography>
+              <Typography variant='body1'>
+                タグ: {roadmap.tags.map((tag) => tag.name).join(',')}
+              </Typography>
             </Grid>
             <Grid container>
               <Typography variant='body1' sx={{ mb: 1 }} lineHeight={1.5}>

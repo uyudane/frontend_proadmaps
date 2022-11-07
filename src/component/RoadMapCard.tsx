@@ -41,7 +41,14 @@ const RoadMapCard = ({
             </Typography>
           </Grid>
           <Grid container>
-            <Typography variant='body2'>タグ: {roadmap.tags.join(',').slice(0, 50)}...</Typography>
+            <Typography variant='body2'>
+              タグ:{' '}
+              {roadmap.tags
+                .map((tag) => tag.name)
+                .join(',')
+                .slice(0, 50)}
+              ...
+            </Typography>
           </Grid>
           <Grid container direction='row' justifyContent='flex-end' alignItems='flex-end'>
             <IconButton aria-label='add to favorites'>
