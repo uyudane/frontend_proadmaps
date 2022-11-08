@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Roadmap, Step, UserState } from 'types';
 
-const RoadMapCard = ({
+const RoadmapCard = ({
   roadmap,
   steps,
   user,
@@ -87,4 +87,4 @@ const RoadMapCard = ({
   );
 };
 
-export default RoadMapCard;
+export default RoadmapCard;

@@ -24,7 +24,7 @@ export const getRoadmaps = async () => {
 };
 
 // (必要に応じて消す)SWRを使用した取得を作成したが、おそらく不要な気がする。
-// export const useGetRoadMap = (id: string) => {
+// export const useGetRoadmap = (id: string) => {
 //   const token = useRecoilValue(tokenState);
 //   const fetcher = async (url: string) => {
 //     const res = await axios.get(url, {

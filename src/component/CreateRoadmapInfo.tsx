@@ -12,7 +12,7 @@ const style = {
   p: 4,
 };
 
-const CreateRoadMapInfo = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
+const CreateRoadmapInfo = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
   return (
     <>
       <Modal
@@ -40,4 +40,4 @@ const CreateRoadMapInfo = ({ open, handleClose }: { open: boolean; handleClose: 
   );
 };
 
-export default CreateRoadMapInfo;
+export default CreateRoadmapInfo;

@@ -1,8 +1,8 @@
 import { Button, Box, Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import RoadMapCard from './RoadMapCard';
-import RoadMapIntroduction from './RoadMapIntroduction';
+import RoadmapCard from './RoadmapCard';
+import RoadmapIntroduction from './RoadmapIntroduction';
 import StepCard from './StepCard';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
@@ -10,7 +10,7 @@ import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 import { postRoadmap } from 'services/roadmaps';
 
-const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
+const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
   const router = useRouter();
   const token = useRecoilValue(tokenState);
   const roadmap = useRecoilValue(roadmapState);
@@ -55,12 +55,12 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
         ①概要プレビュー(一覧ページで表示)
       </Typography>
       <Box display='flex' justifyContent='center' alignItems='center'>
-        <RoadMapCard roadmap={roadmap} steps={steps} user={current_user} />
+        <RoadmapCard roadmap={roadmap} steps={steps} user={current_user} />
       </Box>
       <Typography variant='h6' component='div'>
         ②詳細プレビュー(詳細ページで表示)
       </Typography>
-      <RoadMapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
+      <RoadmapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
       <Grid container alignItems='center' justifyContent='center'>
         {steps.map((step, i) => (
           <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
@@ -80,4 +80,4 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   );
 };
 
-export default ConfirmRoadMap;
+export default ConfirmRoadmap;

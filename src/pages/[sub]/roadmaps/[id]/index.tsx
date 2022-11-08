@@ -2,7 +2,7 @@ import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import Meta from 'component/Meta';
-import RoadMapIntroduction from 'component/RoadMapIntroduction';
+import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
 import { getUsers } from 'services/users';
@@ -18,7 +18,7 @@ const RoadmapDeteilPage = ({ roadmap }: any) => {
       <Meta pageTitle='ロードマップ詳細' />
       <Box sx={{ width: '100%' }}>
         <Box display='flex' justifyContent='center' alignItems='center'>
-          <RoadMapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
+          <RoadmapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
         </Box>
         <Grid container alignItems='center' justifyContent='center'>
           {roadmap.steps.map((step: any, i: any) => (

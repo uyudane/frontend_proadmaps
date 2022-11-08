@@ -5,8 +5,8 @@ import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import { NextPage } from 'next';
 import { useState } from 'react';
-import ConfirmRoadMap from 'component/ConfirmRoadMap';
-import CreateRoadMap from 'component/CreateRoadMap';
+import ConfirmRoadmap from 'component/ConfirmRoadmap';
+import CreateRoadmap from 'component/CreateRoadmap';
 import CreateSteps from 'component/CreateSteps';
 import Meta from 'component/Meta';
 
@@ -41,9 +41,9 @@ const CreateRoadmapPage: NextPage = () => {
           })}
         </Stepper>
         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-        {activeStep === 0 && <CreateRoadMap handleNext={handleNext} />}
+        {activeStep === 0 && <CreateRoadmap handleNext={handleNext} />}
         {activeStep === 1 && <CreateSteps handleNext={handleNext} handleBack={handleBack} />}
-        {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
+        {activeStep === 2 && <ConfirmRoadmap handleBack={handleBack} />}
       </Box>
     </>
   );

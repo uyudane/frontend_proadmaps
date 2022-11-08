@@ -2,12 +2,12 @@ import { Button, Container, Stack, TextField, Grid, Box, Autocomplete, Chip } fr
 import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import CreateRoadMapInfo from './CreateRoadMapInfo';
+import CreateRoadmapInfo from './CreateRoadmapInfo';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
 import type { Tag, RoadmapWhenCreating } from 'types';
 
-const CreateRoadMap = ({ handleNext }: { handleNext: () => void }) => {
+const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
 
@@ -78,7 +78,7 @@ const CreateRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   return (
     <>
       <Meta pageTitle='プロフィール編集' />
-      <CreateRoadMapInfo open={Infoopen} handleClose={handleInfoClose} />
+      <CreateRoadmapInfo open={Infoopen} handleClose={handleInfoClose} />
       <Grid container>
         <Grid item xs={12} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
           <Container maxWidth='md' sx={{ pt: 1 }}>
@@ -249,4 +249,4 @@ const CreateRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   );
 };
 
-export default CreateRoadMap;
+export default CreateRoadmap;

@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Roadmap, Step, UserState } from 'types';
 
-const RoadMapIntroduction = ({
+const RoadmapIntroduction = ({
   roadmap,
   steps,
   user,
@@ -82,4 +82,4 @@ const RoadMapIntroduction = ({
   );
 };
 
-export default RoadMapIntroduction;
+export default RoadmapIntroduction;
