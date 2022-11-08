@@ -14,7 +14,7 @@ export type Tag = {
 
 // ロードマップデータのtagsをstring[]にしたバージョン
 // ロードマップ作成時に使用するAutocompleでは、オブジェクトが扱えないため。
-export type RoadmapWhenMaking = {
+export type RoadmapWhenCreating = {
   id?: number;
   title: string;
   tags: string[];

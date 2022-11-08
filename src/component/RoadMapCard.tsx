@@ -29,7 +29,7 @@ const RoadMapCard = ({
         </Grid>
         <Grid item xs={12}>
           {/* ロードマップページ(作成ページ)の時はリンクにせず、それ以外の時はリンクにする */}
-          {router.pathname === '/roadmap' ? (
+          {router.pathname === '/roadmap/new' ? (
             <Typography
               variant='subtitle1'
               component='a'

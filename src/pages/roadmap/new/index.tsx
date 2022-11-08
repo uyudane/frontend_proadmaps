@@ -1,25 +1,18 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import { NextPage } from 'next';
-import { useState, ReactNode, createContext } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useState } from 'react';
 import ConfirmRoadMap from 'component/ConfirmRoadMap';
-import MakeRoadMap from 'component/MakeRoadMap';
-import MakeSteps from 'component/MakeSteps';
+import CreateRoadMap from 'component/CreateRoadMap';
+import CreateSteps from 'component/CreateSteps';
 import Meta from 'component/Meta';
-
-// recoil
-import tokenState from 'recoil/atoms/tokenState';
-
-import { Roadmap } from 'types';
 
 const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
 
-const RoadmapPage: NextPage = () => {
+const CreateRoadmapPage: NextPage = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -48,12 +41,12 @@ const RoadmapPage: NextPage = () => {
           })}
         </Stepper>
         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-        {activeStep === 0 && <MakeRoadMap handleNext={handleNext} />}
-        {activeStep === 1 && <MakeSteps handleNext={handleNext} handleBack={handleBack} />}
+        {activeStep === 0 && <CreateRoadMap handleNext={handleNext} />}
+        {activeStep === 1 && <CreateSteps handleNext={handleNext} handleBack={handleBack} />}
         {activeStep === 2 && <ConfirmRoadMap handleBack={handleBack} />}
       </Box>
     </>
   );
 };
 
-export default RoadmapPage;
+export default CreateRoadmapPage;

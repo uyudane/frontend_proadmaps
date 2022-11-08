@@ -5,7 +5,7 @@ import Meta from 'component/Meta';
 import RoadMapIntroduction from 'component/RoadMapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
-import { getUsers, getUser } from 'services/users';
+import { getUsers } from 'services/users';
 import type { User, Roadmap } from 'types';
 
 const RoadmapDeteilPage = ({ roadmap }: any) => {

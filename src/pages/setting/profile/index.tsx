@@ -1,5 +1,4 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { ResetTv } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';

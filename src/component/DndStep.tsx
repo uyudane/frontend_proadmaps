@@ -1,5 +1,5 @@
 import DragHandleIcon from '@mui/icons-material/DragHandle';
-import { Grid, ListItem, ListItemText, Typography } from '@mui/material';
+import { Grid, ListItem, ListItemText } from '@mui/material';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
