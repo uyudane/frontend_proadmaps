@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
 import type { RoadmapAndSteps } from 'types';
-import { roadmapsIndex, roadmapsShow } from 'urls/index';
+import { roadmapsIndex, roadmapsShow, ogpShow } from 'urls/index';
 
 export const getRoadmap = async (id: string) => {
   try {
@@ -57,7 +57,7 @@ export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
 
 export const getURLData = async ({ url }: { url: string }) => {
   try {
-    const res = await axios.get('http://localhost:9000/api/ogp', { params: { url: url } });
+    const res = await axios.get(ogpShow, { params: { url: url } });
     return res.data;
   } catch (error) {
     return error;
