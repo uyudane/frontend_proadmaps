@@ -3,6 +3,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Grid, Paper } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Roadmap, Step, UserState } from 'types';
 
 const RoadMapCard = ({
@@ -14,6 +16,9 @@ const RoadMapCard = ({
   steps: Step[];
   user: UserState;
 }) => {
+  // ロードマップカードタイトルのリンク有無に使用
+  const router = useRouter();
+
   return (
     <Paper sx={{ border: 0.5, p: 1, width: '500px', borderRadius: '16px' }}>
       <Grid container>
@@ -23,9 +28,28 @@ const RoadMapCard = ({
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='subtitle1' component='div' sx={{ mb: 0.5 }}>
-            {roadmap.title}
-          </Typography>
+          {/* ロードマップページ(作成ページ)の時はリンクにせず、それ以外の時はリンクにする */}
+          {router.pathname === '/roadmap' ? (
+            <Typography
+              variant='subtitle1'
+              component='a'
+              sx={{ mb: 0.5, textDecoration: 'underline' }}
+              color='primary'
+            >
+              {roadmap.title}
+            </Typography>
+          ) : (
+            <Link href={`${user.sub}/roadmaps/${roadmap.id}`}>
+              <Typography
+                variant='subtitle1'
+                component='a'
+                sx={{ mb: 0.5, textDecoration: 'underline', cursor: 'pointer' }}
+                color='primary'
+              >
+                {roadmap.title}
+              </Typography>
+            </Link>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography variant='body2' sx={{ mb: 1 }} color='text.secondary' lineHeight={1.5}>
