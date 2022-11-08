@@ -1,13 +1,18 @@
 import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
 import Meta from 'component/Meta';
 import RoadMapIntroduction from 'component/RoadMapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
-import { getUsers } from 'services/users';
+import { getUsers, getUser } from 'services/users';
 import type { User, Roadmap } from 'types';
 
-const UserPage = ({ roadmap }: any) => {
+const RoadmapDeteilPage = ({ roadmap }: any) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <h3>Loading...</h3>;
+  }
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
@@ -37,7 +42,7 @@ export const getStaticPaths = async () => {
       }
     }
   }
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
@@ -45,7 +50,11 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     throw new Error('params is undefined');
   }
   const roadmap = await getRoadmap(String(params.id));
-  return { props: { roadmap: roadmap } };
+  if (roadmap.user.sub === params.sub) {
+    return { props: { roadmap: roadmap }, revalidate: 5 };
+  } else {
+    throw new Error('params is undefined');
+  }
 };
 
-export default UserPage;
+export default RoadmapDeteilPage;

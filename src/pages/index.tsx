@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { getStepUtilityClass, Grid, Box } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
@@ -9,7 +9,6 @@ import Meta from 'component/Meta';
 import RoadMapCard from 'component/RoadMapCard';
 import { getRoadmaps } from 'services/roadmaps';
 import { getMyUser } from 'services/users';
-import type { User, Roadmap } from 'types';
 
 const Home: NextPage = ({ roadmaps }: any) => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
@@ -53,7 +52,7 @@ const Home: NextPage = ({ roadmaps }: any) => {
 export const getStaticProps = async () => {
   const roadmaps = await getRoadmaps();
 
-  return { props: { roadmaps: roadmaps } };
+  return { props: { roadmaps: roadmaps }, revalidate: 5 };
 };
 
 export default Home;

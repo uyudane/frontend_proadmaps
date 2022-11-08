@@ -1,5 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
 import Meta from 'component/Meta';
 import ProfileEditButton from 'component/ProfileEditButton';
 import SocialButton from 'component/SocialButton';
@@ -8,6 +9,10 @@ import { getUsers, getUser } from 'services/users';
 import type { User, Users } from 'types';
 
 const UserPage = ({ user }: any) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <h3>Loading...</h3>;
+  }
   return (
     <>
       <Meta pageTitle='プロフィール' />
@@ -39,15 +44,15 @@ export const getStaticPaths = async () => {
   const paths = users.map((user) => ({
     params: { sub: `${user.sub}` },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
     throw new Error('params is undefined');
   }
-  const result: User = await getUser(String(params.sub));
-  return { props: { user: result } };
+  const user: User = await getUser(String(params.sub));
+  return { props: { user: user }, revalidate: 5 };
 };
 
 export default UserPage;
