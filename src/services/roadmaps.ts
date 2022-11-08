@@ -71,7 +71,7 @@ export const useURLData = (url: string) => {
     const res = await axios.get(apiURL, { params: { url } });
     return res.data;
   };
-  const { data, error } = useSWR(['http://localhost:9000/api/ogp', url], fetcher);
+  const { data, error } = useSWR([ogpShow, url], fetcher);
   return {
     urlData: data,
     isLoading: !error && !data,
