@@ -1,5 +1,21 @@
 // ロードマップデータ
 export type Roadmap = {
+  id?: number;
+  title: string;
+  tags: Tag[];
+  introduction: string;
+  start_skill: string;
+  end_skill: string;
+};
+
+export type Tag = {
+  name: string;
+};
+
+// ロードマップデータのtagsをstring[]にしたバージョン
+// ロードマップ作成時に使用するAutocompleでは、オブジェクトが扱えないため。
+export type RoadmapWhenMaking = {
+  id?: number;
   title: string;
   tags: string[];
   introduction: string;

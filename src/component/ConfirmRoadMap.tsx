@@ -19,7 +19,6 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
   const execPostRoadmap = async () => {
-    console.log(steps);
     const result = await postRoadmap(
       {
         title: roadmap.title,
@@ -42,37 +41,30 @@ const ConfirmRoadMap = ({ handleBack }: { handleBack: () => void }) => {
   };
   return (
     <>
-      <Grid
-        container
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
         sx={{
           bgcolor: '#F2DF3A',
-          justifyContent: 'center',
         }}
       >
-        <Typography variant='h6' component='div'>
-          まだ投稿は完了していません!
-        </Typography>
-      </Grid>
+        <Typography variant='h6'>まだ投稿は完了していません!</Typography>
+      </Box>
       <Typography variant='h6' component='div'>
         ①概要プレビュー(一覧ページで表示)
       </Typography>
-      <Grid container alignItems='center' justifyContent='center' direction='column'>
-        <Grid item>
-          <RoadMapCard roadmap={roadmap} steps={steps} user={current_user} />
-        </Grid>
-      </Grid>
+      <Box display='flex' justifyContent='center' alignItems='center'>
+        <RoadMapCard roadmap={roadmap} steps={steps} user={current_user} />
+      </Box>
       <Typography variant='h6' component='div'>
         ②詳細プレビュー(詳細ページで表示)
       </Typography>
-      <Grid container alignItems='center' justifyContent='center' direction='column'>
-        <Grid item>
-          <RoadMapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
-        </Grid>
-        <Grid item>
-          {steps.map((step, i) => (
-            <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
-          ))}
-        </Grid>
+      <RoadMapIntroduction roadmap={roadmap} steps={steps} user={current_user} />
+      <Grid container alignItems='center' justifyContent='center'>
+        {steps.map((step, i) => (
+          <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
+        ))}
       </Grid>
       <br />
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

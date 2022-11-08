@@ -1,15 +1,26 @@
 import { Button, Container, Stack, TextField, Grid, Box, Autocomplete, Chip } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import MakeRoadMapInfo from './MakeRoadMapInfo';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
-import type { Roadmap } from 'types';
+import type { Tag, RoadmapWhenMaking } from 'types';
 
 const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
+
+  // tagの初期値の設定について、MUIのAutocompleteのmultipleを使用していたところ、
+  // リロードすると「Hydration failed because the initial UI does not match what was rendered on the server」のエラーが出力。
+  // おそらく、タグを表現しているチップが原因でサーバ側とクライアントでレンダリング結果が不一致となっているため、
+  // useEffectで設定するようにする。
+  useEffect(() => {
+    setValue(
+      'tags',
+      roadmap.tags.map((tag: Tag) => tag.name),
+    );
+  }, []);
 
   const setRoadmap = useSetRecoilState(roadmapState);
   const roadmap = useRecoilValue(roadmapState);
@@ -20,17 +31,15 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<Roadmap>({
+  } = useForm<RoadmapWhenMaking>({
     defaultValues: {
-      title: roadmap.title,
-      tags: roadmap.tags,
-      introduction: roadmap.introduction,
-      start_skill: roadmap.start_skill,
-      end_skill: roadmap.end_skill,
+      ...roadmap,
+      tags: [],
+      // tags: roadmap.tags.map((tag: Tag) => tag.name),
     },
   });
-
   // (あとでデフォルト値を設定するために使用する)
   // useEffect(() => {
   //   reset({
@@ -39,9 +48,13 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // }, [user, reset]);
 
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<Roadmap> = async (data) => {
-    // バリデーションチェックOK！なときに行う処理を追加
-    setRoadmap(data);
+  const onSubmit: SubmitHandler<RoadmapWhenMaking> = async (data) => {
+    // バリデーションチェックOKなときに行う処理を追加
+    setRoadmap({
+      ...data,
+      // tagのデータについて、DBの設定に合わせてnameプロパティのオブジェクトに変換する
+      tags: data.tags.map((tag) => ({ name: tag })),
+    });
     handleNext();
   };
 
@@ -107,6 +120,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
                         // id='tags-filled'
                         options={top100Films.map((option) => option)}
                         freeSolo
+                        // 自由記述をタグのChipにする処理
                         renderTags={(value: readonly string[], getTagProps) =>
                           value.map((option: string, index: number) => (
                             <Chip

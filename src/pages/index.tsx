@@ -1,14 +1,17 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { getStepUtilityClass, Grid, Box } from '@mui/material';
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
 import Meta from 'component/Meta';
+import RoadMapCard from 'component/RoadMapCard';
+import { getRoadmaps } from 'services/roadmaps';
 import { getMyUser } from 'services/users';
-import type { User } from 'types';
+import type { User, Roadmap } from 'types';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ roadmaps }: any) => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
@@ -34,10 +37,23 @@ const Home: NextPage = () => {
     <>
       <Meta pageTitle='トップ' />
       <div>記事一覧/検索画面</div>
-      {isAuthenticated && <div>{user!.name}</div>}
-      {isAuthenticated && <img src={user!.picture} />}
+      <Grid container direction='row' spacing={2}>
+        {roadmaps.map((roadmap: any, i: any) => (
+          <Grid item xs={6} key={`roadmap-card${i}`}>
+            <Box display='flex' justifyContent='center'>
+              <RoadMapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
+};
+
+export const getStaticProps = async () => {
+  const roadmaps = await getRoadmaps();
+
+  return { props: { roadmaps: roadmaps } };
 };
 
 export default Home;
