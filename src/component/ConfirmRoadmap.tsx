@@ -35,7 +35,7 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
       resetSteps();
       router.push({
         pathname: `/`,
-        query: { message: 'ロードマップを投稿しました' },
+        query: { successMessage: 'ロードマップを投稿しました' },
       });
     }
   };

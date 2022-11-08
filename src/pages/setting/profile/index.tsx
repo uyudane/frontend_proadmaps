@@ -40,7 +40,7 @@ const SettingProfilePage = () => {
     if (result === 'OK') {
       router.push({
         pathname: `/${current_user.sub}`,
-        query: { message: 'プロフィールを更新しました' },
+        query: { successMessage: 'プロフィールを更新しました' },
       });
     }
   };
