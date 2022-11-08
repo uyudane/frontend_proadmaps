@@ -39,7 +39,7 @@ export const getStaticPaths = async () => {
   const paths = users.map((user) => ({
     params: { sub: `${user.sub}` },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
