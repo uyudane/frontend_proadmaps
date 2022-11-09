@@ -10,6 +10,9 @@ import { getUsers } from 'services/users';
 import type { User, Roadmap } from 'types';
 
 const RoadmapDeteilPage = ({ roadmap }: any) => {
+  // step_number順に表示されるステップの順番を並び替える
+  const stepData = [...roadmap.steps];
+  const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
   const router = useRouter();
   if (router.isFallback) {
     return <h3>Loading...</h3>;
@@ -23,7 +26,7 @@ const RoadmapDeteilPage = ({ roadmap }: any) => {
           <RoadmapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
         </Box>
         <Grid container alignItems='center' justifyContent='center'>
-          {roadmap.steps.map((step: any, i: any) => (
+          {orderedSteps.map((step: any, i: any) => (
             <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
           ))}
         </Grid>

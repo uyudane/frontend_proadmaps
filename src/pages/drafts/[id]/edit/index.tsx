@@ -22,12 +22,10 @@ const EditRoadmapPage: NextPage = ({ roadmap }: any) => {
   const setSteps = useSetRecoilState(stepsState);
   useEffect(() => {
     setRoadmap({ ...roadmap });
-    // 編集時に順番を変えていた場合に、step_number順に並べ替える必要がある。
-    // const stepData = [{ ...roadmap.steps }];
-    // const orderedStep = stepData.sort((a: any, b: any) => {
-    //   return a.number < b.number ? -1 : 1;
-    // });
-    setSteps(roadmap.steps);
+    // step_number順に編集時に表示されるステップの順番を並び替える
+    const stepData = [...roadmap.steps];
+    const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
+    setSteps(orderedSteps);
   }, [roadmap]);
 
   const authentication = useAuthUser(roadmap.user);
