@@ -3,11 +3,11 @@ import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
 import type { RoadmapAndSteps } from 'types';
-import { roadmapsIndex, roadmapsShowEdit, ogpShow } from 'urls/index';
+import { roadmapsIndex, roadmapsShowEditDelete, ogpShow } from 'urls/index';
 
 export const getRoadmap = async (id: string) => {
   try {
-    const res = await axios.get(roadmapsShowEdit(id));
+    const res = await axios.get(roadmapsShowEditDelete(id));
     return res.data;
   } catch (error) {
     return error;
@@ -34,7 +34,7 @@ export const getRoadmaps = async () => {
 //     });
 //     return res.data;
 //   };
-//   const { data, error } = useSWR(roadmapsShowEdit(id), fetcher);
+//   const { data, error } = useSWR(roadmapsShowEditDelete(id), fetcher);
 //   return {
 //     roadmap: data,
 //     isLoading: !error && !data,
@@ -57,7 +57,7 @@ export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
 
 export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
   try {
-    const res = await axios.put(roadmapsShowEdit(String(params.id)), params, {
+    const res = await axios.put(roadmapsShowEditDelete(String(params.id)), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -68,6 +68,21 @@ export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
   }
 };
 
+export const deleteRoadmap = async (id: string, token: string) => {
+  try {
+    const res = await axios.delete(roadmapsShowEditDelete(String(id)), {
+      data: { param: '' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return 'OK';
+  } catch (error) {
+    return error;
+  }
+};
+
+// ステップ作成ダイアログで、外部URLからタイトルを取得する際に使用
 export const getURLData = async ({ url }: { url: string }) => {
   try {
     const res = await axios.get(ogpShow, { params: { url: url } });
