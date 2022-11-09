@@ -8,7 +8,7 @@ import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
-import { postRoadmap } from 'services/roadmaps';
+import { postRoadmap, editRoadmap } from 'services/roadmaps';
 
 const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
   const router = useRouter();
@@ -21,6 +21,7 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
   const execPostRoadmap = async () => {
     const result = await postRoadmap(
       {
+        id: roadmap.id,
         title: roadmap.title,
         tags: roadmap.tags,
         introduction: roadmap.introduction,
@@ -30,6 +31,31 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
       },
       token,
     );
+    return result;
+  };
+
+  const execEditRoadmap = async () => {
+    const result = await editRoadmap(
+      {
+        title: roadmap.title,
+        tags: roadmap.tags,
+        introduction: roadmap.introduction,
+        start_skill: roadmap.start_skill,
+        end_skill: roadmap.end_skill,
+        steps: steps,
+      },
+      token,
+    );
+    return result;
+  };
+
+  const execSubmit = () => {
+    let result = '';
+    if (router.pathname === '/drafts/[id]/edit') {
+      result = execEditRoadmap() as any;
+    } else {
+      result = execPostRoadmap() as any;
+    }
     if (result === 'OK') {
       resetRoadmap();
       resetSteps();
@@ -39,6 +65,7 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
       });
     }
   };
+
   return (
     <>
       <Box
@@ -72,7 +99,7 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button color='secondary' variant='contained' onClick={execPostRoadmap}>
+        <Button color='secondary' variant='contained' onClick={execSubmit}>
           finish
         </Button>
       </Box>

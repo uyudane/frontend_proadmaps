@@ -3,11 +3,11 @@ import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
 import type { RoadmapAndSteps } from 'types';
-import { roadmapsIndex, roadmapsShow, ogpShow } from 'urls/index';
+import { roadmapsIndex, roadmapsShowEdit, ogpShow } from 'urls/index';
 
 export const getRoadmap = async (id: string) => {
   try {
-    const res = await axios.get(roadmapsShow(id));
+    const res = await axios.get(roadmapsShowEdit(id));
     return res.data;
   } catch (error) {
     return error;
@@ -34,7 +34,7 @@ export const getRoadmaps = async () => {
 //     });
 //     return res.data;
 //   };
-//   const { data, error } = useSWR(roadmapsShow(id), fetcher);
+//   const { data, error } = useSWR(roadmapsShowEdit(id), fetcher);
 //   return {
 //     roadmap: data,
 //     isLoading: !error && !data,
@@ -45,6 +45,19 @@ export const getRoadmaps = async () => {
 export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
   try {
     const res = await axios.post(roadmapsIndex, params, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return 'OK';
+  } catch (error) {
+    return error;
+  }
+};
+
+export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
+  try {
+    const res = await axios.put(roadmapsShowEdit(String(params.id)), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
