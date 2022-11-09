@@ -59,7 +59,7 @@ const RoadmapCard = ({
             <br />
             総ステップ数: {steps.length}
             <br />
-            概要: {roadmap.introduction.slice(0, 100)}...
+            概要: {roadmap.introduction.slice(0, 100)}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -69,7 +69,6 @@ const RoadmapCard = ({
               .map((tag) => tag.name)
               .join(',')
               .slice(0, 50)}
-            ...
           </Typography>
         </Grid>
         <Grid container direction='row' justifyContent='flex-end' alignItems='flex-end'>

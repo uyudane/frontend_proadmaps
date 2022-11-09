@@ -24,7 +24,6 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
 
   const setRoadmap = useSetRecoilState(roadmapState);
   const roadmap = useRecoilValue(roadmapState);
-
   const [Infoopen, setInfoOpen] = useState(true);
   const handleInfoClose = () => setInfoOpen(false);
 
@@ -54,6 +53,7 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
       ...data,
       // tagのデータについて、DBの設定に合わせてnameプロパティのオブジェクトに変換する
       tags: data.tags.map((tag) => ({ name: tag })),
+      id: roadmap.id,
     });
     handleNext();
   };

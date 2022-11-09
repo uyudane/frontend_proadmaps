@@ -98,7 +98,7 @@ const CreateStepDialog = ({
       setSteps((oldSteps) => [
         ...oldSteps,
         {
-          id: getStepId!(),
+          id: currentStep?.id || getStepId!(),
           url: data.url,
           title: data.title,
           introduction: data.introduction,

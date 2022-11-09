@@ -21,7 +21,6 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
   const execPostRoadmap = async () => {
     const result = await postRoadmap(
       {
-        id: roadmap.id,
         title: roadmap.title,
         tags: roadmap.tags,
         introduction: roadmap.introduction,
@@ -37,6 +36,7 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
   const execEditRoadmap = async () => {
     const result = await editRoadmap(
       {
+        id: roadmap.id,
         title: roadmap.title,
         tags: roadmap.tags,
         introduction: roadmap.introduction,
@@ -49,12 +49,19 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
     return result;
   };
 
-  const execSubmit = () => {
+  const execSubmit = async () => {
     let result = '';
-    if (router.pathname === '/drafts/[id]/edit') {
-      result = execEditRoadmap() as any;
-    } else {
-      result = execPostRoadmap() as any;
+    switch (router.pathname) {
+      case '/roadmap/new':
+        result = (await execPostRoadmap()) as any;
+        break;
+      case '/drafts/[id]/edit':
+        result = (await execEditRoadmap()) as any;
+        break;
+      default:
+        // リファクト必要
+        console.log('エラー');
+        return;
     }
     if (result === 'OK') {
       resetRoadmap();
