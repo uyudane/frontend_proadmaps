@@ -4,17 +4,32 @@ import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import { GetServerSideProps, NextPage } from 'next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 import ConfirmRoadmap from 'component/ConfirmRoadmap';
 import CreateRoadmap from 'component/CreateRoadmap';
 import CreateSteps from 'component/CreateSteps';
 import Meta from 'component/Meta';
 import useAuthUser from 'hooks/useAuthUser';
+import roadmapState from 'recoil/atoms/roadmapState';
+import stepsState from 'recoil/atoms/stepsState';
 import { getRoadmap } from 'services/roadmaps';
 
 const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
 
 const EditRoadmapPage: NextPage = ({ roadmap }: any) => {
+  const setRoadmap = useSetRecoilState(roadmapState);
+  const setSteps = useSetRecoilState(stepsState);
+  useEffect(() => {
+    setRoadmap({ ...roadmap });
+    // 編集時に順番を変えていた場合に、step_number順に並べ替える必要がある。
+    // const stepData = [{ ...roadmap.steps }];
+    // const orderedStep = stepData.sort((a: any, b: any) => {
+    //   return a.number < b.number ? -1 : 1;
+    // });
+    setSteps(roadmap.steps);
+  }, [roadmap]);
+
   const authentication = useAuthUser(roadmap.user);
 
   const [activeStep, setActiveStep] = useState(0);

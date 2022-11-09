@@ -175,7 +175,6 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
                         sx={{ width: '50%', bgcolor: '#ffffff' }}
                         freeSolo
                         autoSelect
-                        disableClearable
                         {...field}
                         options={[
                           'プログラミング完全未経験',
@@ -209,7 +208,6 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
                         sx={{ width: '50%', bgcolor: '#ffffff' }}
                         freeSolo
                         autoSelect
-                        disableClearable
                         {...field}
                         options={[
                           '入門脱出！',
