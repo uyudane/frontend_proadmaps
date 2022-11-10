@@ -8,7 +8,7 @@ import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
 import { getUsers } from 'services/users';
-import type { User, Roadmap, FullRoadmap, UserState } from 'types';
+import type { User, Roadmap } from 'types';
 
 const RoadmapDeteilPage = ({ roadmap }: any) => {
   const router = useRouter();
@@ -56,14 +56,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-  console.log('とおっちゃった');
   if (!params) {
     return <Error statusCode={400}></Error>;
   }
   const roadmap = await getRoadmap(String(params.id));
-  console.log(roadmap);
   if (roadmap === 'エラー') {
-    console.log('エラーに返すよー');
     return { props: { roadmap: 'エラー' }, revalidate: 5 };
     // throw new Error('params is undefined');
     // return <Error statusCode={400}></Error>;
