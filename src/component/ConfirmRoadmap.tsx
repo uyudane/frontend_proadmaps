@@ -1,6 +1,7 @@
 import { Button, Box, Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
+import RoadmapCancelButton from './RoadmapCancelButton';
 import RoadmapCard from './RoadmapCard';
 import RoadmapIntroduction from './RoadmapIntroduction';
 import StepCard from './StepCard';
@@ -106,8 +107,9 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
+        <RoadmapCancelButton />
         <Button color='secondary' variant='contained' onClick={execSubmit}>
-          finish
+          投稿する
         </Button>
       </Box>
     </>

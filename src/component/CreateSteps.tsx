@@ -2,9 +2,10 @@ import { Button, Box } from '@mui/material';
 import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import CreateStepDialog from './CreateStepDialog';
 import DndStepContainer from './DndStepContainer';
+import RoadmapCancelButton from './RoadmapCancelButton';
 import stepsState from 'recoil/atoms/stepsState';
 
 const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
@@ -38,6 +39,7 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
+        <RoadmapCancelButton />
         <Button color='primary' variant='contained' onClick={handleNext}>
           Next
         </Button>

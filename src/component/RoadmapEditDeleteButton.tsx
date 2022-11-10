@@ -34,7 +34,6 @@ const RoadmapEditDeleteButton = ({ roadmap }: any) => {
   const token = useRecoilValue(tokenState);
 
   const execDeleteRoadmap = async () => {
-    console.log('消すぜー、ちょー消すぜー');
     const result = await deleteRoadmap(roadmap.id, token);
     if (result === 'OK') {
       router.push({
