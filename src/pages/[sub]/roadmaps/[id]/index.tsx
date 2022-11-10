@@ -2,6 +2,7 @@ import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
+import AuthUserAndHiddenItem from 'component/AuthUserAndHiddenItem';
 import Meta from 'component/Meta';
 import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
 import RoadmapIntroduction from 'component/RoadmapIntroduction';
@@ -25,7 +26,9 @@ const RoadmapDeteilPage = ({ roadmap }: any) => {
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
-      <RoadmapEditDeleteButton roadmap={roadmap} />
+      <AuthUserAndHiddenItem user={roadmap.user}>
+        <RoadmapEditDeleteButton roadmap={roadmap} />
+      </AuthUserAndHiddenItem>
       <Box sx={{ width: '100%' }}>
         <Box display='flex' justifyContent='center' alignItems='center'>
           <RoadmapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />

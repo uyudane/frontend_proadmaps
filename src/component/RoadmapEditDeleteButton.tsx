@@ -14,13 +14,7 @@ import userState from 'recoil/atoms/userState';
 import { deleteRoadmap } from 'services/roadmaps';
 
 const RoadmapEditDeleteButton = ({ roadmap }: any) => {
-  const current_user = useRecoilValue(userState);
-  const [edit, setEdit] = useState<boolean>(false);
   const router = useRouter();
-  // 「Hydration failed」(CSRとSSG/SSRの間で作成されるDOMに差異)のエラーが出るため、useEffectで設定する。
-  useEffect(() => {
-    setEdit(roadmap.user.sub == current_user.sub);
-  }, []);
 
   // 削除確認ダイアログに使用
   const [open, setOpen] = useState(false);
@@ -45,40 +39,36 @@ const RoadmapEditDeleteButton = ({ roadmap }: any) => {
 
   return (
     <>
-      {edit && (
-        <>
-          <Button
-            variant='outlined'
-            onClick={() => {
-              router.push(`/drafts/${roadmap.id}/edit`);
-            }}
-          >
-            <EditIcon />
+      <Button
+        variant='outlined'
+        onClick={() => {
+          router.push(`/drafts/${roadmap.id}/edit`);
+        }}
+      >
+        <EditIcon />
+      </Button>
+      <Button variant='outlined' onClick={handleClickOpen}>
+        <DeleteIcon />
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+      >
+        <DialogTitle id='alert-dialog-title'>{'削除確認'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            ロードマップを削除しますか？
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>キャンセル</Button>
+          <Button onClick={execDeleteRoadmap} autoFocus>
+            削除する
           </Button>
-          <Button variant='outlined' onClick={handleClickOpen}>
-            <DeleteIcon />
-          </Button>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='alert-dialog-title'
-            aria-describedby='alert-dialog-description'
-          >
-            <DialogTitle id='alert-dialog-title'>{'削除確認'}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id='alert-dialog-description'>
-                ロードマップを削除しますか？
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>キャンセル</Button>
-              <Button onClick={execDeleteRoadmap} autoFocus>
-                削除する
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>
-      )}
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
