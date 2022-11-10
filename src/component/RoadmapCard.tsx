@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Roadmap, Step, UserState } from 'types';
 
-const RoadMapCard = ({
+const RoadmapCard = ({
   roadmap,
   steps,
   user,
@@ -29,7 +29,7 @@ const RoadMapCard = ({
         </Grid>
         <Grid item xs={12}>
           {/* ロードマップページ(作成ページ)の時はリンクにせず、それ以外の時はリンクにする */}
-          {router.pathname === '/roadmap' ? (
+          {router.pathname === '/roadmap/new' ? (
             <Typography
               variant='subtitle1'
               component='a'
@@ -59,7 +59,7 @@ const RoadMapCard = ({
             <br />
             総ステップ数: {steps.length}
             <br />
-            概要: {roadmap.introduction.slice(0, 100)}...
+            概要: {roadmap.introduction.slice(0, 100)}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -69,7 +69,6 @@ const RoadMapCard = ({
               .map((tag) => tag.name)
               .join(',')
               .slice(0, 50)}
-            ...
           </Typography>
         </Grid>
         <Grid container direction='row' justifyContent='flex-end' alignItems='flex-end'>
@@ -87,4 +86,4 @@ const RoadMapCard = ({
   );
 };
 
-export default RoadMapCard;
+export default RoadmapCard;

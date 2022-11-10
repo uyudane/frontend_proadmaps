@@ -6,12 +6,12 @@ import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグロー�
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
 import Meta from 'component/Meta';
-import RoadMapCard from 'component/RoadMapCard';
+import RoadmapCard from 'component/RoadmapCard';
 import { getRoadmaps } from 'services/roadmaps';
 import { getMyUser } from 'services/users';
 
 const Home: NextPage = ({ roadmaps }: any) => {
-  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
 
@@ -40,7 +40,7 @@ const Home: NextPage = ({ roadmaps }: any) => {
         {roadmaps.map((roadmap: any, i: any) => (
           <Grid item xs={6} key={`roadmap-card${i}`}>
             <Box display='flex' justifyContent='center'>
-              <RoadMapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
+              <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
             </Box>
           </Grid>
         ))}

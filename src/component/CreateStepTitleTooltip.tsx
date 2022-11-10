@@ -14,7 +14,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-const MakeStepTitleTooltip = () => {
+const CreateStepTitleTooltip = () => {
   return (
     <>
       <HtmlTooltip
@@ -38,4 +38,4 @@ const MakeStepTitleTooltip = () => {
   );
 };
 
-export default MakeStepTitleTooltip;
+export default CreateStepTitleTooltip;

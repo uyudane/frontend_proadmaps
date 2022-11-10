@@ -63,7 +63,7 @@ function ResponsiveAppBar() {
 
   // 左側メニュー一覧
   const pages = [
-    { name: 'ロードマップ/学習記録の作成はこちら!', link: '/roadmap' },
+    { name: 'ロードマップ/学習記録の作成はこちら！', link: '/roadmap/new' },
     // { name: '○○○', link: '/' },
     // { name: '○○○', link: '/' },
   ];
@@ -170,7 +170,7 @@ function ResponsiveAppBar() {
                     onClick={
                       isAuthenticated
                         ? () => {
-                            router.push('/roadmap');
+                            router.push(page.link);
                           }
                         : dialogOpen
                     }
@@ -219,7 +219,7 @@ function ResponsiveAppBar() {
                   onClick={
                     isAuthenticated
                       ? () => {
-                          router.push('/roadmap');
+                          router.push(page.link);
                         }
                       : dialogOpen
                   }

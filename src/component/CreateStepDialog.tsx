@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import MakeStepTitleTooltip from './MakeStepTitleTooltip';
+import CreateStepTitleTooltip from './CreateStepTitleTooltip';
 import stepsState from 'recoil/atoms/stepsState';
 import { getURLData } from 'services/roadmaps';
 import type { Step } from 'types';
@@ -14,7 +14,7 @@ const replaceItemAtIndex = (arr: Step[], index: number, newValue: Step) => {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 };
 
-const MakeStepDialog = ({
+const CreateStepDialog = ({
   handleClose,
   open,
   getStepId = undefined,
@@ -98,7 +98,7 @@ const MakeStepDialog = ({
       setSteps((oldSteps) => [
         ...oldSteps,
         {
-          id: getStepId!(),
+          id: currentStep?.id || getStepId!(),
           url: data.url,
           title: data.title,
           introduction: data.introduction,
@@ -177,7 +177,7 @@ const MakeStepDialog = ({
                   <Grid container>
                     <Grid item xs={12}>
                       ・タイトル(必須)
-                      <MakeStepTitleTooltip />
+                      <CreateStepTitleTooltip />
                     </Grid>
                     <Grid item xs={12}>
                       <Controller
@@ -280,4 +280,4 @@ const MakeStepDialog = ({
   );
 };
 
-export default MakeStepDialog;
+export default CreateStepDialog;

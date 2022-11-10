@@ -2,12 +2,12 @@ import { Button, Container, Stack, TextField, Grid, Box, Autocomplete, Chip } fr
 import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import MakeRoadMapInfo from './MakeRoadMapInfo';
+import CreateRoadmapInfo from './CreateRoadmapInfo';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
-import type { Tag, RoadmapWhenMaking } from 'types';
+import type { Tag, RoadmapWhenCreating } from 'types';
 
-const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
+const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
   // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
   // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
 
@@ -24,7 +24,6 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
 
   const setRoadmap = useSetRecoilState(roadmapState);
   const roadmap = useRecoilValue(roadmapState);
-
   const [Infoopen, setInfoOpen] = useState(true);
   const handleInfoClose = () => setInfoOpen(false);
 
@@ -33,7 +32,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<RoadmapWhenMaking>({
+  } = useForm<RoadmapWhenCreating>({
     defaultValues: {
       ...roadmap,
       tags: [],
@@ -48,12 +47,13 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   // }, [user, reset]);
 
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<RoadmapWhenMaking> = async (data) => {
+  const onSubmit: SubmitHandler<RoadmapWhenCreating> = async (data) => {
     // バリデーションチェックOKなときに行う処理を追加
     setRoadmap({
       ...data,
       // tagのデータについて、DBの設定に合わせてnameプロパティのオブジェクトに変換する
       tags: data.tags.map((tag) => ({ name: tag })),
+      id: roadmap.id,
     });
     handleNext();
   };
@@ -78,7 +78,7 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   return (
     <>
       <Meta pageTitle='プロフィール編集' />
-      <MakeRoadMapInfo open={Infoopen} handleClose={handleInfoClose} />
+      <CreateRoadmapInfo open={Infoopen} handleClose={handleInfoClose} />
       <Grid container>
         <Grid item xs={12} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
           <Container maxWidth='md' sx={{ pt: 1 }}>
@@ -175,7 +175,6 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
                         sx={{ width: '50%', bgcolor: '#ffffff' }}
                         freeSolo
                         autoSelect
-                        disableClearable
                         {...field}
                         options={[
                           'プログラミング完全未経験',
@@ -209,7 +208,6 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
                         sx={{ width: '50%', bgcolor: '#ffffff' }}
                         freeSolo
                         autoSelect
-                        disableClearable
                         {...field}
                         options={[
                           '入門脱出！',
@@ -249,4 +247,4 @@ const MakeRoadMap = ({ handleNext }: { handleNext: () => void }) => {
   );
 };
 
-export default MakeRoadMap;
+export default CreateRoadmap;

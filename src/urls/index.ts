@@ -3,7 +3,8 @@ const DEFAULT_BASE_LOCALHOST = process.env.NEXT_PUBLIC_BASE_URL;
 
 // ロードマップ
 export const roadmapsIndex = `${DEFAULT_API_LOCALHOST}/roadmaps`;
-export const roadmapsShow = (RoadmapId: string) => `${DEFAULT_API_LOCALHOST}/roadmaps/${RoadmapId}`;
+export const roadmapsShowEditDelete = (RoadmapId: string) =>
+  `${DEFAULT_API_LOCALHOST}/roadmaps/${RoadmapId}`;
 export const ogpShow = `${DEFAULT_BASE_LOCALHOST}/api/ogp`;
 
 // ユーザ情報

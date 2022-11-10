@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, List, Grid } from '@mui/material';
 import update from 'immutability-helper';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import DndStep from './DndStep';
 import stepsState from 'recoil/atoms/stepsState';

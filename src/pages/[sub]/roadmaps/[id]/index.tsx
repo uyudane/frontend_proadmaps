@@ -1,11 +1,13 @@
 import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
+import Error from 'next/error';
 import { useRouter } from 'next/router';
 import Meta from 'component/Meta';
-import RoadMapIntroduction from 'component/RoadMapIntroduction';
+import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
+import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
-import { getUsers, getUser } from 'services/users';
+import { getUsers } from 'services/users';
 import type { User, Roadmap } from 'types';
 
 const RoadmapDeteilPage = ({ roadmap }: any) => {
@@ -13,15 +15,23 @@ const RoadmapDeteilPage = ({ roadmap }: any) => {
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
+  if (roadmap === 'エラー') {
+    return <Error statusCode={400}></Error>;
+  }
+
+  // step_number順に表示されるステップの順番を並び替える
+  const stepData = [...roadmap.steps];
+  const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
+      <RoadmapEditDeleteButton roadmap={roadmap} />
       <Box sx={{ width: '100%' }}>
         <Box display='flex' justifyContent='center' alignItems='center'>
-          <RoadMapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
+          <RoadmapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
         </Box>
         <Grid container alignItems='center' justifyContent='center'>
-          {roadmap.steps.map((step: any, i: any) => (
+          {orderedSteps.map((step: any, i: any) => (
             <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
           ))}
         </Grid>
@@ -47,13 +57,19 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
-    throw new Error('params is undefined');
+    return <Error statusCode={400}></Error>;
   }
   const roadmap = await getRoadmap(String(params.id));
+  if (roadmap === 'エラー') {
+    return { props: { roadmap: 'エラー' }, revalidate: 5 };
+    // throw new Error('params is undefined');
+    // return <Error statusCode={400}></Error>;
+  }
+
   if (roadmap.user.sub === params.sub) {
     return { props: { roadmap: roadmap }, revalidate: 5 };
   } else {
-    throw new Error('params is undefined');
+    return <Error statusCode={400}></Error>;
   }
 };
 

@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import MakeStepDialog from './MakeStepDialog';
+import CreateStepDialog from './CreateStepDialog';
 
 const EditStepButton = ({ index }: { index: number }) => {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ const EditStepButton = ({ index }: { index: number }) => {
 
   return (
     <>
-      <MakeStepDialog open={open} handleClose={handleClose} index={index} />
+      <CreateStepDialog open={open} handleClose={handleClose} index={index} />
       <Button variant='text' onClick={handleClickOpen}>
         編集
       </Button>

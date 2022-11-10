@@ -6,11 +6,13 @@ import Header from './Header';
 const Layout = ({ children }: any) => {
   // フラッシュメッセージを表示する。
   const router = useRouter();
-  const message = router.query.message || null;
+  const successMessage = router.query.successMessage || null;
+  const errorMessage = router.query.errorMessage || null;
   return (
     <>
       <Header />
-      {message && <Alert severity='success'>{message}</Alert>}
+      {successMessage && <Alert severity='success'>{successMessage}</Alert>}
+      {errorMessage && <Alert severity='error'>{errorMessage}</Alert>}
       {/* Containerはもともと左右にpaddingが設定されているため、上下にのみpaddingをつける */}
       <Container maxWidth='xl' sx={{ pt: 3, pb: 3 }}>
         <main>{children}</main>

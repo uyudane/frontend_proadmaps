@@ -10,6 +10,7 @@ const ProfileEditButton = ({ profileUser }: { profileUser: User }) => {
   const [edit, setEdit] = useState<boolean>(false); // 自分のプロフィールの場合のみプロフィール編集ボタンを作成する
   const router = useRouter();
 
+  // 「Hydration failed」(CSRとSSG/SSRの間で作成されるDOMに差異)のエラーが出るため、useEffectで設定する。
   useEffect(() => {
     setEdit(profileUser.sub == current_user.sub);
   }, []);
