@@ -231,7 +231,12 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
         <RoadmapCancelButton />
-        <Button onClick={handleSubmit(onSubmit)} color='primary' variant='contained'>
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          color='primary'
+          variant='contained'
+          sx={{ ml: 10 }}
+        >
           Next
         </Button>
       </Box>

@@ -34,7 +34,7 @@ const RoadmapCancelButton = () => {
   };
   return (
     <>
-      <Button variant='contained' onClick={handleClickOpen} color='inherit' sx={{ mr: 5 }}>
+      <Button variant='contained' onClick={handleClickOpen} color='inherit' sx={{ mr: 1 }}>
         Cancel
       </Button>
       <Dialog

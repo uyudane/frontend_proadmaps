@@ -41,8 +41,8 @@ const RoadmapDraftSubmitButton = () => {
 
   return (
     <>
-      <Button color='secondary' variant='contained' onClick={execDraftRoadmap} sx={{ mr: 5 }}>
-        下書き保存する
+      <Button color='inherit' variant='contained' onClick={execDraftRoadmap} sx={{ mr: 1 }}>
+        下書き保存
       </Button>
     </>
   );

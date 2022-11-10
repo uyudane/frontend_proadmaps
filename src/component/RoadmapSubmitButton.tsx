@@ -1,3 +1,4 @@
+import SendIcon from '@mui/icons-material/Send';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
@@ -13,16 +14,19 @@ const RoadmapSubmitButton = () => {
   const steps = useRecoilValue(stepsState);
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
+  const baseParams = {
+    title: roadmap.title,
+    tags: roadmap.tags,
+    introduction: roadmap.introduction,
+    start_skill: roadmap.start_skill,
+    end_skill: roadmap.end_skill,
+    steps: steps,
+    is_published: true,
+  };
   const execPostRoadmap = async () => {
     const result = await postRoadmap(
       {
-        title: roadmap.title,
-        tags: roadmap.tags,
-        introduction: roadmap.introduction,
-        start_skill: roadmap.start_skill,
-        end_skill: roadmap.end_skill,
-        steps: steps,
-        is_published: true,
+        ...baseParams,
       },
       token,
     );
@@ -32,14 +36,8 @@ const RoadmapSubmitButton = () => {
   const execEditRoadmap = async () => {
     const result = await editRoadmap(
       {
+        ...baseParams,
         id: roadmap.id,
-        title: roadmap.title,
-        tags: roadmap.tags,
-        introduction: roadmap.introduction,
-        start_skill: roadmap.start_skill,
-        end_skill: roadmap.end_skill,
-        steps: steps,
-        is_published: true,
       },
       token,
     );
@@ -72,8 +70,14 @@ const RoadmapSubmitButton = () => {
 
   return (
     <>
-      <Button color='secondary' variant='contained' onClick={execSubmit}>
-        投稿する
+      <Button
+        color='secondary'
+        variant='contained'
+        onClick={execSubmit}
+        sx={{ ml: 10 }}
+        endIcon={<SendIcon />}
+      >
+        {router.pathname === '/roadmap/new' ? '投稿する' : '更新する'}
       </Button>
     </>
   );

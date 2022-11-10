@@ -42,7 +42,7 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
         <Box sx={{ flex: '1 1 auto' }} />
         <RoadmapCancelButton />
         <RoadmapDraftSubmitButton />
-        <Button color='primary' variant='contained' onClick={handleNext}>
+        <Button color='primary' variant='contained' onClick={handleNext} sx={{ ml: 10 }}>
           Next
         </Button>
       </Box>
