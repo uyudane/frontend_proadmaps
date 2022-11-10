@@ -33,7 +33,7 @@ const RoadmapDraftSubmitButton = () => {
       resetRoadmap();
       resetSteps();
       router.push({
-        pathname: `/`,
+        pathname: `/drafts`,
         query: { successMessage: 'ロードマップを下書き保存しました' },
       });
     }
