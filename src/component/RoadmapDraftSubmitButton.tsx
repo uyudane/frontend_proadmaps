@@ -13,15 +13,19 @@ const RoadmapDraftSubmitButton = () => {
   const steps = useRecoilValue(stepsState);
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
+  const baseParams = {
+    title: roadmap.title,
+    tags: roadmap.tags,
+    introduction: roadmap.introduction,
+    start_skill: roadmap.start_skill,
+    end_skill: roadmap.end_skill,
+    steps: steps,
+  };
   const execDraftRoadmap = async () => {
     const result = await postRoadmap(
       {
-        title: roadmap.title,
-        tags: roadmap.tags,
-        introduction: roadmap.introduction,
-        start_skill: roadmap.start_skill,
-        end_skill: roadmap.end_skill,
-        steps: steps,
+        ...baseParams,
+        is_published: false,
       },
       token,
     );

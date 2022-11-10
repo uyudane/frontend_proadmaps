@@ -22,6 +22,7 @@ const RoadmapSubmitButton = () => {
         start_skill: roadmap.start_skill,
         end_skill: roadmap.end_skill,
         steps: steps,
+        is_published: true,
       },
       token,
     );
@@ -38,6 +39,7 @@ const RoadmapSubmitButton = () => {
         start_skill: roadmap.start_skill,
         end_skill: roadmap.end_skill,
         steps: steps,
+        is_published: true,
       },
       token,
     );

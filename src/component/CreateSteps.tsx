@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import CreateStepDialog from './CreateStepDialog';
 import DndStepContainer from './DndStepContainer';
 import RoadmapCancelButton from './RoadmapCancelButton';
+import RoadmapDraftSubmitButton from './RoadmapDraftSubmitButton';
 import stepsState from 'recoil/atoms/stepsState';
 
 const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
@@ -40,6 +41,7 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
         <RoadmapCancelButton />
+        <RoadmapDraftSubmitButton />
         <Button color='primary' variant='contained' onClick={handleNext}>
           Next
         </Button>

@@ -35,7 +35,7 @@ export type Step = {
 };
 
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
-export type RoadmapAndSteps = Roadmap & { steps: Step[] };
+export type RoadmapAndSteps = Roadmap & { steps: Step[] } & { is_published: boolean };
 
 // プロフィールデータ
 export type User = {
