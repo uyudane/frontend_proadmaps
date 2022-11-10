@@ -1,4 +1,5 @@
 import { Button, Box } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -17,6 +18,7 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
   const getStepId = () => {
     return stepId++;
   };
+  const router = useRouter();
 
   const [open, setOpen] = useState(true);
 
@@ -41,7 +43,7 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
         <RoadmapCancelButton />
-        <RoadmapDraftSubmitButton />
+        {router.pathname === '/roadmap/new' && <RoadmapDraftSubmitButton />}
         <Button color='primary' variant='contained' onClick={handleNext} sx={{ ml: 10 }}>
           Next
         </Button>

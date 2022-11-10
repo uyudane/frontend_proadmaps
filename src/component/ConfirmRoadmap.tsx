@@ -1,4 +1,5 @@
 import { Button, Box, Grid, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import RoadmapCancelButton from './RoadmapCancelButton';
 import RoadmapCard from './RoadmapCard';
@@ -14,6 +15,9 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
   const roadmap = useRecoilValue(roadmapState);
   const steps = useRecoilValue(stepsState);
   const current_user = useRecoilValue(userState);
+
+  // 下書き保存ボタンの有無の制御に使用(編集時には出さない)
+  const router = useRouter();
 
   return (
     <>
@@ -49,7 +53,7 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
         <RoadmapCancelButton />
-        <RoadmapDraftSubmitButton />
+        {router.pathname === '/roadmap/new' && <RoadmapDraftSubmitButton />}
         <RoadmapSubmitButton />
       </Box>
     </>
