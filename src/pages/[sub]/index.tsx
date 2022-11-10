@@ -1,6 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
+import AuthUserAndHiddenItem from 'component/AuthUserAndHiddenItem';
 import Meta from 'component/Meta';
 import ProfileEditButton from 'component/ProfileEditButton';
 import SocialButton from 'component/SocialButton';
@@ -28,7 +29,9 @@ const UserPage = ({ user }: any) => {
               <SocialButton profileUser={user} />
             </Grid>
             <Grid item>
-              <ProfileEditButton profileUser={user} />
+              <AuthUserAndHiddenItem user={user}>
+                <ProfileEditButton />
+              </AuthUserAndHiddenItem>
             </Grid>
           </Grid>
         </Grid>

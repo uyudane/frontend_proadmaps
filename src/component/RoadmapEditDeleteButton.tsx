@@ -7,10 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import tokenState from 'recoil/atoms/tokenState';
-import userState from 'recoil/atoms/userState';
 import { deleteRoadmap } from 'services/roadmaps';
 
 const RoadmapEditDeleteButton = ({ roadmap }: any) => {
