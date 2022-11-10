@@ -1,5 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext } from 'next';
+import Error from 'next/error';
 import { useRouter } from 'next/router';
 import Meta from 'component/Meta';
 import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
@@ -7,16 +8,20 @@ import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
 import { getUsers } from 'services/users';
-import type { User, Roadmap } from 'types';
+import type { User, Roadmap, FullRoadmap, UserState } from 'types';
 
 const RoadmapDeteilPage = ({ roadmap }: any) => {
-  // step_number順に表示されるステップの順番を並び替える
-  const stepData = [...roadmap.steps];
-  const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
   const router = useRouter();
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
+  if (roadmap === 'エラー') {
+    return <Error statusCode={400}></Error>;
+  }
+
+  // step_number順に表示されるステップの順番を並び替える
+  const stepData = [...roadmap.steps];
+  const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
@@ -51,14 +56,23 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+  console.log('とおっちゃった');
   if (!params) {
-    throw new Error('params is undefined');
+    return <Error statusCode={400}></Error>;
   }
   const roadmap = await getRoadmap(String(params.id));
+  console.log(roadmap);
+  if (roadmap === 'エラー') {
+    console.log('エラーに返すよー');
+    return { props: { roadmap: 'エラー' }, revalidate: 5 };
+    // throw new Error('params is undefined');
+    // return <Error statusCode={400}></Error>;
+  }
+
   if (roadmap.user.sub === params.sub) {
     return { props: { roadmap: roadmap }, revalidate: 5 };
   } else {
-    throw new Error('params is undefined');
+    return <Error statusCode={400}></Error>;
   }
 };
 

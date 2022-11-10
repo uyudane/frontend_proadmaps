@@ -10,7 +10,7 @@ export const getRoadmap = async (id: string) => {
     const res = await axios.get(roadmapsShowEditDelete(id));
     return res.data;
   } catch (error) {
-    return error;
+    return 'エラー';
   }
 };
 
