@@ -26,13 +26,14 @@ const RoadmapEditDeleteButton = ({ roadmap }: any) => {
 
   const token = useRecoilValue(tokenState);
 
-  // delete後のリダイレクト先を、下書き削除時は下書き一覧にする
+  // delete後のリダイレクト先を、ロードマップの公開状況によって振り分ける
   let deletedRedirectPath = '';
-  router.pathname === '/draft' ? (deletedRedirectPath = '/draft') : (deletedRedirectPath = '/');
+  roadmap.is_published ? (deletedRedirectPath = '/') : (deletedRedirectPath = '/drafts');
 
   const execDeleteRoadmap = async () => {
     const result = await deleteRoadmap(roadmap.id, token);
     if (result === 'OK') {
+      setOpen(false);
       router.push({
         pathname: deletedRedirectPath,
         query: { successMessage: 'ロードマップを削除しました' },

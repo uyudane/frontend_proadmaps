@@ -77,7 +77,8 @@ const RoadmapSubmitButton = () => {
         sx={{ ml: 10 }}
         endIcon={<SendIcon />}
       >
-        {router.pathname === '/roadmap/new' ? '投稿する' : '更新する'}
+        {/* ロードマップが公開済みの場合は"更新する"、新規作成、下書きからの編集の場合は"投稿する" */}
+        {roadmap?.is_published === true ? '更新する' : '投稿する'}
       </Button>
     </>
   );

@@ -6,6 +6,7 @@ export type Roadmap = {
   introduction: string;
   start_skill: string;
   end_skill: string;
+  is_published?: boolean;
 };
 
 export type Tag = {
