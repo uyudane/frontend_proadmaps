@@ -2,9 +2,12 @@ import { Button, Box } from '@mui/material';
 import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import CreateStepDialog from './CreateStepDialog';
 import DndStepContainer from './DndStepContainer';
+import RoadmapCancelButton from './RoadmapCancelButton';
+import RoadmapDraftSubmitButton from './RoadmapDraftSubmitButton';
+import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 
 const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
@@ -15,6 +18,7 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
   const getStepId = () => {
     return stepId++;
   };
+  const roadmap = useRecoilValue(roadmapState);
 
   const [open, setOpen] = useState(true);
 
@@ -38,7 +42,10 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button color='primary' variant='contained' onClick={handleNext}>
+        <RoadmapCancelButton />
+        {/* ロードマップが下書きからの修正、新規作成の時のみ、下書き保存ボタンを出す */}
+        {roadmap?.is_published !== true && <RoadmapDraftSubmitButton />}
+        <Button color='primary' variant='contained' onClick={handleNext} sx={{ ml: 10 }}>
           Next
         </Button>
       </Box>

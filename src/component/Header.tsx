@@ -54,6 +54,11 @@ function ResponsiveAppBar() {
     router.push(`/${current_user.sub}`);
   };
 
+  // 下書き一覧ページにルーティング
+  const toDrafts = () => {
+    router.push('/drafts');
+  };
+
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
   const logout_auth0 = () => {
     resetToken();
@@ -70,9 +75,9 @@ function ResponsiveAppBar() {
 
   // 右側ユーザメニュ一覧
   const settings = [
-    { name: 'Profile', action: toProfile },
-    { name: 'Account', action: handleCloseUserMenu },
-    { name: 'Logout', action: logout_auth0 },
+    { name: 'プロフィール', action: toProfile },
+    { name: '下書き一覧', action: toDrafts },
+    { name: 'ログアウト', action: logout_auth0 },
   ];
 
   // 未ログイン時のダイアログの開閉に使用

@@ -3,14 +3,12 @@ import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import CreateRoadmapInfo from './CreateRoadmapInfo';
+import RoadmapCancelButton from './RoadmapCancelButton';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
 import type { Tag, RoadmapWhenCreating } from 'types';
 
 const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
-  // (あとで使う)下書き機能、編集機能でデフォルト値を取得するために使用
-  // const { user, isLoading, isError } = useGetProadMap(); // Roadmap用にする必要あり
-
   // tagの初期値の設定について、MUIのAutocompleteのmultipleを使用していたところ、
   // リロードすると「Hydration failed because the initial UI does not match what was rendered on the server」のエラーが出力。
   // おそらく、タグを表現しているチップが原因でサーバ側とクライアントでレンダリング結果が不一致となっているため、
@@ -36,15 +34,8 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
     defaultValues: {
       ...roadmap,
       tags: [],
-      // tags: roadmap.tags.map((tag: Tag) => tag.name),
     },
   });
-  // (あとでデフォルト値を設定するために使用する)
-  // useEffect(() => {
-  //   reset({
-  //     ...user,
-  //   });
-  // }, [user, reset]);
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<RoadmapWhenCreating> = async (data) => {
@@ -239,7 +230,13 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleSubmit(onSubmit)} color='primary' variant='contained'>
+        <RoadmapCancelButton />
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          color='primary'
+          variant='contained'
+          sx={{ ml: 10 }}
+        >
           Next
         </Button>
       </Box>

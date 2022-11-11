@@ -1,77 +1,19 @@
 import { Button, Box, Grid, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import RoadmapCancelButton from './RoadmapCancelButton';
 import RoadmapCard from './RoadmapCard';
+import RoadmapDraftSubmitButton from './RoadmapDraftSubmitButton';
 import RoadmapIntroduction from './RoadmapIntroduction';
+import RoadmapSubmitButton from './RoadmapSubmitButton';
 import StepCard from './StepCard';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
-import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
-import { postRoadmap, editRoadmap } from 'services/roadmaps';
 
 const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
-  const router = useRouter();
-  const token = useRecoilValue(tokenState);
   const roadmap = useRecoilValue(roadmapState);
   const steps = useRecoilValue(stepsState);
   const current_user = useRecoilValue(userState);
-  const resetRoadmap = useResetRecoilState(roadmapState);
-  const resetSteps = useResetRecoilState(stepsState);
-  const execPostRoadmap = async () => {
-    const result = await postRoadmap(
-      {
-        title: roadmap.title,
-        tags: roadmap.tags,
-        introduction: roadmap.introduction,
-        start_skill: roadmap.start_skill,
-        end_skill: roadmap.end_skill,
-        steps: steps,
-      },
-      token,
-    );
-    return result;
-  };
-
-  const execEditRoadmap = async () => {
-    const result = await editRoadmap(
-      {
-        id: roadmap.id,
-        title: roadmap.title,
-        tags: roadmap.tags,
-        introduction: roadmap.introduction,
-        start_skill: roadmap.start_skill,
-        end_skill: roadmap.end_skill,
-        steps: steps,
-      },
-      token,
-    );
-    return result;
-  };
-
-  const execSubmit = async () => {
-    let result = '';
-    switch (router.pathname) {
-      case '/roadmap/new':
-        result = (await execPostRoadmap()) as any;
-        break;
-      case '/drafts/[id]/edit':
-        result = (await execEditRoadmap()) as any;
-        break;
-      default:
-        // リファクト必要
-        console.log('エラー');
-        return;
-    }
-    if (result === 'OK') {
-      resetRoadmap();
-      resetSteps();
-      router.push({
-        pathname: `/`,
-        query: { successMessage: 'ロードマップを投稿しました' },
-      });
-    }
-  };
 
   return (
     <>
@@ -106,9 +48,10 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button color='secondary' variant='contained' onClick={execSubmit}>
-          finish
-        </Button>
+        <RoadmapCancelButton />
+        {/* ロードマップが下書きからの修正、新規作成の時のみ、下書き保存ボタンを出す */}
+        {roadmap?.is_published !== true && <RoadmapDraftSubmitButton />}
+        <RoadmapSubmitButton />
       </Box>
     </>
   );

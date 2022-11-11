@@ -6,6 +6,7 @@ export type Roadmap = {
   introduction: string;
   start_skill: string;
   end_skill: string;
+  is_published?: boolean;
 };
 
 export type Tag = {
@@ -35,7 +36,7 @@ export type Step = {
 };
 
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
-export type RoadmapAndSteps = Roadmap & { steps: Step[] };
+export type RoadmapAndSteps = Roadmap & { steps: Step[] } & { is_published: boolean };
 
 // プロフィールデータ
 export type User = {

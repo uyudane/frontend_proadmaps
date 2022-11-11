@@ -10,7 +10,7 @@ import ConfirmRoadmap from 'component/ConfirmRoadmap';
 import CreateRoadmap from 'component/CreateRoadmap';
 import CreateSteps from 'component/CreateSteps';
 import Meta from 'component/Meta';
-import useAuthUser from 'hooks/useAuthUser';
+import useAuthUserAndRedirect from 'hooks/useAuthUserAndRedirect';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import { getRoadmap } from 'services/roadmaps';
@@ -28,7 +28,7 @@ const EditRoadmapPage: NextPage = ({ roadmap }: any) => {
     setSteps(orderedSteps);
   }, [roadmap]);
 
-  const authentication = useAuthUser(roadmap.user);
+  const authentication = useAuthUserAndRedirect(roadmap.user);
 
   const [activeStep, setActiveStep] = useState(0);
 
