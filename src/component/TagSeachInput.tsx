@@ -38,10 +38,8 @@ const TagSearchInput = () => {
   return (
     <>
       <Grid container>
-        <Grid item xs={12}>
-          ・タグ(必須)
-        </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
           <Controller
             name='tags'
             rules={{ required: true }}
@@ -53,12 +51,7 @@ const TagSearchInput = () => {
                 multiple
                 options={tagTemplate.map((option) => option)}
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant='standard'
-                    label='Multiple values'
-                    placeholder='Favorites'
-                  />
+                  <TextField {...params} placeholder='ロードマップのタグを検索します。' />
                 )}
                 autoSelect
                 onChange={(_, data) => field.onChange(data)}

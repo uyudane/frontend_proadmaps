@@ -21,10 +21,8 @@ const FreeSearchInput = () => {
   return (
     <>
       <Grid container>
-        <Grid item xs={12}>
-          ・タイトル(必須)
-        </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
           <Controller
             name='searchText'
             rules={{ required: true }}
