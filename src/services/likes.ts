@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { likePost, likeDelete } from 'urls/index';
 
-export const postLike = async (id: string, token: string) => {
+export const postLike = async ({ id, token }: any) => {
   try {
     const res = await axios.post(
       likePost,
@@ -18,7 +18,7 @@ export const postLike = async (id: string, token: string) => {
   }
 };
 
-export const deleteLike = async (roadmapId: string, token: string) => {
+export const deleteLike = async ({ roadmapId, token }: any) => {
   try {
     const res = await axios.delete(likeDelete(roadmapId), {
       data: '',

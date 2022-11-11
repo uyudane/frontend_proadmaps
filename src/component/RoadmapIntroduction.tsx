@@ -65,7 +65,7 @@ const RoadmapIntroduction = ({
           <Grid item xs={1}>
             <Grid container direction='column' justifyContent='center' alignItems='flex-end'>
               <Grid item>
-                <RoadmapLikeButton />
+                <RoadmapLikeButton roadmap={roadmap} />
               </Grid>
               <Grid item>
                 <IconButton aria-label='share'>
