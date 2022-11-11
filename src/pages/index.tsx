@@ -7,6 +7,7 @@ import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報を�
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
 import Meta from 'component/Meta';
 import RoadmapCard from 'component/RoadmapCard';
+import TagSearchInput from 'component/TagSeachInput';
 import { getRoadmaps } from 'services/roadmaps';
 import { getMyUser } from 'services/users';
 
@@ -36,6 +37,8 @@ const Home: NextPage = ({ roadmaps }: any) => {
     <>
       <Meta pageTitle='トップ' />
       <div>記事一覧/検索画面</div>
+      <TagSearchInput />
+      <br />
       <Grid container direction='row' spacing={2}>
         {roadmaps.map((roadmap: any, i: any) => (
           <Grid item xs={6} key={`roadmap-card${i}`}>
