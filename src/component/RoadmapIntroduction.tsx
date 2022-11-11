@@ -1,9 +1,9 @@
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import RoadmapLikeButton from './RoadmapLikeButton';
 import { Roadmap, Step, UserState } from 'types';
 
 const RoadmapIntroduction = ({
@@ -65,9 +65,7 @@ const RoadmapIntroduction = ({
           <Grid item xs={1}>
             <Grid container direction='column' justifyContent='center' alignItems='flex-end'>
               <Grid item>
-                <IconButton aria-label='add to favorites'>
-                  <FavoriteIcon sx={{ fontSize: 40 }} />
-                </IconButton>
+                <RoadmapLikeButton roadmap={roadmap} />
               </Grid>
               <Grid item>
                 <IconButton aria-label='share'>

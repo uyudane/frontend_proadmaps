@@ -11,3 +11,7 @@ export const ogpShow = `${DEFAULT_BASE_LOCALHOST}/api/ogp`;
 export const usersIndex = `${DEFAULT_API_LOCALHOST}/users`;
 export const usersShow = (UserSub: string) => `${DEFAULT_API_LOCALHOST}/users/${UserSub}`;
 export const userWhoami = `${DEFAULT_API_LOCALHOST}/users/whoami`;
+
+// いいね(ロードマップ)
+export const likePost = `${DEFAULT_API_LOCALHOST}/likes`;
+export const likeDelete = (Id: string) => `${DEFAULT_API_LOCALHOST}/likes/${Id}`;

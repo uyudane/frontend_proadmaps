@@ -16,7 +16,6 @@ const DraftPage = () => {
   if (isLoading) return <div>ローディング</div>;
   if (isError) return <div>エラー</div>;
   const draftRoadmaps = user.roadmaps.filter((roadmap: any) => roadmap.is_published == false);
-  console.log(draftRoadmaps);
   return (
     <>
       <Meta pageTitle='下書き一覧' />
