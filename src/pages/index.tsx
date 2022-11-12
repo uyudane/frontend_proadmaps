@@ -9,9 +9,10 @@ import Meta from 'component/Meta';
 import RoadmapCard from 'component/RoadmapCard';
 import SearchModeTabs from 'component/SearchModeTabs';
 import { getRoadmaps } from 'services/roadmaps';
+import { getTags } from 'services/tags';
 import { getMyUser } from 'services/users';
 
-const Home: NextPage = ({ roadmaps }: any) => {
+const Home: NextPage = ({ roadmaps, tags }: any) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
@@ -33,9 +34,6 @@ const Home: NextPage = ({ roadmaps }: any) => {
     };
     getToken();
   }, []);
-
-  console.log('トップ');
-  console.log(freeSarchWord);
 
   const reg = new RegExp(freeSarchWord);
   const outputRoadmap = [...roadmaps].filter((roadmap) => roadmap.title.match(reg));
@@ -61,8 +59,9 @@ const Home: NextPage = ({ roadmaps }: any) => {
 
 export const getStaticProps = async () => {
   const roadmaps = await getRoadmaps();
+  const tags = await getTags();
 
-  return { props: { roadmaps: roadmaps }, revalidate: 5 };
+  return { props: { roadmaps: roadmaps, tags: tags }, revalidate: 5 };
 };
 
 export default Home;
