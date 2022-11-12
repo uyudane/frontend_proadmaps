@@ -20,7 +20,13 @@ const useSearchRoadmaps = ({ roadmaps, searchTags, freeSearchWord }: any) => {
   } else if (freeSearchWord) {
     // 正規表現で文字列が含まれるロードマップを検索する
     const reg = new RegExp(freeSearchWord);
-    outputRoadmaps = roadmaps.filter((roadmap: any) => roadmap.title.match(reg));
+    for (const roadmap of roadmaps) {
+      roadmap.steps;
+    }
+
+    outputRoadmaps = roadmaps.filter(
+      (roadmap: any) => roadmap.title.match(reg) || roadmap.introduction.match(reg),
+    );
   } else {
     // どちらも検索ワードがない場合は全出力する
     outputRoadmaps = roadmaps;

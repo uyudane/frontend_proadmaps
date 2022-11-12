@@ -30,7 +30,7 @@ const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: any) => {
               <TextField
                 {...field}
                 sx={{ width: '100%', bgcolor: '#ffffff' }}
-                placeholder='ロードマップ/ステップのタイトルを検索します。'
+                placeholder='ロードマップのタイトル/概要を検索します。'
               />
             )}
           />
