@@ -23,7 +23,7 @@ const RoadmapLikeButton = ({ roadmap }: any) => {
   useEffect(() => {
     // いいねをしているかどうかを判定
     setIsLiked(
-      typeof roadmap.likes.find((like: any) => like.user_sub === user.sub) !== 'undefined',
+      typeof roadmap.likes?.find((like: any) => like.user_sub === user.sub) !== 'undefined',
     );
   }, []);
 
