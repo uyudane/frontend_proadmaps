@@ -8,7 +8,7 @@ const { persistAtom } = recoilPersist({
 
 const userState = atom<UserState>({
   key: 'userState',
-  default: { sub: '', name: '' },
+  default: { sub: '', name: '', avatar: '' },
   effects_UNSTABLE: [persistAtom],
 });
 
