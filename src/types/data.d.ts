@@ -51,6 +51,7 @@ export type User = {
 export type UserState = {
   sub: string;
   name: string;
+  avatar: string;
 };
 
 // プロフィール一覧データ

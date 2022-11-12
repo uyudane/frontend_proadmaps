@@ -26,6 +26,7 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const resetToken = useResetRecoilState(tokenState);
   const resetUser = useResetRecoilState(userState);
+  const current_user = useRecoilValue(userState); // RecoilのTokneを取得する
 
   // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,8 +47,6 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const current_user = useRecoilValue(userState); // RecoilのTokneを取得する
 
   // プロフィール画面にルーティング(もっとうまい方法がないかを検討する)
   const toProfile = () => {
@@ -240,7 +239,7 @@ function ResponsiveAppBar() {
                 <>
                   <Tooltip title='Open settings'>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt='Remy Sharp' src={user!.picture} />
+                      <Avatar alt='Remy Sharp' src={current_user.avatar} />
                     </IconButton>
                   </Tooltip>
 
@@ -272,7 +271,7 @@ function ResponsiveAppBar() {
                 <div>Loading...</div>
               ) : (
                 <MenuItem key='login' onClick={loginWithRedirect}>
-                  <Typography textAlign='center'>Login</Typography>
+                  <Typography textAlign='center'>Login / Sign up</Typography>
                 </MenuItem>
               )}
             </Box>
