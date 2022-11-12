@@ -16,6 +16,8 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import RequireLoginDialog from './RequireLoginDialog';
+import roadmapState from 'recoil/atoms/roadmapState';
+import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 
@@ -26,6 +28,8 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const resetToken = useResetRecoilState(tokenState);
   const resetUser = useResetRecoilState(userState);
+  const resetRoadmap = useResetRecoilState(roadmapState);
+  const resetSteps = useResetRecoilState(stepsState);
   const current_user = useRecoilValue(userState); // RecoilのTokneを取得する
 
   // 画面がxsになった時に、メニューをハンバーガーメニューで表示するようにする
@@ -60,6 +64,8 @@ function ResponsiveAppBar() {
 
   // logoutのままだとonClickにactionとして渡した際にエラーになったため以下で再定義
   const logout_auth0 = () => {
+    resetRoadmap();
+    resetSteps();
     resetToken();
     resetUser();
     logout({ returnTo: window.location.origin });

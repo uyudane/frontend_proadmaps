@@ -1,11 +1,11 @@
 import axios from 'axios';
 import useSWR from 'swr';
 import type { RoadmapAndSteps } from 'types';
-import { roadmapsIndex, roadmapsShowEditDelete, ogpShow } from 'urls/index';
+import { roadmapsIndex, roadmapsShowUpdateDelete, ogpShow } from 'urls/index';
 
 export const getRoadmap = async (id: string) => {
   try {
-    const res = await axios.get(roadmapsShowEditDelete(id));
+    const res = await axios.get(roadmapsShowUpdateDelete(id));
     return res.data;
   } catch (error) {
     return 'エラー';
@@ -32,7 +32,7 @@ export const getRoadmaps = async () => {
 //     });
 //     return res.data;
 //   };
-//   const { data, error } = useSWR(roadmapsShowEditDelete(id), fetcher);
+//   const { data, error } = useSWR(roadmapsShowUpdateDelete(id), fetcher);
 //   return {
 //     roadmap: data,
 //     isLoading: !error && !data,
@@ -55,7 +55,7 @@ export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
 
 export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
   try {
-    const res = await axios.put(roadmapsShowEditDelete(String(params.id)), params, {
+    const res = await axios.put(roadmapsShowUpdateDelete(String(params.id)), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -68,7 +68,7 @@ export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
 
 export const deleteRoadmap = async (id: string, token: string) => {
   try {
-    const res = await axios.delete(roadmapsShowEditDelete(String(id)), {
+    const res = await axios.delete(roadmapsShowUpdateDelete(String(id)), {
       data: { param: '' },
       headers: {
         Authorization: `Bearer ${token}`,

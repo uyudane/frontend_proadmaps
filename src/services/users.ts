@@ -3,11 +3,11 @@ import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
 import type { User } from 'types';
-import { usersIndex, usersShow, userWhoami } from 'urls/index';
+import { usersIndex, usersShowUpdateDelete, userWhoami } from 'urls/index';
 
 export const getUser = async (sub: string) => {
   try {
-    const res = await axios.get(usersShow(sub));
+    const res = await axios.get(usersShowUpdateDelete(sub));
     return res.data;
   } catch (error) {
     console.log(error);
@@ -72,7 +72,21 @@ export const postUsers = async (params: User, token: any) => {
 export const updateUser = async (params: User, token: any) => {
   try {
     // 0はURLをRailsに合わせるための念の為のダミーで、パラメータは使わず、自身の情報しか修正できないようにしている。
-    await axios.put(usersShow('0'), params, {
+    await axios.put(usersShowUpdateDelete('0'), params, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return 'OK';
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteUser = async ({ sub, token }: any) => {
+  try {
+    const res = await axios.delete(usersShowUpdateDelete(sub), {
+      data: { param: '' },
       headers: {
         Authorization: `Bearer ${token}`,
       },
