@@ -1,32 +1,64 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Grid, Paper } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Roadmap, Step, UserState } from 'types';
+import { Roadmap, Step, User } from 'types';
 
-const RoadmapCard = ({
-  roadmap,
-  steps,
-  user,
-}: {
-  roadmap: Roadmap;
-  steps: Step[];
-  user: UserState;
-}) => {
+const RoadmapCard = ({ roadmap, steps, user }: { roadmap: Roadmap; steps: Step[]; user: User }) => {
   // ロードマップカードタイトルのリンク有無に使用
   const router = useRouter();
+
+  const toProfile = () => {
+    router.push(`/${user.sub}`);
+  };
 
   return (
     <Paper sx={{ border: 0.5, p: 1, width: '500px', borderRadius: '16px' }}>
       <Grid container>
-        <Grid item xs={12}>
-          <Typography variant='body1' color='text.secondary'>
-            {user.name}
-          </Typography>
-        </Grid>
+        {/* ロードマップ作成/編集ページの時はリンクにせず、それ以外の時はリンクにする */}
+        {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (
+          <Grid container alignItems='center' spacing='8'>
+            <Grid item>
+              <IconButton sx={{ p: 0 }}>
+                <Avatar alt='Remy Sharp' src={user.avatar} />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <Typography
+                variant='body1'
+                sx={{ cursor: 'pointer' }}
+                // color='text.secondary'
+                component='a'
+              >
+                {user.name}
+              </Typography>
+            </Grid>
+          </Grid>
+        ) : (
+          <Grid container alignItems='center' spacing='8'>
+            <Grid item>
+              <IconButton sx={{ p: 0 }} onClick={toProfile}>
+                <Avatar alt='Remy Sharp' src={user.avatar} />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <Link href={`${user.sub}`}>
+                <Typography
+                  variant='body1'
+                  sx={{ cursor: 'pointer' }}
+                  // color='text.secondary'
+                  component='a'
+                >
+                  {user.name}
+                </Typography>
+              </Link>
+            </Grid>
+          </Grid>
+        )}
         <Grid item xs={12}>
           {/* ロードマップ作成/編集ページの時はリンクにせず、それ以外の時はリンクにする */}
           {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (

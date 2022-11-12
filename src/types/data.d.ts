@@ -42,8 +42,9 @@ export type RoadmapAndSteps = Roadmap & { steps: Step[] } & { is_published: bool
 export type User = {
   sub?: string;
   name: string;
-  github_account: string;
-  twitter_account: string;
+  avatar?: string;
+  github_account?: string;
+  twitter_account?: string;
 };
 
 // userStateで使用する型
