@@ -49,7 +49,7 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
     handleNext();
   };
 
-  const top100Films = [
+  const tagTemplate = [
     'Ruby',
     'Rails',
     'PHP',
@@ -109,7 +109,7 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
                         {...field}
                         multiple
                         // id='tags-filled'
-                        options={top100Films.map((option) => option)}
+                        options={tagTemplate.map((option) => option)}
                         freeSolo
                         // 自由記述をタグのChipにする処理
                         renderTags={(value: readonly string[], getTagProps) =>

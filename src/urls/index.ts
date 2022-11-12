@@ -15,3 +15,6 @@ export const userWhoami = `${DEFAULT_API_LOCALHOST}/users/whoami`;
 // いいね(ロードマップ)
 export const likePost = `${DEFAULT_API_LOCALHOST}/likes`;
 export const likeDelete = (Id: string) => `${DEFAULT_API_LOCALHOST}/likes/${Id}`;
+
+// いいね(ロードマップ)
+export const tagsGet = `${DEFAULT_API_LOCALHOST}/tags`;
