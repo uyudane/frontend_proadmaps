@@ -238,7 +238,7 @@ function ResponsiveAppBar() {
               {isAuthenticated ? (
                 <>
                   <Tooltip title='Open settings'>
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <IconButton onClick={handleOpenUserMenu}>
                       <Avatar alt='Remy Sharp' src={current_user.avatar} />
                     </IconButton>
                   </Tooltip>

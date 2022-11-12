@@ -23,7 +23,7 @@ const RoadmapCard = ({ roadmap, steps, user }: { roadmap: Roadmap; steps: Step[]
         {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (
           <Grid container alignItems='center' spacing='8'>
             <Grid item>
-              <IconButton sx={{ p: 0 }}>
+              <IconButton>
                 <Avatar alt='Remy Sharp' src={user.avatar} />
               </IconButton>
             </Grid>
@@ -41,12 +41,12 @@ const RoadmapCard = ({ roadmap, steps, user }: { roadmap: Roadmap; steps: Step[]
         ) : (
           <Grid container alignItems='center' spacing='8'>
             <Grid item>
-              <IconButton sx={{ p: 0 }} onClick={toProfile}>
+              <IconButton onClick={toProfile}>
                 <Avatar alt='Remy Sharp' src={user.avatar} />
               </IconButton>
             </Grid>
             <Grid item>
-              <Link href={`${user.sub}`}>
+              <Link href={`/${user.sub}`}>
                 <Typography
                   variant='body1'
                   sx={{ cursor: 'pointer' }}
