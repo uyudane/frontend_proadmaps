@@ -1,21 +1,20 @@
 import { Button, TextField, Grid, Box } from '@mui/material';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
-const FreeSearchInput = () => {
+const FreeSearchInput = ({ setFreeSearchWord }: any) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
-      searchText: '',
+      searchWord: '',
     },
   });
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<any> = async (data) => {
-    // バリデーションチェックOKなときに行う処理を追加
-    console.log(data);
+    setFreeSearchWord(data.searchWord);
   };
 
   return (
@@ -24,7 +23,7 @@ const FreeSearchInput = () => {
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
           <Controller
-            name='searchText'
+            name='searchWord'
             rules={{ required: true }}
             control={control}
             render={({ field }) => (

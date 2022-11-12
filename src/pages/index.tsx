@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, Box } from '@mui/material';
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
@@ -15,6 +15,7 @@ const Home: NextPage = ({ roadmaps }: any) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
+  const [freeSarchWord, setFreeSearchWord] = useState('');
 
   useEffect(() => {
     const getToken = async () => {
@@ -33,14 +34,20 @@ const Home: NextPage = ({ roadmaps }: any) => {
     getToken();
   }, []);
 
+  console.log('トップ');
+  console.log(freeSarchWord);
+
+  const reg = new RegExp(freeSarchWord);
+  const outputRoadmap = [...roadmaps].filter((roadmap) => roadmap.title.match(reg));
+
   return (
     <>
       <Meta pageTitle='トップ' />
       <div>記事一覧/検索画面</div>
-      <SearchModeTabs />
+      <SearchModeTabs setFreeSearchWord={setFreeSearchWord} />
       <br />
       <Grid container direction='row' spacing={2}>
-        {roadmaps.map((roadmap: any, i: any) => (
+        {outputRoadmap.map((roadmap: any, i: any) => (
           <Grid item xs={6} key={`roadmap-card${i}`}>
             <Box display='flex' justifyContent='center'>
               <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />

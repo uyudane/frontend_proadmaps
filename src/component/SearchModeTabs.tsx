@@ -22,7 +22,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const SearchModeTabs = () => {
+const SearchModeTabs = ({ setFreeSearchWord }: any) => {
   const [value, setValue] = useState(0);
 
   // 選択されたタブに合わせて、valueを変更
@@ -37,14 +37,14 @@ const SearchModeTabs = () => {
           {/* valueの値と一致したTabが表示される? */}
           <Tabs value={value} onChange={handleChange} centered>
             <Tab label='タグ検索' />
-            <Tab label='フリー検索' />
+            <Tab label='フリーワード検索' />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <TagSearchInput />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FreeSearchInput />
+          <FreeSearchInput setFreeSearchWord={setFreeSearchWord} />
         </TabPanel>
       </Box>
     </>
