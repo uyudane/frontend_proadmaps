@@ -16,7 +16,10 @@ const Home: NextPage = ({ roadmaps, tags }: any) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
+  const [serchTags, setSearchTags] = useState('');
   const [freeSarchWord, setFreeSearchWord] = useState('');
+  console.log(serchTags);
+  // const serchRoadmap = serchTags.map((tag) => tag.roadmaps);
 
   useEffect(() => {
     const getToken = async () => {
@@ -42,7 +45,11 @@ const Home: NextPage = ({ roadmaps, tags }: any) => {
     <>
       <Meta pageTitle='トップ' />
       <div>記事一覧/検索画面</div>
-      <SearchModeTabs setFreeSearchWord={setFreeSearchWord} />
+      <SearchModeTabs
+        setFreeSearchWord={setFreeSearchWord}
+        setSearchTags={setSearchTags}
+        tags={tags}
+      />
       <br />
       <Grid container direction='row' spacing={2}>
         {outputRoadmap.map((roadmap: any, i: any) => (

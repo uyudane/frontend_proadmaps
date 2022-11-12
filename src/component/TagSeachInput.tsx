@@ -1,23 +1,8 @@
 import { Button, TextField, Grid, Box, Autocomplete } from '@mui/material';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
-const TagSearchInput = () => {
-  const tagTemplate = [
-    'Ruby',
-    'Rails',
-    'PHP',
-    'Laravel',
-    'Python',
-    'Django',
-    'データベース',
-    'Vue.js',
-    'Nuxt.js',
-    'React',
-    'Next.js',
-    'HTML',
-    'CSS',
-    'JavaScript',
-  ];
+const TagSearchInput = ({ setSearchTags, tags }: any) => {
+  const tagTemplate = tags;
 
   const {
     handleSubmit,
@@ -32,7 +17,7 @@ const TagSearchInput = () => {
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<any> = async (data) => {
     // バリデーションチェックOKなときに行う処理を追加
-    console.log(data);
+    setSearchTags(data.tags);
   };
 
   return (
@@ -49,7 +34,8 @@ const TagSearchInput = () => {
                 sx={{ bgcolor: '#FFFFFF' }}
                 {...field}
                 multiple
-                options={tagTemplate.map((option) => option)}
+                options={tagTemplate}
+                getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
                   <TextField {...params} placeholder='ロードマップのタグを検索します。' />
                 )}
