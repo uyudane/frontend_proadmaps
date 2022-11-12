@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import Meta from 'component/Meta';
 import SocialButton from 'component/SocialButton';
+import UserDeleteButton from 'component/UserDeleteButton';
 import UserIcon from 'component/UserIcon';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
@@ -132,6 +133,10 @@ const SettingProfilePage = () => {
           </Container>
         </Grid>
       </Grid>
+      <br />
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+        <UserDeleteButton />
+      </Box>
     </>
   );
 };
