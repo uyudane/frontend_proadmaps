@@ -23,7 +23,7 @@ const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: any) => {
 
   return (
     <>
-      <Grid container>
+      <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
           <Controller
@@ -50,7 +50,7 @@ const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: any) => {
             onClick={handleSubmit(onSubmit)}
             color='primary'
             variant='contained'
-            sx={{ ml: 10 }}
+            sx={{ ml: 2 }}
           >
             検索
           </Button>
