@@ -41,10 +41,14 @@ const SearchModeTabs = ({ setFreeSearchWord, setSearchTags, tags }: any) => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <TagSearchInput setSearchTags={setSearchTags} tags={tags} />
+          <TagSearchInput
+            setSearchTags={setSearchTags}
+            setFreeSearchWord={setFreeSearchWord}
+            tags={tags}
+          />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FreeSearchInput setFreeSearchWord={setFreeSearchWord} />
+          <FreeSearchInput setSearchTags={setSearchTags} setFreeSearchWord={setFreeSearchWord} />
         </TabPanel>
       </Box>
     </>

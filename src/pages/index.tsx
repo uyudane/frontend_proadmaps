@@ -8,6 +8,7 @@ import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグ
 import Meta from 'component/Meta';
 import RoadmapCard from 'component/RoadmapCard';
 import SearchModeTabs from 'component/SearchModeTabs';
+import useSearchRoadmaps from 'hooks/useSearchRoadmaps';
 import { getRoadmaps } from 'services/roadmaps';
 import { getTags } from 'services/tags';
 import { getMyUser } from 'services/users';
@@ -16,10 +17,8 @@ const Home: NextPage = ({ roadmaps, tags }: any) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
-  const [serchTags, setSearchTags] = useState('');
-  const [freeSarchWord, setFreeSearchWord] = useState('');
-  console.log(serchTags);
-  // const serchRoadmap = serchTags.map((tag) => tag.roadmaps);
+  const [searchTags, setSearchTags] = useState('');
+  const [freeSearchWord, setFreeSearchWord] = useState('');
 
   useEffect(() => {
     const getToken = async () => {
@@ -38,13 +37,15 @@ const Home: NextPage = ({ roadmaps, tags }: any) => {
     getToken();
   }, []);
 
-  const reg = new RegExp(freeSarchWord);
-  const outputRoadmap = [...roadmaps].filter((roadmap) => roadmap.title.match(reg));
+  const outputRoadmap = useSearchRoadmaps({
+    roadmaps: roadmaps,
+    searchTags: searchTags,
+    freeSearchWord: freeSearchWord,
+  });
 
   return (
     <>
       <Meta pageTitle='トップ' />
-      <div>記事一覧/検索画面</div>
       <SearchModeTabs
         setFreeSearchWord={setFreeSearchWord}
         setSearchTags={setSearchTags}

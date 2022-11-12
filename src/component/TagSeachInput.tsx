@@ -1,7 +1,7 @@
 import { Button, TextField, Grid, Box, Autocomplete } from '@mui/material';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
-const TagSearchInput = ({ setSearchTags, tags }: any) => {
+const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: any) => {
   const tagTemplate = tags;
 
   const {
@@ -16,8 +16,9 @@ const TagSearchInput = ({ setSearchTags, tags }: any) => {
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<any> = async (data) => {
-    // バリデーションチェックOKなときに行う処理を追加
-    setSearchTags(data.tags);
+    // タグデータがない場合はundefinedにする。(全出力にするため)
+    data.tags.length > 0 ? setSearchTags(data.tags) : setSearchTags();
+    setFreeSearchWord();
   };
 
   return (
@@ -27,7 +28,6 @@ const TagSearchInput = ({ setSearchTags, tags }: any) => {
         <Grid item xs={8}>
           <Controller
             name='tags'
-            rules={{ required: true }}
             control={control}
             render={({ field }) => (
               <Autocomplete
@@ -37,14 +37,13 @@ const TagSearchInput = ({ setSearchTags, tags }: any) => {
                 options={tagTemplate}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder='ロードマップのタグを検索します。' />
+                  <TextField {...params} placeholder='ロードマップのタグをAND検索します。' />
                 )}
                 autoSelect
                 onChange={(_, data) => field.onChange(data)}
               />
             )}
           />
-          {errors.tags && <Box color='red'>入力が必須の項目です</Box>}
         </Grid>
         <Grid item xs={2}>
           <Button

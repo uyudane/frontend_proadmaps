@@ -1,7 +1,7 @@
 import { Button, TextField, Grid, Box } from '@mui/material';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
-const FreeSearchInput = ({ setFreeSearchWord }: any) => {
+const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: any) => {
   const {
     handleSubmit,
     control,
@@ -14,6 +14,7 @@ const FreeSearchInput = ({ setFreeSearchWord }: any) => {
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<any> = async (data) => {
+    setSearchTags();
     setFreeSearchWord(data.searchWord);
   };
 
@@ -24,7 +25,6 @@ const FreeSearchInput = ({ setFreeSearchWord }: any) => {
         <Grid item xs={8}>
           <Controller
             name='searchWord'
-            rules={{ required: true }}
             control={control}
             render={({ field }) => (
               <TextField
@@ -34,7 +34,6 @@ const FreeSearchInput = ({ setFreeSearchWord }: any) => {
               />
             )}
           />
-          {errors.title && <Box color='red'>入力が必須の項目です</Box>}
         </Grid>
         <Grid item xs={2}>
           <Button
