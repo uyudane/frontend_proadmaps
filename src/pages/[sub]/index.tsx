@@ -22,7 +22,7 @@ const UserPage = ({ user }: any) => {
         <Grid item xs={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
-              <UserIcon />
+              <UserIcon user={user} />
             </Grid>
             <Typography variant='h6'>{user.name}</Typography>
             <Grid item>

@@ -1,8 +1,11 @@
 import ShareIcon from '@mui/icons-material/Share';
 import { Grid } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import RoadmapLikeButton from './RoadmapLikeButton';
 import { Roadmap, Step, UserState } from 'types';
 
@@ -15,14 +18,57 @@ const RoadmapIntroduction = ({
   steps: Step[];
   user: UserState;
 }) => {
+  const router = useRouter();
+  const toProfile = () => {
+    router.push(`/${user.sub}`);
+  };
   return (
     <>
       <Box sx={{ width: '100%', m: 2 }}>
         <Grid container alignItems='center'>
           <Grid item xs={11}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Typography variant='h6'>{user.name}</Typography>
-            </Grid>
+            </Grid> */}
+            {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (
+              <Grid container alignItems='center' spacing='8'>
+                <Grid item>
+                  <IconButton>
+                    <Avatar alt='Remy Sharp' src={user.avatar} sx={{ width: 56, height: 56 }} />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant='h6'
+                    sx={{ cursor: 'pointer' }}
+                    // color='text.secondary'
+                    component='a'
+                  >
+                    {user.name}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container alignItems='center' spacing='8'>
+                <Grid item>
+                  <IconButton onClick={toProfile}>
+                    <Avatar alt='Remy Sharp' src={user.avatar} sx={{ width: 56, height: 56 }} />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Link href={`/${user.sub}`}>
+                    <Typography
+                      variant='h6'
+                      sx={{ cursor: 'pointer' }}
+                      // color='text.secondary'
+                      component='a'
+                    >
+                      {user.name}
+                    </Typography>
+                  </Link>
+                </Grid>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <Typography variant='h4' component='div' sx={{ mb: 0.5 }}>
                 {roadmap.title}

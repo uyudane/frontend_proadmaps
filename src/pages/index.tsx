@@ -29,7 +29,7 @@ const Home: NextPage = ({ roadmaps, tags }: any) => {
         const user_data = await getMyUser(accessToken);
         // ログイン完了後に自身の情報をバックエンドから取得してrecoilへ格納
         // ユーザ登録の場合は、このタイミングでバックエンドに情報が追加される
-        setUser({ sub: user_data.sub, name: user_data.name });
+        setUser({ sub: user_data.sub, name: user_data.name, avatar: user_data.avatar });
       } catch (e: any) {
         console.log(e.message);
       }
