@@ -1,40 +1,51 @@
-import { Grid, Box, Paper, Container, Typography } from '@mui/material';
+import { Grid, Box, Paper, Container, Typography, Link as MuiLink } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
     <>
-      <Paper
-        sx={{ mt: 'calc(10% + 30px)', width: '100%', bottom: 0, bgcolor: '#eeeeee' }}
+      <Box
+        sx={{ mt: 'calc(5%)', width: '100%', bottom: 0, bgcolor: '#eeeeee' }}
         component='footer'
-        variant='outlined'
+        // variant='outlined'
       >
-        <Container maxWidth='lg'>
-          <Box
-            sx={{
-              flexGrow: 1,
-              justifyContent: 'center',
-              display: 'flex',
-              my: 1,
-            }}
-          >
-            <div>
-              <Image priority src='/logo_unit.png' width={16} height={16} alt='Logo' />
-            </div>
-          </Box>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              justifyContent: 'center',
-              display: 'flex',
-              mb: 2,
-            }}
-          >
-            <Typography variant='caption'>Copyright ©2022. [] Limited</Typography>
-          </Box>
-        </Container>
-      </Paper>
+        <Grid
+          container
+          direction='row'
+          justifyContent='flex-end'
+          alignItems='center'
+          spacing={2}
+          pb={2}
+        >
+          {/* <Grid item>
+            <Image priority src='/logo_unit.png' width={20} height={20} alt='Logo' />
+          </Grid> */}
+          <Grid item>
+            <MuiLink
+              href='https://twitter.com/uyudane'
+              target='_blank'
+              rel='noopener noreferrer'
+              underline='none'
+            >
+              お問い合わせ
+            </MuiLink>
+          </Grid>
+          <Grid item>
+            <Link href='/terms' passHref>
+              <MuiLink underline='none'>利用規約</MuiLink>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link href='/privacy' passHref>
+              <MuiLink underline='none'>プライバシーポリシー</MuiLink>
+            </Link>
+          </Grid>
+          <Grid item pr={2}>
+            <Typography variant='body1'>©2022 ProadMaps</Typography>
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
 };
