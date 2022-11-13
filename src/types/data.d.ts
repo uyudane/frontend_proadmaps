@@ -7,8 +7,6 @@ export type Roadmap = {
   start_skill: string;
   end_skill: string;
   is_published?: boolean;
-  number_of_steps?: number;
-  number_of_likes?: number;
 };
 
 export type Tag = {
