@@ -45,6 +45,7 @@ export type User = {
   avatar?: string;
   github_account?: string;
   twitter_account?: string;
+  likes?: [];
 };
 
 // userStateで使用する型
