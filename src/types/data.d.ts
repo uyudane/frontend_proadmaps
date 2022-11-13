@@ -7,6 +7,8 @@ export type Roadmap = {
   start_skill: string;
   end_skill: string;
   is_published?: boolean;
+  number_of_steps?: number;
+  number_of_likes?: number;
 };
 
 export type Tag = {
@@ -45,6 +47,7 @@ export type User = {
   avatar?: string;
   github_account?: string;
   twitter_account?: string;
+  likes?: [];
 };
 
 // userStateで使用する型
