@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -72,11 +73,7 @@ function ResponsiveAppBar() {
   };
 
   // 左側メニュー一覧
-  const pages = [
-    { name: 'ロードマップ/学習記録の作成はこちら！', link: '/roadmap/new' },
-    // { name: '○○○', link: '/' },
-    // { name: '○○○', link: '/' },
-  ];
+  const pages = [{ name: 'ロードマップ/学習記録の作成はこちら！', link: '/roadmap/new' }];
 
   // 右側ユーザメニュ一覧
   const settings = [
@@ -106,32 +103,29 @@ function ResponsiveAppBar() {
           {/* disableGutters→左右の余白を削除 */}
           <Toolbar disableGutters>
             {/* md以上ようのロゴ */}
-            <Link href='/'>
-              <a>
-                <Box
-                  component='img'
-                  sx={{
-                    height: 50,
-                    width: 50,
-                    display: { xs: 'none', md: 'flex' },
-                    mr: 1,
-                  }}
-                  alt='ロゴ'
-                  src='logo_unit.png'
-                />
-              </a>
-            </Link>
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+              }}
+            >
+              <Link href='/'>
+                <a>
+                  <Image src='/logo_unit.png' alt='ロゴ' width='48' height='48'></Image>
+                </a>
+              </Link>
+            </Box>
             {/* Linkで囲む事でクライアント側でページ遷移ができる(リロードせずにすむ)
           Link側とTyporaphyで両方"/"を指定するのが気持ち悪いが、カーソルが変わらなくなるため両方つける。
           遷移は問題なさそう */}
-            <Link href='/'>
+            <Link href='/' passHref>
               <Typography
                 variant='h6'
                 noWrap
                 component='a'
                 href='/'
                 sx={{
-                  mr: 4,
+                  ml: 1,
+                  mr: 2,
                   display: { xs: 'none', md: 'flex' },
                   fontFamily: 'monospace',
                   fontWeight: 700,
@@ -144,7 +138,7 @@ function ResponsiveAppBar() {
               </Typography>
             </Link>
 
-            {/* xsの時はハンバーガーメニュー */}
+            {/* xsの時に表示するハンバーガーメニュー */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'
@@ -191,7 +185,7 @@ function ResponsiveAppBar() {
               </Menu>
             </Box>
 
-            {/* xs用(ハンバーガーメニュー、ロゴの順で表示) */}
+            {/* xsの時のロゴ(ハンバーガーメニュー、ロゴの順で表示) */}
             <Box
               component='img'
               sx={{
@@ -223,6 +217,12 @@ function ResponsiveAppBar() {
             </Typography>
             {/* md用メニューボタン */}
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Typography variant='body2'>
+                〜プログラミング学習のロードマップ/学習記録 共有サイト〜
+              </Typography>
+            </Box>
+
+            <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, pr: 2 }}>
               {pages.map((page) => (
                 <Button
                   key={page.name}
@@ -277,7 +277,7 @@ function ResponsiveAppBar() {
                 <div>Loading...</div>
               ) : (
                 <MenuItem key='login' onClick={loginWithRedirect}>
-                  <Typography textAlign='center'>Login / Sign up</Typography>
+                  <Typography textAlign='center'>Login</Typography>
                 </MenuItem>
               )}
             </Box>
