@@ -13,6 +13,7 @@
   ],
   "rules": {
     "react/react-in-jsx-scope": "off", //eslint-plugin-react を使用している場合、react/jsx-uses-react と react/react-in-jsx-scope のルールは不要になるそう。https://zenn.dev/ryuu/scraps/583dad79532879
-    "import/order": [2, { "alphabetize": { "order": "asc" } }] // // 2. "external" modulesのモジュールの順番をアルファベット昇順にしている??
+    "import/order": [2, { "alphabetize": { "order": "asc" } }], // // 2. "external" modulesのモジュールの順番をアルファベット昇順にしている??
+    "no-undef": "off" //未定義の変数を利用している場合に出るエラーで、jestのテスト時にエラーになるため回避する。
   }
 }
