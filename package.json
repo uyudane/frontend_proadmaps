@@ -9,7 +9,7 @@
     "lint": "next lint --dir src",
     "export": "next export",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.12.0",
