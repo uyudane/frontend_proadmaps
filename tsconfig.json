@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "incremental": true,
-    "types": ["@emotion/react/types/css-prop"]
+    "types": ["@emotion/react/types/css-prop", "jest", "@testing-library/jest-dom"]
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
