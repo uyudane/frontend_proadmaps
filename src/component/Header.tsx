@@ -137,7 +137,6 @@ function ResponsiveAppBar() {
                 ProadMaps
               </Typography>
             </Link>
-
             {/* xsの時に表示するハンバーガーメニュー */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -187,18 +186,15 @@ function ResponsiveAppBar() {
 
             {/* xsの時のロゴ(ハンバーガーメニュー、ロゴの順で表示) */}
             <Box
-              component='img'
               sx={{
-                height: 50,
-                width: 50,
                 display: { xs: 'flex', md: 'none' },
                 mr: 1,
               }}
-              alt='ロゴ'
-              src='logo_unit.png'
-            />
+            >
+              <Image src='/logo_unit.png' alt='ロゴ' width='32' height='32'></Image>
+            </Box>
             <Typography
-              variant='h5'
+              variant='h6'
               noWrap
               component='a'
               href=''

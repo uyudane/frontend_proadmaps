@@ -43,6 +43,14 @@ const SettingProfilePage = () => {
         pathname: `/${current_user.sub}`,
         query: { successMessage: 'プロフィールを更新しました' },
       });
+    } else {
+      // バックエンドから200以外が返ってきた際に、エラーを伝える
+      router.push({
+        pathname: router.asPath,
+        query: {
+          errorMessage: '500（Internal Server Error） | プロフィールを更新に失敗しました',
+        },
+      });
     }
   };
   if (isLoading) return <div>ローディング</div>;
@@ -51,7 +59,6 @@ const SettingProfilePage = () => {
     <>
       <Meta pageTitle='プロフィール編集' />
       <Grid container>
-        <Grid item xs={12}></Grid>
         <Grid item xs={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
@@ -132,11 +139,14 @@ const SettingProfilePage = () => {
             </Stack>
           </Container>
         </Grid>
+        <Grid item xs={2}>
+          <Grid container alignItems='center' justifyContent='center' direction='column'>
+            <Grid item>
+              <UserDeleteButton />
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
-      <br />
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-        <UserDeleteButton />
-      </Box>
     </>
   );
 };
