@@ -38,6 +38,15 @@ const RoadmapEditDeleteButton = ({ roadmap }: any) => {
         pathname: deletedRedirectPath,
         query: { successMessage: 'ロードマップを削除しました' },
       });
+    } else {
+      setOpen(false);
+      // バックエンドから200以外が返ってきた際に、エラーを伝える
+      router.push({
+        pathname: router.asPath,
+        query: {
+          errorMessage: '500（Internal Server Error） | ロードマップの削除に失敗しました',
+        },
+      });
     }
   };
 
