@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
-import type { User } from 'types';
+import type { User, UserFullData } from 'types';
 import { usersIndex, usersShowUpdateDelete, userWhoami } from 'urls/index';
 
 export const getUser = async (sub: string) => {
@@ -34,7 +34,7 @@ export const useMyUser = () => {
     });
     return res.data;
   };
-  const { data, error } = useSWR(userWhoami, fetcher);
+  const { data, error } = useSWR<UserFullData, Error>(userWhoami, fetcher);
   return {
     user: data,
     isLoading: !error && !data,

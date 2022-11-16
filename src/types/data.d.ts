@@ -1,6 +1,6 @@
 // ロードマップデータ
 export type Roadmap = {
-  id?: number;
+  id: number;
   title: string;
   tags: Tag[];
   introduction: string;
@@ -9,8 +9,34 @@ export type Roadmap = {
   is_published?: boolean;
 };
 
+// ステップデータ
+export type Step = {
+  id: number;
+  url: string;
+  title: string;
+  introduction: string;
+  required_time: string;
+  year: string;
+  month: string;
+  step_number: number;
+};
+
+// タグデータ
 export type Tag = {
   name: string;
+};
+
+// 作成済みのロードマップデータ(バックエンドから取得したデータ)
+export type RoadmapFullData = {
+  id: number;
+  title: string;
+  tags: Tag[];
+  introduction: string;
+  start_skill: string;
+  end_skill: string;
+  is_published: boolean;
+  steps: Step[];
+  user: User;
 };
 
 // ロードマップデータのtagsをstring[]にしたバージョン
@@ -24,28 +50,17 @@ export type RoadmapWhenCreating = {
   end_skill: string;
 };
 
-// ステップデータ
-export type Step = {
-  id: number;
-  url: string;
-  title: string;
-  introduction: string;
-  required_time: string;
-  year: string;
-  month: string;
-};
-
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
 export type RoadmapAndSteps = Roadmap & { steps: Step[] } & { is_published: boolean };
 
 // プロフィールデータ
 export type User = {
-  sub?: string;
+  sub: string;
   name: string;
-  avatar?: string;
+  avatar: string;
   github_account?: string;
   twitter_account?: string;
-  likes?: [];
+  likes: [];
 };
 
 // userStateで使用する型
@@ -55,5 +70,12 @@ export type UserState = {
   avatar: string;
 };
 
-// プロフィール一覧データ
-export type Users = User[];
+export type UserFullData = {
+  sub: string;
+  name: string;
+  github_account: string;
+  twitter_account: string;
+  avatar: string;
+  roadmaps: Roadmap[];
+  likes: [];
+};

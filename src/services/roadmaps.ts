@@ -1,6 +1,6 @@
 import axios from 'axios';
 import useSWR from 'swr';
-import type { RoadmapAndSteps } from 'types';
+import type { RoadmapAndSteps, RoadmapFullData } from 'types';
 import { roadmapsIndex, roadmapsShowUpdateDelete, ogpShow } from 'urls/index';
 
 export const getRoadmap = async (id: string) => {
@@ -12,13 +12,9 @@ export const getRoadmap = async (id: string) => {
   }
 };
 
-export const getRoadmaps = async () => {
-  try {
-    const res = await axios.get(roadmapsIndex);
-    return res.data;
-  } catch (error) {
-    return error;
-  }
+export const getRoadmaps = async (): Promise<RoadmapFullData[]> => {
+  const res = await axios.get(roadmapsIndex);
+  return res.data;
 };
 
 export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
