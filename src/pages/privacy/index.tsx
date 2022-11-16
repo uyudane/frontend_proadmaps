@@ -1,7 +1,8 @@
 import { Box } from '@mui/system';
+import type { NextPage } from 'next';
 import Meta from 'component/Meta';
 
-const PrivacyPage = () => {
+const PrivacyPage: NextPage = () => {
   return (
     <>
       <Meta pageTitle='プライバシーポリシー' />
