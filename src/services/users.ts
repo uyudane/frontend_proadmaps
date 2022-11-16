@@ -10,7 +10,7 @@ export const getUser = async (sub: string) => {
     const res = await axios.get(usersShowUpdateDelete(sub));
     return res.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -19,7 +19,7 @@ export const getUsers = async () => {
     const res = await axios.get(usersIndex);
     return res.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -53,31 +53,19 @@ export const getMyUser = async (token: any) => {
     });
     return res.data;
   } catch (error) {
-    console.log(error);
-  }
-};
-
-export const postUsers = async (params: User, token: any) => {
-  try {
-    const res = await axios.post(usersIndex, params, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
 export const updateUser = async (params: User, token: any) => {
   try {
     // 0はURLをRailsに合わせるための念の為のダミーで、パラメータは使わず、自身の情報しか修正できないようにしている。
-    await axios.put(usersShowUpdateDelete('0'), params, {
+    const res = await axios.put(usersShowUpdateDelete('0'), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
@@ -91,7 +79,7 @@ export const deleteUser = async ({ sub, token }: any) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }

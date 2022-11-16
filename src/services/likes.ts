@@ -12,7 +12,7 @@ export const postLike = async ({ id, token }: any) => {
         },
       },
     );
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
@@ -26,7 +26,7 @@ export const deleteLike = async ({ roadmapId, token }: any) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
