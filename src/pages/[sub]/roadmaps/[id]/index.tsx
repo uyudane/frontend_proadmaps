@@ -1,6 +1,5 @@
 import { Box, Grid } from '@mui/material';
-import { GetStaticPropsContext } from 'next';
-import Error from 'next/error';
+import { GetStaticPropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import AuthUserAndHiddenItem from 'component/AuthUserAndHiddenItem';
 import Meta from 'component/Meta';
@@ -9,20 +8,22 @@ import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
 import { getRoadmap } from 'services/roadmaps';
 import { getUsers } from 'services/users';
-import type { User, Roadmap } from 'types';
+import type { RoadmapFullData, UserFullData } from 'types';
 
-const RoadmapDeteilPage = ({ roadmap }: any) => {
+type Props = {
+  roadmap: RoadmapFullData;
+};
+
+const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
   const router = useRouter();
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
-  if (roadmap === 'エラー') {
-    return <Error statusCode={400}></Error>;
-  }
 
   // step_number順に表示されるステップの順番を並び替える
   const stepData = [...roadmap.steps];
-  const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
+  // ロードマップ作成後のため、step_numberがnullになることはない
+  const orderedSteps = stepData.sort((a, b) => (a.step_number! > b.step_number! ? 1 : -1));
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
@@ -34,7 +35,7 @@ const RoadmapDeteilPage = ({ roadmap }: any) => {
           <RoadmapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
         </Box>
         <Grid container alignItems='center' justifyContent='center'>
-          {orderedSteps.map((step: any, i: any) => (
+          {orderedSteps.map((step, i) => (
             <StepCard key={`step${i}`} step={step} index={String(i + 1)} />
           ))}
         </Grid>
@@ -44,8 +45,7 @@ const RoadmapDeteilPage = ({ roadmap }: any) => {
 };
 
 export const getStaticPaths = async () => {
-  type UserFull = User & { roadmaps: Roadmap[] };
-  const users: UserFull[] = await getUsers();
+  const users: UserFullData[] = await getUsers();
   if (!users) return { paths: [], fallback: false };
   const paths = [];
   for (const user of users) {
@@ -65,7 +65,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   try {
     const roadmap = await getRoadmap(String(params.id));
     // 見つからなかった場合は、errorが渡ってきて、以下のコマンドで「Not Found」が出力される
-    // console.log(roadmap.response.statusText);
+    // console.log(roadmap.response.statusText); // 「Not Found」
     // roadmap.user.subでエラーになり、エラー処理に渡る
     if (roadmap.user.sub === params.sub) {
       return { props: { roadmap: roadmap }, revalidate: 5 };

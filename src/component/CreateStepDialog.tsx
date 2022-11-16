@@ -14,17 +14,21 @@ const replaceItemAtIndex = (arr: Step[], index: number, newValue: Step) => {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 };
 
+type Props = {
+  handleClose: () => void;
+  open: boolean;
+  // 新規のステップの際はgetStepIdが渡される
+  getStepId?: () => number;
+  // ステップの編集時にはindexが渡される
+  index?: number;
+};
+
 const CreateStepDialog = ({
   handleClose,
   open,
   getStepId = undefined,
   index = undefined,
-}: {
-  handleClose: () => void;
-  open: boolean;
-  getStepId?: () => number;
-  index?: number;
-}) => {
+}: Props) => {
   const [steps, setSteps] = useRecoilState(stepsState);
 
   // IDを渡された場合(編集の場合)はデフォルト値がもとの値になり、新規作成の場合は空にする
@@ -51,12 +55,12 @@ const CreateStepDialog = ({
     formState: { errors },
   } = useForm<Step>({
     defaultValues: {
-      url: currentStep?.url,
-      title: currentStep?.title,
-      introduction: currentStep?.introduction,
-      required_time: currentStep?.required_time,
-      year: currentStep?.year,
-      month: currentStep?.month,
+      url: currentStep.url,
+      title: currentStep.title,
+      introduction: currentStep.introduction,
+      required_time: currentStep.required_time,
+      year: currentStep.year,
+      month: currentStep.month,
     },
   });
 
@@ -98,6 +102,7 @@ const CreateStepDialog = ({
       setSteps((oldSteps) => [
         ...oldSteps,
         {
+          // 新規作成時はgetStepId()が渡されている想定
           id: currentStep?.id || getStepId!(),
           url: data.url,
           title: data.title,
@@ -105,19 +110,24 @@ const CreateStepDialog = ({
           required_time: data.required_time,
           year: data.year,
           month: data.month,
+          // step_numberは表示の際に使用するもので、作成時には関係ないためnullを入れる
+          step_number: null,
         },
       ]);
       reset();
     } else {
       // 編集時の処理(配列の指定の値を変更する)
       const newList = replaceItemAtIndex(steps, index, {
-        id: currentStep.id as number, //index === 'undefined出ない時点で、idに値が入っている想定
+        //index === 'undefined出ない時点で、idに値が入っている想定
+        id: currentStep.id as number,
         url: data.url,
         title: data.title,
         introduction: data.introduction,
         required_time: data.required_time,
         year: data.year,
         month: data.month,
+        // step_numberは表示の際に使用するもので、作成時には関係ないためnullを入れる
+        step_number: null,
       });
       setSteps(newList);
     }
@@ -138,6 +148,7 @@ const CreateStepDialog = ({
     }
     const urlData = await getURLData({ url });
     const title = `【${urlData.site_name}】 ${urlData.title}`;
+    // titleが取れなかった場合、もしくはURLが誤っていた場合は【】を設定する
     if (title === '【undefined】 undefined' || title === '【】 ') {
       setValue('title', '【】');
     } else {

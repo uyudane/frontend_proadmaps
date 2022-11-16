@@ -14,17 +14,23 @@ import useAuthUserAndRedirect from 'hooks/useAuthUserAndRedirect';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import { getRoadmap } from 'services/roadmaps';
+import { RoadmapFullData } from 'types';
 
-const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
+const steps = ['ロードマップ/学習記録の概要作成', 'ステップ作成', 'プレビュー確認'];
 
-const EditRoadmapPage: NextPage = ({ roadmap }: any) => {
+type Props = {
+  roadmap: RoadmapFullData;
+};
+
+const EditRoadmapPage: NextPage<Props> = ({ roadmap }: Props) => {
   const setRoadmap = useSetRecoilState(roadmapState);
   const setSteps = useSetRecoilState(stepsState);
   useEffect(() => {
     setRoadmap({ ...roadmap });
     // step_number順に編集時に表示されるステップの順番を並び替える
     const stepData = [...roadmap.steps];
-    const orderedSteps = stepData.sort((a, b) => (a.step_number > b.step_number ? 1 : -1));
+    // 編集時のため、step_numberがnullなることはない
+    const orderedSteps = stepData.sort((a, b) => (a.step_number! > b.step_number! ? 1 : -1));
     setSteps(orderedSteps);
   }, [roadmap]);
 
@@ -45,7 +51,7 @@ const EditRoadmapPage: NextPage = ({ roadmap }: any) => {
   }
   return (
     <>
-      <Meta pageTitle='ロードマップ作成' />
+      <Meta pageTitle='ロードマップ編集' />
       <Box sx={{ width: '100%' }}>
         {/* 上部のステップ表示部分 */}
         {/* Stepperでアクティブの所まで色がつく */}
@@ -60,9 +66,9 @@ const EditRoadmapPage: NextPage = ({ roadmap }: any) => {
           })}
         </Stepper>
         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-        {activeStep === 0 && <CreateRoadmap handleNext={handleNext} />}
-        {activeStep === 1 && <CreateSteps handleNext={handleNext} handleBack={handleBack} />}
-        {activeStep === 2 && <ConfirmRoadmap handleBack={handleBack} />}
+        {activeStep === 0 && <CreateRoadmap {...{ handleNext }} />}
+        {activeStep === 1 && <CreateSteps {...{ handleNext, handleBack }} />}
+        {activeStep === 2 && <ConfirmRoadmap {...{ handleBack }} />}
       </Box>
     </>
   );

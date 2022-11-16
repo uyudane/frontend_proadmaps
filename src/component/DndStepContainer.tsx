@@ -7,7 +7,11 @@ import DndStep from './DndStep';
 import stepsState from 'recoil/atoms/stepsState';
 import type { Step } from 'types';
 
-const DndStepContainer = ({ handleClickOpen }: { handleClickOpen: () => void }) => {
+type Props = {
+  handleClickOpen: () => void;
+};
+
+const DndStepContainer = ({ handleClickOpen }: Props) => {
   const [steps, setSteps] = useRecoilState(stepsState);
 
   const moveStep = useCallback((dragIndex: number, hoverIndex: number) => {

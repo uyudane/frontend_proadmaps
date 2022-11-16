@@ -1,12 +1,23 @@
 // ロードマップデータ
 export type Roadmap = {
-  id: number;
+  id: number | null; // ロードマップ新規作成時はnullになる
   title: string;
   tags: Tag[];
   introduction: string;
   start_skill: string;
   end_skill: string;
-  is_published?: boolean;
+  is_published: boolean | null;
+};
+
+// ロードマップデータのtagsをstring[]にしたバージョン
+// ロードマップ作成時に使用するAutocompleでは、オブジェクトが扱えないため。
+export type RoadmapWhenCreating = {
+  id: number | null;
+  title: string;
+  tags: string[];
+  introduction: string;
+  start_skill: string;
+  end_skill: string;
 };
 
 // ステップデータ
@@ -18,7 +29,7 @@ export type Step = {
   required_time: string;
   year: string;
   month: string;
-  step_number: number;
+  step_number: number | null;
 };
 
 // タグデータ
@@ -39,17 +50,6 @@ export type RoadmapFullData = {
   user: User;
 };
 
-// ロードマップデータのtagsをstring[]にしたバージョン
-// ロードマップ作成時に使用するAutocompleでは、オブジェクトが扱えないため。
-export type RoadmapWhenCreating = {
-  id?: number;
-  title: string;
-  tags: string[];
-  introduction: string;
-  start_skill: string;
-  end_skill: string;
-};
-
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
 export type RoadmapAndSteps = Roadmap & { steps: Step[] } & { is_published: boolean };
 
@@ -58,8 +58,8 @@ export type User = {
   sub: string;
   name: string;
   avatar: string;
-  github_account?: string;
-  twitter_account?: string;
+  github_account: string;
+  twitter_account: string;
   likes: [];
 };
 
@@ -70,6 +70,7 @@ export type UserState = {
   avatar: string;
 };
 
+// 作成済みのユーザーデータ(バックエンドから取得したデータ)
 export type UserFullData = {
   sub: string;
   name: string;
