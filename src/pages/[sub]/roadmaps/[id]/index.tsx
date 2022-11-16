@@ -60,19 +60,21 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
-    return <Error statusCode={400}></Error>;
+    return { notFound: true };
   }
-  const roadmap = await getRoadmap(String(params.id));
-  if (roadmap === 'エラー') {
-    return { props: { roadmap: 'エラー' }, revalidate: 5 };
-    // throw new Error('params is undefined');
-    // return <Error statusCode={400}></Error>;
-  }
-
-  if (roadmap.user.sub === params.sub) {
-    return { props: { roadmap: roadmap }, revalidate: 5 };
-  } else {
-    return <Error statusCode={400}></Error>;
+  try {
+    const roadmap = await getRoadmap(String(params.id));
+    // 見つからなかった場合は、errorが渡ってきて、以下のコマンドで「Not Found」が出力される
+    // console.log(roadmap.response.statusText);
+    // roadmap.user.subでエラーになり、エラー処理に渡る
+    if (roadmap.user.sub === params.sub) {
+      return { props: { roadmap: roadmap }, revalidate: 5 };
+    } else {
+      return { notFound: true };
+    }
+  } catch (err) {
+    // 見つからなかった際に、404エラーページに飛ばす
+    return { notFound: true };
   }
 };
 
