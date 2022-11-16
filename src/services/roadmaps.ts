@@ -28,7 +28,7 @@ export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
@@ -41,7 +41,7 @@ export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
@@ -55,7 +55,7 @@ export const deleteRoadmap = async (id: string, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }

@@ -65,6 +65,14 @@ const RoadmapSubmitButton = () => {
         pathname: `/`,
         query: { successMessage: 'ロードマップを投稿しました' },
       });
+    } else {
+      // バックエンドから200以外が返ってきた際に、エラーを伝える
+      router.push({
+        pathname: router.asPath,
+        query: {
+          errorMessage: '500（Internal Server Error） | ロードマップの投稿に失敗しました',
+        },
+      });
     }
   };
 
