@@ -16,7 +16,7 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
   useEffect(() => {
     setValue(
       'tags',
-      roadmap.tags.map((tag: Tag) => tag.name),
+      roadmap.tags?.map((tag: Tag) => tag.name),
     );
   }, []);
 

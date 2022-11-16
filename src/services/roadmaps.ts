@@ -8,7 +8,7 @@ export const getRoadmap = async (id: string) => {
     const res = await axios.get(roadmapsShowUpdateDelete(id));
     return res.data;
   } catch (error) {
-    return 'エラー';
+    return error;
   }
 };
 
@@ -21,25 +21,6 @@ export const getRoadmaps = async () => {
   }
 };
 
-// (必要に応じて消す)SWRを使用した取得を作成したが、おそらく不要な気がする。
-// export const useGetRoadmap = (id: string) => {
-//   const token = useRecoilValue(tokenState);
-//   const fetcher = async (url: string) => {
-//     const res = await axios.get(url, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     return res.data;
-//   };
-//   const { data, error } = useSWR(roadmapsShowUpdateDelete(id), fetcher);
-//   return {
-//     roadmap: data,
-//     isLoading: !error && !data,
-//     isError: error,
-//   };
-// };
-
 export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
   try {
     const res = await axios.post(roadmapsIndex, params, {
@@ -47,7 +28,7 @@ export const postRoadmap = async (params: RoadmapAndSteps, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
@@ -60,7 +41,7 @@ export const editRoadmap = async (params: RoadmapAndSteps, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }
@@ -74,7 +55,7 @@ export const deleteRoadmap = async (id: string, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return 'OK';
+    return res.statusText; // 0Kが返る想定
   } catch (error) {
     return error;
   }

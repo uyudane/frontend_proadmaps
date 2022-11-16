@@ -8,8 +8,8 @@ import ProfilePageTabs from 'component/ProfilePageTabs';
 import SocialButton from 'component/SocialButton';
 import UserIcon from 'component/UserIcon';
 import { getRoadmaps } from 'services/roadmaps';
-import { getUsers, getUser } from 'services/users';
-import type { User, Users } from 'types';
+import { getUser } from 'services/users';
+import type { User } from 'types';
 
 const UserPage = ({ user, usersRoadmaps, likedRoadmaps }: any) => {
   const router = useRouter();
@@ -49,28 +49,25 @@ const UserPage = ({ user, usersRoadmaps, likedRoadmaps }: any) => {
   );
 };
 
-export const getStaticPaths = async () => {
-  const users: Users = await getUsers();
-  if (!users) return { paths: [], fallback: false };
-  const paths = users.map((user) => ({
-    params: { sub: `${user.sub}` },
-  }));
-  return { paths, fallback: true };
-};
-
-export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+export const getServerSideProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
     throw new Error('params is undefined');
   }
-  const user: User = await getUser(String(params.sub));
-  const roadmaps = await getRoadmaps();
-  const usersRoadmaps = roadmaps.filter((roadmap: any) => roadmap.user.sub === params.sub);
-  const likedRoadmapIds = user.likes!.map((like: any) => like.roadmap_id);
-  const likedRoadmaps = roadmaps.filter((roadmap: any) => likedRoadmapIds.includes(roadmap.id));
-  return {
-    props: { user: user, usersRoadmaps: usersRoadmaps, likedRoadmaps: likedRoadmaps },
-    revalidate: 5,
-  };
+  try {
+    const user: User = await getUser(String(params.sub));
+    const roadmaps = await getRoadmaps();
+    // ユーザのロードマップを抽出
+    const usersRoadmaps = roadmaps.filter((roadmap: any) => roadmap.user.sub === params.sub);
+    // ユーザのいいねしたロードマップIDをもとに、ロードマップを抽出
+    const likedRoadmapIds = user.likes?.map((like: any) => like.roadmap_id);
+    const likedRoadmaps = roadmaps.filter((roadmap: any) => likedRoadmapIds?.includes(roadmap.id));
+    return {
+      props: { user: user, usersRoadmaps: usersRoadmaps, likedRoadmaps: likedRoadmaps },
+    };
+  } catch (err) {
+    // 見つからなかった際に、404エラーページに飛ばす
+    return { notFound: true };
+  }
 };
 
 export default UserPage;
