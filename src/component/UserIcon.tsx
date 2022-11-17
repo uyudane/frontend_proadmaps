@@ -1,7 +1,11 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { Container, Avatar } from '@mui/material';
+import { UserState } from 'types';
 
-const UserIcon = ({ user }: any) => {
+type Props = {
+  user: UserState;
+};
+
+const UserIcon = ({ user }: Props) => {
   return (
     <>
       <Container sx={{ flexGrow: 0 }}>

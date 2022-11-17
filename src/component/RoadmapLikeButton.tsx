@@ -8,12 +8,17 @@ import RequireLoginDialog from './RequireLoginDialog';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 import { postLike, deleteLike } from 'services/likes';
+import { RoadmapFullData, Roadmap } from 'types';
 
-const RoadmapLikeButton = ({ roadmap }: any) => {
+type Props = {
+  // 詳細時はRoadmapFullData、Roadmapは確認時に渡ってくる
+  roadmap: RoadmapFullData | Roadmap;
+};
+
+const RoadmapLikeButton = ({ roadmap }: Props) => {
   const { isAuthenticated, isLoading } = useAuth0();
   const token = useRecoilValue(tokenState);
   const user = useRecoilValue(userState);
-
   // パスでロードマップ作成/編集を判断するのに使用
   const router = useRouter();
 
@@ -22,20 +27,22 @@ const RoadmapLikeButton = ({ roadmap }: any) => {
 
   useEffect(() => {
     // いいねをしているかどうかを判定
+    // 確認画面でRoadmapが渡っている場合+いいねがない場合は、undefindeになる。
     setIsLiked(
-      typeof roadmap.likes?.find((like: any) => like.user_sub === user.sub) !== 'undefined',
+      typeof (roadmap as RoadmapFullData).likes?.find((like) => like.user_sub === user.sub) !==
+        'undefined',
     );
   }, []);
 
   // いいねをする
   const execPostLike = async () => {
-    const result = await postLike({ id: roadmap.id, token: token });
+    await postLike({ id: roadmap.id as number, token: token });
     setIsLiked(true);
   };
 
   // いいねを取り消し
   const execDeleteLike = async () => {
-    const result = await deleteLike({ roadmapId: roadmap.id, token: token });
+    await deleteLike({ roadmapId: String(roadmap.id), token: token });
     setIsLiked(false);
   };
 

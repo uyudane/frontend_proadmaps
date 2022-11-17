@@ -7,10 +7,14 @@ import Typography from '@mui/material/Typography';
 import OgpCard from './OgpCard';
 import { Step } from 'types';
 
-const StepCard = ({ step, index }: { step: Step; index: string }) => {
+type Props = {
+  step: Step;
+  index: string;
+};
+
+const StepCard = ({ step, index }: Props) => {
   return (
     <>
-      {/* <ListItem sx={{ width: '100%', p: 3, m: 1, bgcolor: '#eeeeee' }}> */}
       <Box sx={{ width: '80%', m: 2, border: 2 }}>
         <Grid container sx={{ bgcolor: '#143F6B' }}>
           <Grid item xs={12}>
@@ -76,7 +80,6 @@ const StepCard = ({ step, index }: { step: Step; index: string }) => {
           </Grid>
         </Grid>
       </Box>
-      {/* </ListItem> */}
     </>
   );
 };

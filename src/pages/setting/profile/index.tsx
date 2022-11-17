@@ -12,7 +12,7 @@ import UserIcon from 'component/UserIcon';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 import { updateUser, useMyUser } from 'services/users';
-import type { User } from 'types';
+import type { User, UserFullData } from 'types';
 
 const SettingProfilePage: NextPage = () => {
   const { user, isLoading, isError } = useMyUser();
@@ -63,7 +63,7 @@ const SettingProfilePage: NextPage = () => {
         <Grid item xs={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
-              <UserIcon user={user} />
+              <UserIcon user={user as UserFullData} />
             </Grid>
             {/* エラーになっていないため、userはundefinedにはならない */}
             <Typography variant='h6'>{user!.name}</Typography>

@@ -74,7 +74,7 @@ const EditRoadmapPage: NextPage<Props> = ({ roadmap }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<any> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params) {
     throw new Error('params is undefined');
   }

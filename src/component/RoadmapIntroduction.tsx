@@ -7,17 +7,16 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import RoadmapLikeButton from './RoadmapLikeButton';
-import { Roadmap, Step, UserState } from 'types';
+import { RoadmapFullData, Step, UserState, Roadmap } from 'types';
 
-const RoadmapIntroduction = ({
-  roadmap,
-  steps,
-  user,
-}: {
-  roadmap: Roadmap;
+type Props = {
+  // 詳細時はRoadmapFullData、Roadmapは確認時に渡ってくる
+  roadmap: RoadmapFullData | Roadmap;
   steps: Step[];
   user: UserState;
-}) => {
+};
+
+const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
   const router = useRouter();
   const toProfile = () => {
     router.push(`/${user.sub}`);
@@ -27,9 +26,6 @@ const RoadmapIntroduction = ({
       <Box sx={{ width: '100%', m: 2 }}>
         <Grid container alignItems='center'>
           <Grid item xs={11}>
-            {/* <Grid item xs={12}>
-              <Typography variant='h6'>{user.name}</Typography>
-            </Grid> */}
             {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (
               <Grid container alignItems='center' spacing='8'>
                 <Grid item>

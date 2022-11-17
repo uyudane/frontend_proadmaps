@@ -23,8 +23,8 @@ const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
-  const [searchTags, setSearchTags] = useState('');
-  const [freeSearchWord, setFreeSearchWord] = useState('');
+  const [searchTags, setSearchTags] = useState<Tag[] | undefined>();
+  const [freeSearchWord, setFreeSearchWord] = useState<string | undefined>();
 
   useEffect(() => {
     const getToken = async () => {

@@ -38,7 +38,7 @@ const ConfirmRoadmap = ({ handleBack }: Props) => {
         <RoadmapCard
           roadmap={roadmap}
           steps={steps}
-          user={{ ...current_user, likes: [], github_account: '', twitter_account: '' }}
+          user={{ ...current_user, github_account: '', twitter_account: '' }}
         />
       </Box>
       <Typography variant='h6' component='div'>

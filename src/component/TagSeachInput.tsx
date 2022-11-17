@@ -1,24 +1,32 @@
-import { Button, TextField, Grid, Box, Autocomplete } from '@mui/material';
+import { Button, TextField, Grid, Autocomplete } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import { Tag } from 'types';
 
-const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: any) => {
+type Props = {
+  setSearchTags: Dispatch<SetStateAction<Tag[] | undefined>>;
+  setFreeSearchWord: Dispatch<SetStateAction<string | undefined>>;
+  tags: Tag[];
+};
+
+const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: Props) => {
   const tagTemplate = tags;
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<any>({
+  type useFormProps = {
+    tags: Tag[];
+  };
+
+  const { handleSubmit, control } = useForm<useFormProps>({
     defaultValues: {
       tags: [],
     },
   });
 
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<any> = async (data) => {
+  const onSubmit: SubmitHandler<useFormProps> = async (data) => {
     // タグデータがない場合はundefinedにする。(全出力にするため)
-    data.tags.length > 0 ? setSearchTags(data.tags) : setSearchTags();
-    setFreeSearchWord();
+    data.tags.length > 0 ? setSearchTags(data.tags) : setSearchTags(undefined);
+    setFreeSearchWord(undefined);
   };
 
   return (

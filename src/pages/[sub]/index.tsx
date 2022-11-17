@@ -13,8 +13,8 @@ import type { UserFullData, RoadmapFullData } from 'types';
 
 type Props = {
   user: UserFullData;
-  usersRoadmaps: RoadmapFullData;
-  likedRoadmaps: RoadmapFullData;
+  usersRoadmaps: RoadmapFullData[];
+  likedRoadmaps: RoadmapFullData[];
 };
 
 const UserPage: NextPage<Props> = ({ user, usersRoadmaps, likedRoadmaps }: Props) => {

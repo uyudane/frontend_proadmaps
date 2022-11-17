@@ -3,9 +3,14 @@ import { useRouter } from 'next/router';
 import siteImg from '../../public/images/proad_icon.jpg';
 import { siteMeta } from 'lib/constants';
 
+type Props = {
+  pageTitle?: string;
+  pageDesc?: string;
+};
+
 const { siteTitle, siteDesc, siteUrl, siteLocale, siteType, siteIcon } = siteMeta;
 
-const Meta = ({ pageTitle, pageDesc }: { pageTitle?: string; pageDesc?: string }) => {
+const Meta = ({ pageTitle, pageDesc }: Props) => {
   // ページタイトル
   const title = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
 

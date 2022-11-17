@@ -11,8 +11,13 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import tokenState from 'recoil/atoms/tokenState';
 import { deleteRoadmap } from 'services/roadmaps';
+import { Roadmap } from 'types';
 
-const RoadmapEditDeleteButton = ({ roadmap }: any) => {
+type Props = {
+  roadmap: Roadmap;
+};
+
+const RoadmapEditDeleteButton = ({ roadmap }: Props) => {
   const router = useRouter();
 
   // 削除確認ダイアログに使用
@@ -26,12 +31,13 @@ const RoadmapEditDeleteButton = ({ roadmap }: any) => {
 
   const token = useRecoilValue(tokenState);
 
-  // delete後のリダイレクト先を、ロードマップの公開状況によって振り分ける
+  // delete後のリダイレクト先を、ロードマップの公開状況によって振り分けようとしたが、
+  // SWRのデータが残ってリロードしないと削除データが見えてしまったため、どちらも一旦ルートに戻るようにする
   let deletedRedirectPath = '';
-  roadmap.is_published ? (deletedRedirectPath = '/') : (deletedRedirectPath = '/drafts');
+  roadmap.is_published ? (deletedRedirectPath = '/') : (deletedRedirectPath = '/');
 
   const execDeleteRoadmap = async () => {
-    const result = await deleteRoadmap(roadmap.id, token);
+    const result = await deleteRoadmap(String(roadmap.id), token);
     if (result === 'OK') {
       setOpen(false);
       router.push({

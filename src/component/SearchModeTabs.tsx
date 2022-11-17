@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import FreeSearchInput from 'component/FreeSearchInput';
 import TagSearchInput from 'component/TagSeachInput';
+import { Tag } from 'types';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -22,7 +23,13 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const SearchModeTabs = ({ setFreeSearchWord, setSearchTags, tags }: any) => {
+type Props = {
+  setSearchTags: Dispatch<SetStateAction<Tag[] | undefined>>;
+  setFreeSearchWord: Dispatch<SetStateAction<string | undefined>>;
+  tags: Tag[];
+};
+
+const SearchModeTabs = ({ setFreeSearchWord, setSearchTags, tags }: Props) => {
   const [value, setValue] = useState(0);
 
   // 選択されたタブに合わせて、valueを変更
@@ -41,14 +48,10 @@ const SearchModeTabs = ({ setFreeSearchWord, setSearchTags, tags }: any) => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <TagSearchInput
-            setSearchTags={setSearchTags}
-            setFreeSearchWord={setFreeSearchWord}
-            tags={tags}
-          />
+          <TagSearchInput {...{ setSearchTags, setFreeSearchWord, tags }} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FreeSearchInput setSearchTags={setSearchTags} setFreeSearchWord={setFreeSearchWord} />
+          <FreeSearchInput {...{ setSearchTags, setFreeSearchWord }} />
         </TabPanel>
       </Box>
     </>

@@ -3,7 +3,11 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import Link from '@mui/material/Link';
 import type { UserFullData } from 'types';
 
-const SocialButton = ({ profileUser }: { profileUser: UserFullData }) => {
+type Props = {
+  profileUser: UserFullData;
+};
+
+const SocialButton = ({ profileUser }: Props) => {
   return (
     <>
       {profileUser.github_account ? (

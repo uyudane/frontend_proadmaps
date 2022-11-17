@@ -15,6 +15,7 @@ const RoadmapSubmitButton = () => {
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
   const baseParams = {
+    id: roadmap.id,
     title: roadmap.title,
     tags: roadmap.tags,
     introduction: roadmap.introduction,
@@ -48,14 +49,12 @@ const RoadmapSubmitButton = () => {
     let result = '';
     switch (router.pathname) {
       case '/roadmap/new':
-        result = (await execPostRoadmap()) as any;
+        result = (await execPostRoadmap()) as string;
         break;
       case '/drafts/[id]/edit':
-        result = (await execEditRoadmap()) as any;
+        result = (await execEditRoadmap()) as string;
         break;
       default:
-        // リファクト必要
-        console.log('エラー');
         return;
     }
     if (result === 'OK') {
@@ -86,7 +85,7 @@ const RoadmapSubmitButton = () => {
         endIcon={<SendIcon />}
       >
         {/* ロードマップが公開済みの場合は"更新する"、新規作成、下書きからの編集の場合は"投稿する" */}
-        {roadmap?.is_published === true ? '更新する' : '投稿する'}
+        {roadmap.is_published === true ? '更新する' : '投稿する'}
       </Button>
     </>
   );

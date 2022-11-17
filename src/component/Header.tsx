@@ -24,7 +24,7 @@ import userState from 'recoil/atoms/userState';
 
 function ResponsiveAppBar() {
   const router = useRouter();
-  const { isAuthenticated, loginWithRedirect, logout, isLoading, user } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const resetToken = useResetRecoilState(tokenState);

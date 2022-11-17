@@ -35,6 +35,7 @@ export type Step = {
 // タグデータ
 export type Tag = {
   name: string;
+  roadmap_ids?: number[]; // 検索機能で取得。バックエンドから取得した時のみ入っている。
 };
 
 // 作成済みのロードマップデータ(バックエンドから取得したデータ)
@@ -48,6 +49,8 @@ export type RoadmapFullData = {
   is_published: boolean;
   steps: Step[];
   user: User;
+  number_of_likes: number;
+  likes: Like[];
 };
 
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
@@ -64,7 +67,7 @@ export type User = {
 
 export type Like = {
   roadmap_id: number;
-  roadmap_id: number;
+  user_sub: string;
 };
 
 // userStateで使用する型
