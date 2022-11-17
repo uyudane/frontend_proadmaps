@@ -44,6 +44,7 @@ const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: Props) => {
                 multiple
                 options={tagTemplate}
                 getOptionLabel={(option) => option.name}
+                isOptionEqualToValue={(option, value) => option.name === value.name}
                 renderInput={(params) => (
                   <TextField {...params} placeholder='ロードマップのタグをAND検索します。' />
                 )}

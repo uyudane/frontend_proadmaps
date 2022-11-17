@@ -15,7 +15,7 @@ type useFormProps = {
 const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: Props) => {
   const { handleSubmit, control } = useForm<useFormProps>({
     defaultValues: {
-      searchWord: undefined,
+      searchWord: '',
     },
   });
 

@@ -1,5 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Container } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
@@ -23,9 +25,32 @@ const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
-  const [searchTags, setSearchTags] = useState<Tag[] | undefined>();
-  const [freeSearchWord, setFreeSearchWord] = useState<string | undefined>();
+  const [searchTags, setSearchTags] = useState<Tag[] | undefined>(); // 検索タグを格納
+  const [freeSearchWord, setFreeSearchWord] = useState<string | undefined>(); // 検索フリーワードを格納
+  const [page, setPage] = useState(1); // ページネーションの値
+  const [count, setCount] = useState(1); // ページネーションの最大値
 
+  // 検索結果から出力するロードマップを抽出。
+  const targetRoadmap = useSearchRoadmaps({ ...{ roadmaps, searchTags, freeSearchWord } });
+
+  // ページネーションに合わせて、表示する範囲を変更
+  const outputRoadmap = targetRoadmap.slice(6 * (page - 1), 6 * page);
+
+  // ページネーションの最大値を設定
+  useEffect(() => {
+    setCount(Math.floor((targetRoadmap.length - 1) / 6) + 1);
+    setPage(1);
+  }, [searchTags, freeSearchWord]);
+
+  // ページ変更時に一番上にスクロールするようにする
+  const returnTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  // ログイン時に認証情報をrecoilに登録
   useEffect(() => {
     const getToken = async () => {
       try {
@@ -45,22 +70,34 @@ const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
     getToken();
   }, []);
 
-  const outputRoadmap = useSearchRoadmaps({ ...{ roadmaps, searchTags, freeSearchWord } });
-
   return (
     <>
       <Meta pageTitle='トップ' />
       <SearchModeTabs {...{ setFreeSearchWord, setSearchTags, tags }} />
       <br />
-      <Grid container direction='row' spacing={2}>
-        {outputRoadmap.map((roadmap: RoadmapFullData, i: number) => (
-          <Grid item xs={6} key={`roadmap-card${i}`}>
-            <Box display='flex' justifyContent='center'>
-              <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+      <Container maxWidth='lg'>
+        <Grid container direction='row' spacing={4}>
+          {outputRoadmap.map((roadmap: RoadmapFullData, i: number) => (
+            <Grid item xs={6} key={`roadmap-card${i}`}>
+              <Box display='flex' justifyContent='center'>
+                <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+        <Box display='flex' justifyContent='center' alignItems='center' sx={{ mt: 8 }}>
+          <Stack spacing={2}>
+            <Pagination
+              count={count}
+              color='primary'
+              onChange={(e, page) => {
+                setPage(page);
+                returnTop();
+              }}
+            />
+          </Stack>
+        </Box>
+      </Container>
     </>
   );
 };
