@@ -9,6 +9,7 @@ import StepCard from './StepCard';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import userState from 'recoil/atoms/userState';
+import { RoadmapFullData } from 'types';
 
 type Props = {
   handleBack: () => void;
@@ -36,7 +37,7 @@ const ConfirmRoadmap = ({ handleBack }: Props) => {
       </Typography>
       <Box display='flex' justifyContent='center' alignItems='center'>
         <RoadmapCard
-          roadmap={roadmap}
+          roadmap={roadmap as RoadmapFullData}
           steps={steps}
           user={{ ...current_user, github_account: '', twitter_account: '' }}
         />

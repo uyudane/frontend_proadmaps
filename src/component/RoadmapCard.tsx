@@ -1,15 +1,14 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import { Grid, Paper } from '@mui/material';
+import { Grid, Paper, Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Roadmap, Step, User } from 'types';
+import { RoadmapFullData, Step, User } from 'types';
 
 type Props = {
-  roadmap: Roadmap;
+  roadmap: RoadmapFullData;
   steps: Step[];
   user: User;
 };
@@ -45,13 +44,13 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
             </Grid>
           </Grid>
         ) : (
-          <Grid container alignItems='center' spacing='8'>
-            <Grid item>
+          <Grid container alignItems='center'>
+            <Grid item xs={1.5}>
               <IconButton onClick={toProfile}>
                 <Avatar alt='Remy Sharp' src={user.avatar} />
               </IconButton>
             </Grid>
-            <Grid item>
+            <Grid item xs={7.5}>
               <Link href={`/${user.sub}`}>
                 <Typography
                   variant='body1'
@@ -63,13 +62,16 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
                 </Typography>
               </Link>
             </Grid>
+            <Grid item xs={3}>
+              <Typography variant='body2'>{roadmap.created_date}</Typography>
+            </Grid>
           </Grid>
         )}
         <Grid item xs={12}>
           {/* ロードマップ作成/編集ページの時はリンクにせず、それ以外の時はリンクにする */}
           {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (
             <Typography
-              variant='subtitle1'
+              variant='h6'
               component='a'
               sx={{ mb: 0.5, textDecoration: 'underline' }}
               color='primary'
@@ -79,7 +81,7 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
           ) : (
             <Link href={`${user.sub}/roadmaps/${roadmap.id}`}>
               <Typography
-                variant='subtitle1'
+                variant='h6'
                 component='a'
                 sx={{ mb: 0.5, textDecoration: 'underline', cursor: 'pointer' }}
                 color='primary'
@@ -111,12 +113,10 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
         </Grid>
         <Grid container direction='row' justifyContent='flex-end' alignItems='flex-end'>
           <Grid item>
-            <IconButton aria-label='add to favorites'>
-              <FavoriteIcon fontSize='small' />
-            </IconButton>
-            <IconButton aria-label='share'>
-              <ShareIcon fontSize='small' />
-            </IconButton>
+            <Box display='flex' justifyContent='center' alignItems='center' sx={{ pr: 1 }}>
+              <FavoriteIcon sx={{ pr: 1 }} />
+              {roadmap.number_of_likes}
+            </Box>
           </Grid>
         </Grid>
       </Grid>

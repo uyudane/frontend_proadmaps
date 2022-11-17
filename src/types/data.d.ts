@@ -47,10 +47,11 @@ export type RoadmapFullData = {
   start_skill: string;
   end_skill: string;
   is_published: boolean;
-  steps: Step[];
-  user: User;
-  number_of_likes: number;
-  likes: Like[];
+  steps: Step[]; // Roadmapからの追加分
+  user: User; // Roadmapからの追加分
+  number_of_likes: string; // Roadmapからの追加分
+  likes: Like[]; // Roadmapからの追加分
+  created_date: string; // Roadmapからの追加分
 };
 
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
