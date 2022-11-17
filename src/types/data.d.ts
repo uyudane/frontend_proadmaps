@@ -60,7 +60,11 @@ export type User = {
   avatar: string;
   github_account: string;
   twitter_account: string;
-  likes: [];
+};
+
+export type Like = {
+  roadmap_id: number;
+  roadmap_id: number;
 };
 
 // userStateで使用する型
@@ -74,9 +78,9 @@ export type UserState = {
 export type UserFullData = {
   sub: string;
   name: string;
+  avatar: string;
   github_account: string;
   twitter_account: string;
-  avatar: string;
   roadmaps: Roadmap[];
-  likes: [];
+  likes: Like[];
 };

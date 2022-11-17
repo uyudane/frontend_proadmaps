@@ -12,6 +12,7 @@ export const getRoadmap = async (id: string) => {
   }
 };
 
+// 他にも型をつけたかったが、errorとの付け方が分からなかったため、一旦、仕様上エラーにならない全取得のみ型をつけた
 export const getRoadmaps = async (): Promise<RoadmapFullData[]> => {
   const res = await axios.get(roadmapsIndex);
   return res.data;

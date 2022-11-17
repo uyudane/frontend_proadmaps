@@ -1,9 +1,9 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Link from '@mui/material/Link';
-import type { User } from 'types';
+import type { UserFullData } from 'types';
 
-const SocialButton = ({ profileUser }: { profileUser: User }) => {
+const SocialButton = ({ profileUser }: { profileUser: UserFullData }) => {
   return (
     <>
       {profileUser.github_account ? (
