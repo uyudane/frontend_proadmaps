@@ -39,7 +39,11 @@ const DraftPage: NextPage = () => {
                         </ListItemAvatar>
                       </Grid>
                       <Grid item xs={10}>
-                        <ListItemText primary={roadmap.title} secondary={roadmap.introduction} />
+                        <ListItemText
+                          primary={roadmap.title}
+                          secondary={roadmap.introduction}
+                          sx={{ wordWrap: 'break-word' }}
+                        />
                       </Grid>
                       <Grid item xs={1}>
                         <Grid

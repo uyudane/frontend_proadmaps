@@ -24,7 +24,12 @@ const StepCard = ({ step, index }: Props) => {
           </Grid>
           <Grid item xs={12}>
             <Link href={step.url} target='_blank' rel='noopener noreferrer' underline='hover'>
-              <Typography variant='h6' component='div' color='white'>
+              <Typography
+                variant='h6'
+                component='div'
+                color='white'
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {step.title}
               </Typography>
             </Link>
@@ -35,7 +40,12 @@ const StepCard = ({ step, index }: Props) => {
             <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
               紹介文/コメント
             </Typography>
-            <Typography variant='body1' component='div' sx={{ mb: 1 }} lineHeight={1.5}>
+            <Typography
+              variant='body1'
+              component='div'
+              sx={{ mb: 1, wordWrap: 'break-word' }}
+              lineHeight={1.5}
+            >
               {step.introduction}
             </Typography>
           </Grid>

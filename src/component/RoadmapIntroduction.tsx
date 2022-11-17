@@ -66,7 +66,7 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
               </Grid>
             )}
             <Grid item xs={12}>
-              <Typography variant='h4' component='div' sx={{ mb: 0.5 }}>
+              <Typography variant='h4' component='div' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
                 {roadmap.title}
               </Typography>
             </Grid>
@@ -75,19 +75,19 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
               <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
                 タグ
               </Typography>
-              <Typography variant='body1' sx={{ mb: 0.5 }} lineHeight={1.5}>
+              <Typography variant='body1' sx={{ mb: 0.5, wordWrap: 'break-word' }} lineHeight={1.5}>
                 {roadmap.tags.map((tag) => tag.name).join(',')}
               </Typography>
               <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
                 開始時スキル
               </Typography>
-              <Typography variant='body1' sx={{ mb: 0.5 }} lineHeight={1.5}>
+              <Typography variant='body1' sx={{ mb: 0.5, wordWrap: 'break-word' }} lineHeight={1.5}>
                 {roadmap.start_skill}
               </Typography>
               <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
                 終了時スキル
               </Typography>
-              <Typography variant='body1' sx={{ mb: 0.5 }} lineHeight={1.5}>
+              <Typography variant='body1' sx={{ mb: 0.5, wordWrap: 'break-word' }} lineHeight={1.5}>
                 {roadmap.end_skill}
               </Typography>
               <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
@@ -101,7 +101,9 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
               概要
             </Typography>
             <Grid item xs={12}>
-              <Typography variant='body1'>{roadmap.introduction}</Typography>
+              <Typography variant='body1' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
+                {roadmap.introduction}
+              </Typography>
             </Grid>
           </Grid>
           <Grid item xs={1}>
