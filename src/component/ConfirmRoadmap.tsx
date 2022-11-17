@@ -10,7 +10,11 @@ import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import userState from 'recoil/atoms/userState';
 
-const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
+type Props = {
+  handleBack: () => void;
+};
+
+const ConfirmRoadmap = ({ handleBack }: Props) => {
   const roadmap = useRecoilValue(roadmapState);
   const steps = useRecoilValue(stepsState);
   const current_user = useRecoilValue(userState);
@@ -31,7 +35,11 @@ const ConfirmRoadmap = ({ handleBack }: { handleBack: () => void }) => {
         ①概要プレビュー(一覧ページで表示)
       </Typography>
       <Box display='flex' justifyContent='center' alignItems='center'>
-        <RoadmapCard roadmap={roadmap} steps={steps} user={current_user} />
+        <RoadmapCard
+          roadmap={roadmap}
+          steps={steps}
+          user={{ ...current_user, github_account: '', twitter_account: '' }}
+        />
       </Box>
       <Typography variant='h6' component='div'>
         ②詳細プレビュー(詳細ページで表示)

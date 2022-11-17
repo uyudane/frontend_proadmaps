@@ -1,22 +1,18 @@
 // ロードマップデータ
 export type Roadmap = {
-  id?: number;
+  id: number | null; // ロードマップ新規作成時はnullになる
   title: string;
   tags: Tag[];
   introduction: string;
   start_skill: string;
   end_skill: string;
-  is_published?: boolean;
-};
-
-export type Tag = {
-  name: string;
+  is_published: boolean | null;
 };
 
 // ロードマップデータのtagsをstring[]にしたバージョン
 // ロードマップ作成時に使用するAutocompleでは、オブジェクトが扱えないため。
 export type RoadmapWhenCreating = {
-  id?: number;
+  id: number | null;
   title: string;
   tags: string[];
   introduction: string;
@@ -33,6 +29,28 @@ export type Step = {
   required_time: string;
   year: string;
   month: string;
+  step_number: number | null;
+};
+
+// タグデータ
+export type Tag = {
+  name: string;
+  roadmap_ids?: number[]; // 検索機能で取得。バックエンドから取得した時のみ入っている。
+};
+
+// 作成済みのロードマップデータ(バックエンドから取得したデータ)
+export type RoadmapFullData = {
+  id: number;
+  title: string;
+  tags: Tag[];
+  introduction: string;
+  start_skill: string;
+  end_skill: string;
+  is_published: boolean;
+  steps: Step[];
+  user: User;
+  number_of_likes: number;
+  likes: Like[];
 };
 
 // ロードマップ&ステップス(ロードマップの作成、修正時に使用)
@@ -40,12 +58,16 @@ export type RoadmapAndSteps = Roadmap & { steps: Step[] } & { is_published: bool
 
 // プロフィールデータ
 export type User = {
-  sub?: string;
+  sub: string;
   name: string;
-  avatar?: string;
-  github_account?: string;
-  twitter_account?: string;
-  likes?: [];
+  avatar: string;
+  github_account: string;
+  twitter_account: string;
+};
+
+export type Like = {
+  roadmap_id: number;
+  user_sub: string;
 };
 
 // userStateで使用する型
@@ -55,5 +77,13 @@ export type UserState = {
   avatar: string;
 };
 
-// プロフィール一覧データ
-export type Users = User[];
+// 作成済みのユーザーデータ(バックエンドから取得したデータ)
+export type UserFullData = {
+  sub: string;
+  name: string;
+  avatar: string;
+  github_account: string;
+  twitter_account: string;
+  roadmaps: Roadmap[];
+  likes: Like[];
+};

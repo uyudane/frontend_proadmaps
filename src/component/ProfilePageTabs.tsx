@@ -1,11 +1,10 @@
-import { ConnectedTvOutlined } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import RoadmapCard from './RoadmapCard';
+import { RoadmapFullData } from 'types';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,7 +23,12 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const ProfilePageTabs = ({ user, usersRoadmaps, likedRoadmaps }: any) => {
+type Props = {
+  usersRoadmaps: RoadmapFullData[];
+  likedRoadmaps: RoadmapFullData[];
+};
+
+const ProfilePageTabs = ({ usersRoadmaps, likedRoadmaps }: Props) => {
   const [value, setValue] = useState(0);
 
   // 選択されたタブに合わせて、valueを変更
@@ -47,7 +51,7 @@ const ProfilePageTabs = ({ user, usersRoadmaps, likedRoadmaps }: any) => {
             '投稿したロードマップはありません'
           ) : (
             <Grid container direction='row' spacing={2}>
-              {usersRoadmaps.map((roadmap: any, i: any) => (
+              {usersRoadmaps.map((roadmap, i) => (
                 <Grid item xs={6} key={`roadmap-card${i}`}>
                   <Box display='flex' justifyContent='center'>
                     <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
@@ -62,7 +66,7 @@ const ProfilePageTabs = ({ user, usersRoadmaps, likedRoadmaps }: any) => {
             'いいねしたロードマップはありません'
           ) : (
             <Grid container direction='row' spacing={2}>
-              {likedRoadmaps.map((roadmap: any, i: any) => (
+              {likedRoadmaps.map((roadmap, i) => (
                 <Grid item xs={6} key={`roadmap-card${i}`}>
                   <Box display='flex' justifyContent='center'>
                     <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />

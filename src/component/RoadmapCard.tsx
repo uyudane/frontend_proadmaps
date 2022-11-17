@@ -8,7 +8,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Roadmap, Step, User } from 'types';
 
-const RoadmapCard = ({ roadmap, steps, user }: { roadmap: Roadmap; steps: Step[]; user: User }) => {
+type Props = {
+  roadmap: Roadmap;
+  steps: Step[];
+  user: User;
+};
+
+const RoadmapCard = ({ roadmap, steps, user }: Props) => {
   // ロードマップカードタイトルのリンク有無に使用
   const router = useRouter();
 

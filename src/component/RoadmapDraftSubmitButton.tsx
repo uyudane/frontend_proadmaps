@@ -4,7 +4,7 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
-import { postRoadmap } from 'services/roadmaps';
+import { postRoadmap, editRoadmap } from 'services/roadmaps';
 
 const RoadmapDraftSubmitButton = () => {
   const router = useRouter();
@@ -14,21 +14,24 @@ const RoadmapDraftSubmitButton = () => {
   const resetRoadmap = useResetRecoilState(roadmapState);
   const resetSteps = useResetRecoilState(stepsState);
   const baseParams = {
+    id: roadmap.id,
     title: roadmap.title,
     tags: roadmap.tags,
     introduction: roadmap.introduction,
     start_skill: roadmap.start_skill,
     end_skill: roadmap.end_skill,
     steps: steps,
+    is_published: false,
   };
   const execDraftRoadmap = async () => {
-    const result = await postRoadmap(
-      {
-        ...baseParams,
-        is_published: false,
-      },
-      token,
-    );
+    let result = '';
+    // 新規作成時はpost
+    if (roadmap.id === null) {
+      result = (await postRoadmap(baseParams, token)) as string;
+    } else {
+      // 下書き時はedit
+      result = (await editRoadmap(baseParams, token)) as string;
+    }
     if (result === 'OK') {
       resetRoadmap();
       resetSteps();

@@ -12,13 +12,19 @@ import useSearchRoadmaps from 'hooks/useSearchRoadmaps';
 import { getRoadmaps } from 'services/roadmaps';
 import { getTags } from 'services/tags';
 import { getMyUser } from 'services/users';
+import { RoadmapFullData, Tag } from 'types';
 
-const Home: NextPage = ({ roadmaps, tags }: any) => {
+type Props = {
+  roadmaps: RoadmapFullData[];
+  tags: Tag[];
+};
+
+const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
   const { getAccessTokenSilently } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
-  const [searchTags, setSearchTags] = useState('');
-  const [freeSearchWord, setFreeSearchWord] = useState('');
+  const [searchTags, setSearchTags] = useState<Tag[] | undefined>();
+  const [freeSearchWord, setFreeSearchWord] = useState<string | undefined>();
 
   useEffect(() => {
     const getToken = async () => {
@@ -30,30 +36,24 @@ const Home: NextPage = ({ roadmaps, tags }: any) => {
         // ログイン完了後に自身の情報をバックエンドから取得してrecoilへ格納
         // ユーザ登録の場合は、このタイミングでバックエンドに情報が追加される
         setUser({ sub: user_data.sub, name: user_data.name, avatar: user_data.avatar });
-      } catch (e: any) {
-        console.log(e.message);
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          console.log(e.message);
+        }
       }
     };
     getToken();
   }, []);
 
-  const outputRoadmap = useSearchRoadmaps({
-    roadmaps: roadmaps,
-    searchTags: searchTags,
-    freeSearchWord: freeSearchWord,
-  });
+  const outputRoadmap = useSearchRoadmaps({ ...{ roadmaps, searchTags, freeSearchWord } });
 
   return (
     <>
       <Meta pageTitle='トップ' />
-      <SearchModeTabs
-        setFreeSearchWord={setFreeSearchWord}
-        setSearchTags={setSearchTags}
-        tags={tags}
-      />
+      <SearchModeTabs {...{ setFreeSearchWord, setSearchTags, tags }} />
       <br />
       <Grid container direction='row' spacing={2}>
-        {outputRoadmap.map((roadmap: any, i: any) => (
+        {outputRoadmap.map((roadmap: RoadmapFullData, i: number) => (
           <Grid item xs={6} key={`roadmap-card${i}`}>
             <Box display='flex' justifyContent='center'>
               <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
@@ -69,7 +69,7 @@ export const getServerSideProps = async () => {
   const roadmaps = await getRoadmaps();
   const tags = await getTags();
 
-  return { props: { roadmaps: roadmaps, tags: tags } };
+  return { props: { ...{ roadmaps, tags } } };
 };
 
 export default Home;

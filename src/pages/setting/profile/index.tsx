@@ -1,5 +1,6 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
+import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -11,9 +12,9 @@ import UserIcon from 'component/UserIcon';
 import tokenState from 'recoil/atoms/tokenState';
 import userState from 'recoil/atoms/userState';
 import { updateUser, useMyUser } from 'services/users';
-import type { User } from 'types';
+import type { User, UserFullData } from 'types';
 
-const SettingProfilePage = () => {
+const SettingProfilePage: NextPage = () => {
   const { user, isLoading, isError } = useMyUser();
   const {
     register,
@@ -62,11 +63,12 @@ const SettingProfilePage = () => {
         <Grid item xs={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
-              <UserIcon user={user} />
+              <UserIcon user={user as UserFullData} />
             </Grid>
-            <Typography variant='h6'>{user.name}</Typography>
+            {/* エラーになっていないため、userはundefinedにはならない */}
+            <Typography variant='h6'>{user!.name}</Typography>
             <Grid item>
-              <SocialButton profileUser={user} />
+              <SocialButton profileUser={user!} />
             </Grid>
           </Grid>
         </Grid>

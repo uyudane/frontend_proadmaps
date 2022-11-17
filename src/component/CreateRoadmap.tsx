@@ -8,7 +8,11 @@ import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
 import type { Tag, RoadmapWhenCreating } from 'types';
 
-const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
+type Props = {
+  handleNext: () => void;
+};
+
+const CreateRoadmap = ({ handleNext }: Props) => {
   // tagの初期値の設定について、MUIのAutocompleteのmultipleを使用していたところ、
   // リロードすると「Hydration failed because the initial UI does not match what was rendered on the server」のエラーが出力。
   // おそらく、タグを表現しているチップが原因でサーバ側とクライアントでレンダリング結果が不一致となっているため、
@@ -16,7 +20,7 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
   useEffect(() => {
     setValue(
       'tags',
-      roadmap.tags?.map((tag: Tag) => tag.name),
+      roadmap.tags.map((tag: Tag) => tag.name),
     );
   }, []);
 
@@ -45,6 +49,7 @@ const CreateRoadmap = ({ handleNext }: { handleNext: () => void }) => {
       // tagのデータについて、DBの設定に合わせてnameプロパティのオブジェクトに変換する
       tags: data.tags.map((tag) => ({ name: tag })),
       id: roadmap.id,
+      is_published: roadmap.is_published,
     });
     handleNext();
   };

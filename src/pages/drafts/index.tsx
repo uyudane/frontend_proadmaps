@@ -6,20 +6,21 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
+import { NextPage } from 'next';
 import Meta from 'component/Meta';
 import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
 import { useMyUser } from 'services/users';
 
-const DraftPage = () => {
+const DraftPage: NextPage = () => {
   const { user, isLoading, isError } = useMyUser();
 
   if (isLoading) return <div>ローディング</div>;
   if (isError) return <div>エラー</div>;
-  const draftRoadmaps = user.roadmaps.filter((roadmap: any) => roadmap.is_published == false);
+  // エラーにならない時点でuserが取得できている想定
+  const draftRoadmaps = user!.roadmaps.filter((roadmap) => roadmap.is_published == false);
   return (
     <>
       <Meta pageTitle='下書き一覧' />
-
       <Box display='flex' justifyContent='center' alignItems='center' sx={{ width: '100%' }}>
         <Box sx={{ width: '100%', maxWidth: 'md' }}>
           <List>
@@ -27,7 +28,7 @@ const DraftPage = () => {
               <>
                 <Typography variant='h6'>下書きロードマップ一覧</Typography>
                 <br />
-                {draftRoadmaps.map((roadmap: any) => (
+                {draftRoadmaps.map((roadmap) => (
                   <ListItem sx={{ border: 0.1, borderColor: 'grey.500', p: 3 }} key={roadmap.id}>
                     <Grid container alignItems='center' justifyContent='center' direction='row'>
                       <Grid item xs={1}>

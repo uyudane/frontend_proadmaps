@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
-import type { User } from 'types';
+import type { User, UserFullData } from 'types';
 import { usersIndex, usersShowUpdateDelete, userWhoami } from 'urls/index';
 
 export const getUser = async (sub: string) => {
@@ -26,7 +26,7 @@ export const getUsers = async () => {
 // 自身のユーザ情報を取得(SWRを利用して初回表示を制御する)
 export const useMyUser = () => {
   const token = useRecoilValue(tokenState); // RecoilのTokneを取得する
-  const fetcher = async (url: any) => {
+  const fetcher = async (url: string) => {
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ export const useMyUser = () => {
     });
     return res.data;
   };
-  const { data, error } = useSWR(userWhoami, fetcher);
+  const { data, error } = useSWR<UserFullData, Error>(userWhoami, fetcher);
   return {
     user: data,
     isLoading: !error && !data,
@@ -44,7 +44,7 @@ export const useMyUser = () => {
 
 // useMyUserと同様自身の情報方を取得するが、カスタムフックにしてしまうとuseEffectの中で使用できない。
 // 初回ログイン後の情報格納でuseEffectで使用したいため、こちらも残して使用する。
-export const getMyUser = async (token: any) => {
+export const getMyUser = async (token: string) => {
   try {
     const res = await axios.get(userWhoami, {
       headers: {
@@ -57,7 +57,7 @@ export const getMyUser = async (token: any) => {
   }
 };
 
-export const updateUser = async (params: User, token: any) => {
+export const updateUser = async (params: User, token: string) => {
   try {
     // 0はURLをRailsに合わせるための念の為のダミーで、パラメータは使わず、自身の情報しか修正できないようにしている。
     const res = await axios.put(usersShowUpdateDelete('0'), params, {
@@ -71,7 +71,7 @@ export const updateUser = async (params: User, token: any) => {
   }
 };
 
-export const deleteUser = async ({ sub, token }: any) => {
+export const deleteUser = async ({ sub, token }: { sub: string; token: string }) => {
   try {
     const res = await axios.delete(usersShowUpdateDelete(sub), {
       data: { param: '' },

@@ -11,7 +11,7 @@ const ItemTypes = {
   STEP: 'step',
 };
 
-export interface StepProps {
+export interface Props {
   index: number;
   step: Step;
   id: number;
@@ -24,7 +24,7 @@ interface DragItem {
   type: string;
 }
 
-const DndStep = ({ index, step, id, moveStep }: StepProps) => {
+const DndStep = ({ index, step, id, moveStep }: Props) => {
   // ドラッグ対象のrefを取得(DOMを操作していくためのもの)
   const ref = useRef<HTMLDivElement>(null);
 

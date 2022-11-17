@@ -1,10 +1,15 @@
 import { Grid, Typography, Link, Box } from '@mui/material';
 import { useURLData } from 'services/roadmaps';
 
-const OgpCard = ({ url }: { url: string }) => {
+type Props = {
+  url: string;
+};
+
+const OgpCard = ({ url }: Props) => {
   const { urlData, isLoading, isError } = useURLData(url);
   if (isLoading) return <div></div>;
   if (isError) return <div></div>;
+  console.log(urlData.image);
   return (
     <>
       <Box sx={{ maxWidth: 'sm', border: 1, m: 1 }}>
@@ -25,7 +30,7 @@ const OgpCard = ({ url }: { url: string }) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <img src={urlData.image} height={100} width={150} />
+                  <img src={urlData.image} height={100} width={150} alt={'ogp_imgae'} />
                 </Grid>
               </Grid>
             </Link>

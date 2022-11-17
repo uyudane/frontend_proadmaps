@@ -1,7 +1,8 @@
 import { Box } from '@mui/system';
+import type { NextPage } from 'next';
 import Meta from 'component/Meta';
 
-const TermsPage = () => {
+const TermsPage: NextPage = () => {
   return (
     <>
       <Meta pageTitle='利用規約' />

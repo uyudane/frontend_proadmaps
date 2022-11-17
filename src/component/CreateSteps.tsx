@@ -10,7 +10,12 @@ import RoadmapDraftSubmitButton from './RoadmapDraftSubmitButton';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 
-const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: any }) => {
+type Props = {
+  handleNext: () => void;
+  handleBack: () => void;
+};
+
+const CreateSteps = ({ handleNext, handleBack }: Props) => {
   // CreateStepDialogでステップを作成する際に使用する内部的なIDの設定に使用。
   // リロードしても連番になるように、配列のIDで一番大きいID+1の値になるように設定。
   const step = useRecoilValue(stepsState);
@@ -33,9 +38,9 @@ const CreateSteps = ({ handleNext, handleBack }: { handleNext: any; handleBack: 
   return (
     <>
       ステップの作成
-      <CreateStepDialog open={open} handleClose={handleClose} getStepId={getStepId} />
+      <CreateStepDialog {...{ open, handleClose, getStepId }} />
       <DndProvider backend={HTML5Backend}>
-        <DndStepContainer handleClickOpen={handleClickOpen} />
+        <DndStepContainer {...{ handleClickOpen }} />
       </DndProvider>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button color='primary' variant='contained' onClick={handleBack} sx={{ mr: 1 }}>

@@ -1,5 +1,4 @@
-import { Grid, Box, Paper, Container, Typography, Link as MuiLink } from '@mui/material';
-import Image from 'next/image';
+import { Grid, Box, Typography, Link as MuiLink } from '@mui/material';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -18,9 +17,6 @@ const Footer = () => {
           spacing={2}
           pb={2}
         >
-          {/* <Grid item>
-            <Image priority src='/logo_unit.png' width={20} height={20} alt='Logo' />
-          </Grid> */}
           <Grid item>
             <MuiLink
               href='https://twitter.com/uyudane'

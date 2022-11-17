@@ -30,9 +30,9 @@ const CreateRoadmapPage: NextPage = () => {
         {/* 上部のステップ表示部分 */}
         {/* Stepperでアクティブの所まで色がつく */}
         <Stepper activeStep={activeStep} alternativeLabel>
+          {/* 上部のステップのsteps */}
           {steps.map((label) => {
             const stepProps: { completed?: boolean } = {};
-
             return (
               <Step key={label} {...stepProps}>
                 <StepLabel>{label}</StepLabel>
@@ -41,9 +41,9 @@ const CreateRoadmapPage: NextPage = () => {
           })}
         </Stepper>
         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-        {activeStep === 0 && <CreateRoadmap handleNext={handleNext} />}
-        {activeStep === 1 && <CreateSteps handleNext={handleNext} handleBack={handleBack} />}
-        {activeStep === 2 && <ConfirmRoadmap handleBack={handleBack} />}
+        {activeStep === 0 && <CreateRoadmap {...{ handleNext }} />}
+        {activeStep === 1 && <CreateSteps {...{ handleNext, handleBack }} />}
+        {activeStep === 2 && <ConfirmRoadmap {...{ handleBack }} />}
       </Box>
     </>
   );

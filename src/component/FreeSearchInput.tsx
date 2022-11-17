@@ -1,20 +1,27 @@
-import { Button, TextField, Grid, Box } from '@mui/material';
+import { Button, TextField, Grid } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import { Tag } from 'types';
 
-const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: any) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<any>({
+type Props = {
+  setSearchTags: Dispatch<SetStateAction<Tag[] | undefined>>;
+  setFreeSearchWord: Dispatch<SetStateAction<string | undefined>>;
+};
+
+type useFormProps = {
+  searchWord: string;
+};
+
+const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: Props) => {
+  const { handleSubmit, control } = useForm<useFormProps>({
     defaultValues: {
-      searchWord: '',
+      searchWord: undefined,
     },
   });
 
   // フォーム送信時の処理
-  const onSubmit: SubmitHandler<any> = async (data) => {
-    setSearchTags();
+  const onSubmit: SubmitHandler<useFormProps> = async (data) => {
+    setSearchTags(undefined);
     setFreeSearchWord(data.searchWord);
   };
 

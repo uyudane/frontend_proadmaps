@@ -1,9 +1,14 @@
 import { Container, Alert } from '@mui/material';
 import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 
-const Layout = ({ children }: any) => {
+type Props = {
+  children: ReactNode;
+};
+
+const Layout = ({ children }: Props) => {
   // フラッシュメッセージを表示する。
   const router = useRouter();
   const successMessage = router.query.successMessage || null;

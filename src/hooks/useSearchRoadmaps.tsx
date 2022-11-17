@@ -1,8 +1,16 @@
-const useSearchRoadmaps = ({ roadmaps, searchTags, freeSearchWord }: any) => {
+import { RoadmapFullData, Tag } from 'types';
+
+type Props = {
+  roadmaps: RoadmapFullData[];
+  searchTags: Tag[] | undefined;
+  freeSearchWord: string | undefined;
+};
+
+const useSearchRoadmaps = ({ roadmaps, searchTags, freeSearchWord }: Props) => {
   let outputRoadmaps = undefined;
   if (searchTags) {
     // 取得したタグ情報からロードマップのID情報を抽出する(二次元配列)
-    const searchRoadmapsIds = searchTags.map((tag: any) => tag.roadmap_ids);
+    const searchRoadmapsIds = searchTags.map((tag: Tag) => tag.roadmap_ids);
     const tagCount = searchRoadmapsIds.length;
 
     // 検索結果となるロードマップのIDの初期値を設定
@@ -10,13 +18,15 @@ const useSearchRoadmaps = ({ roadmaps, searchTags, freeSearchWord }: any) => {
 
     // 上記の初期値をもとに、全てのタグを含むロードマップのIDを抽出する
     for (let i = 0; i < tagCount - 1; i++) {
-      outputRoadmapsIds = outputRoadmapsIds.filter((outputRoadmapsId: any) =>
-        searchRoadmapsIds[i + 1].includes(outputRoadmapsId),
+      outputRoadmapsIds = (outputRoadmapsIds as number[]).filter((outputRoadmapsId: number) =>
+        (searchRoadmapsIds[i + 1] as number[]).includes(outputRoadmapsId),
       );
     }
 
     // 抽出したIDをもとに、ロードマップの情報を取得する
-    outputRoadmaps = roadmaps.filter((roadmap: any) => outputRoadmapsIds.includes(roadmap.id));
+    outputRoadmaps = roadmaps.filter((roadmap) =>
+      (outputRoadmapsIds as number[])?.includes(roadmap.id),
+    );
   } else if (freeSearchWord) {
     // 正規表現で文字列が含まれるロードマップを検索する
     const reg = new RegExp(freeSearchWord);
@@ -25,7 +35,7 @@ const useSearchRoadmaps = ({ roadmaps, searchTags, freeSearchWord }: any) => {
     }
 
     outputRoadmaps = roadmaps.filter(
-      (roadmap: any) => roadmap.title.match(reg) || roadmap.introduction.match(reg),
+      (roadmap) => roadmap.title.match(reg) || roadmap.introduction.match(reg),
     );
   } else {
     // どちらも検索ワードがない場合は全出力する
