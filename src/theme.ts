@@ -18,7 +18,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Yu Gothic', 'Roboto', 'sans-serif'].join(','),
+    fontFamily: ['"Helvetica Neue"', 'Arial', 'Hiragino Sans', 'Meiryo', 'sans-serif'].join(','),
     // ボタンの文字がデフォルトで大文字になっているため、小文字も許可
     button: {
       textTransform: 'none',
