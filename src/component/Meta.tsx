@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import siteImg from '../../public/images/proad_icon.jpg';
+import siteImg from '../../public/logo_unit.png';
 import { siteMeta } from 'lib/constants';
 
 type Props = {
