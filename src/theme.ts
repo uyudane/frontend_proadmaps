@@ -21,11 +21,11 @@ const theme = createTheme({
     fontFamily: [
       'Helvetica Neue',
       'Helvetica',
-      'Hiragino Sans',
       'Arial',
-      'Hiragino Kaku Gothic ProN',
-      'Yu Gothic',
       'Meiryo',
+      'Hiragino Kaku Gothic ProN',
+      'Hiragino Sans',
+      'Yu Gothic',
       'sans-serif',
     ].join(','),
     // ボタンの文字がデフォルトで大文字になっているため、小文字も許可
