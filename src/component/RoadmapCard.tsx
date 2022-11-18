@@ -73,26 +73,36 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
             <Typography
               variant='h6'
               component='a'
-              sx={{ mb: 0.5, textDecoration: 'underline' }}
+              sx={{ mb: 0.5, textDecoration: 'underline', wordWrap: 'break-word' }}
               color='primary'
             >
-              {roadmap.title}
+              {roadmap.title.slice(0, 100)}
             </Typography>
           ) : (
             <Link href={`${user.sub}/roadmaps/${roadmap.id}`}>
               <Typography
                 variant='h6'
                 component='a'
-                sx={{ mb: 0.5, textDecoration: 'underline', cursor: 'pointer' }}
+                sx={{
+                  mb: 0.5,
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  wordWrap: 'break-word',
+                }}
                 color='primary'
               >
-                {roadmap.title}
+                {roadmap.title.slice(0, 100)}
               </Typography>
             </Link>
           )}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='body2' sx={{ mb: 1 }} color='text.secondary' lineHeight={1.5}>
+          <Typography
+            variant='body2'
+            sx={{ mb: 1, wordWrap: 'break-word' }}
+            color='text.secondary'
+            lineHeight={1.5}
+          >
             開始時スキル: {roadmap.start_skill.slice(0, 50)}
             <br />
             終了時スキル: {roadmap.end_skill.slice(0, 50)}

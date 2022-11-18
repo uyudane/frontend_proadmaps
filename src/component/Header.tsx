@@ -172,6 +172,8 @@ function ResponsiveAppBar() {
                     onClick={
                       isAuthenticated
                         ? () => {
+                            resetRoadmap();
+                            resetSteps();
                             router.push(page.link);
                           }
                         : dialogOpen
@@ -190,26 +192,31 @@ function ResponsiveAppBar() {
                 mr: 1,
               }}
             >
-              <Image src='/logo_unit.png' alt='ロゴ' width='32' height='32'></Image>
+              <Link href='/'>
+                <a>
+                  <Image src='/logo_unit.png' alt='ロゴ' width='32' height='32'></Image>
+                </a>
+              </Link>
             </Box>
-            <Typography
-              variant='h6'
-              noWrap
-              component='a'
-              href=''
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              ProadMaps
-            </Typography>
+            <Link href='/' passHref>
+              <Typography
+                variant='h6'
+                noWrap
+                component='a'
+                sx={{
+                  mr: 2,
+                  display: { xs: 'flex', md: 'none' },
+                  flexGrow: 1,
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                ProadMaps
+              </Typography>
+            </Link>
             {/* md用メニューボタン */}
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Typography variant='body2'>
@@ -224,6 +231,8 @@ function ResponsiveAppBar() {
                   onClick={
                     isAuthenticated
                       ? () => {
+                          resetRoadmap();
+                          resetSteps();
                           router.push(page.link);
                         }
                       : dialogOpen

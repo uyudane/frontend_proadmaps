@@ -1,5 +1,5 @@
 import DragHandleIcon from '@mui/icons-material/DragHandle';
-import { Grid, ListItem, ListItemText } from '@mui/material';
+import { Grid, ListItem, ListItemText, Box } from '@mui/material';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
@@ -137,7 +137,7 @@ const DndStep = ({ index, step, id, moveStep }: Props) => {
             />
           </Grid>
           <Grid item xs={10}>
-            <ListItemText primary={step.title} secondary={stepDescription} />
+            <ListItemText primary={step.title.slice(0, 70)} secondary={stepDescription} />
           </Grid>
           <Grid item xs={1}>
             <EditStepButton index={index} />

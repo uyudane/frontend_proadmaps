@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { IconButton, List, Grid } from '@mui/material';
+import { IconButton, List, Grid, Box } from '@mui/material';
 import update from 'immutability-helper';
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
@@ -34,12 +34,14 @@ const DndStepContainer = ({ handleClickOpen }: Props) => {
   return (
     <>
       <Grid container alignItems='center' justifyContent='center' direction='column'>
-        <Grid item>
-          <List sx={{ width: '100%', maxWidth: 'md' }}>
-            {/* stepの内容とi(stepの並び順になるIndex)を渡している。 */}
-            <div>{steps.map((step, i) => renderStep(step, i))}</div>
-          </List>
-        </Grid>
+        <Box sx={{ width: '100%', maxWidth: 'md' }}>
+          <Grid item>
+            <List>
+              {/* stepの内容とi(stepの並び順になるIndex)を渡している。 */}
+              <div>{steps.map((step, i) => renderStep(step, i))}</div>
+            </List>
+          </Grid>
+        </Box>
         <Grid item>
           <IconButton aria-label='AddStep' onClick={handleClickOpen}>
             <AddIcon
