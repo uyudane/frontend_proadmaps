@@ -6,6 +6,7 @@ import Meta from 'component/Meta';
 import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
 import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
+import TwitterCard from 'component/TwitterCard';
 import { getRoadmap } from 'services/roadmaps';
 import { getUsers } from 'services/users';
 import type { RoadmapFullData, UserFullData } from 'types';
@@ -27,6 +28,7 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
+      <TwitterCard />
       <AuthUserAndHiddenItem user={roadmap.user}>
         <RoadmapEditDeleteButton roadmap={roadmap} />
       </AuthUserAndHiddenItem>
