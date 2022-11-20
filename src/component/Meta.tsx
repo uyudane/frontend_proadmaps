@@ -43,7 +43,7 @@ const Meta = ({ pageTitle, pageDesc }: Props) => {
       <meta property='og:image' content={imgUrl} />
       <meta property='og:image:width' content={imgW} />
       <meta property='og:image:height' content={imgH} />
-      <meta name='twitter:card' content='summary_large_image' />
+      {/* <meta name='twitter:card' content='summary_large_image' /> */}
     </Head>
   );
 };
