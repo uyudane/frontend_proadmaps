@@ -1,4 +1,3 @@
-import ShareIcon from '@mui/icons-material/Share';
 import { Grid } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -7,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import RoadmapLikeButton from './RoadmapLikeButton';
+import RoadmapTweetButton from './RoadmapTweetButton';
 import { RoadmapFullData, Step, UserState, Roadmap } from 'types';
 
 type Props = {
@@ -107,14 +107,15 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
             </Grid>
           </Grid>
           <Grid item xs={1}>
-            <Grid container direction='column' justifyContent='center' alignItems='flex-end'>
+            <Grid container direction='column' justifyContent='center' alignItems='center'>
               <Grid item>
                 <RoadmapLikeButton roadmap={roadmap} />
               </Grid>
+              <br />
               <Grid item>
-                <IconButton aria-label='share'>
-                  <ShareIcon sx={{ fontSize: 40 }} />
-                </IconButton>
+                {router.pathname !== '/roadmap/new' && router.pathname !== '/drafts/[id]/edit' && (
+                  <RoadmapTweetButton roadmap={roadmap} />
+                )}
               </Grid>
             </Grid>
           </Grid>
