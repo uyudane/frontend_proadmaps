@@ -113,9 +113,9 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
               </Grid>
               <br />
               <Grid item>
-                <IconButton aria-label='share'>
-                  <RoadmapTweetButton {...{ roadmap }} />
-                </IconButton>
+                {router.pathname !== '/roadmap/new' && router.pathname !== '/drafts/[id]/edit' && (
+                  <RoadmapTweetButton roadmap={roadmap} />
+                )}
               </Grid>
             </Grid>
           </Grid>

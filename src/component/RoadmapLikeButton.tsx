@@ -70,7 +70,7 @@ const RoadmapLikeButton = ({ roadmap }: Props) => {
         ) : isLiked ? (
           // ログイン済みの場合は、いいね有無で色、アクションを変える。
           <IconButton aria-label='favorite' onClick={execDeleteLike}>
-            <FavoriteIcon sx={{ fontSize: 40, color: 'blue' }} />
+            <FavoriteIcon sx={{ fontSize: 40, color: '#f62b86' }} />
           </IconButton>
         ) : (
           <IconButton aria-label='unfavorite' onClick={execPostLike}>
