@@ -28,7 +28,7 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
   return (
     <>
       <Meta pageTitle='ロードマップ詳細' />
-      <TwitterCard />
+      <TwitterCard {...{ roadmap }} />
       <AuthUserAndHiddenItem user={roadmap.user}>
         <RoadmapEditDeleteButton roadmap={roadmap} />
       </AuthUserAndHiddenItem>
