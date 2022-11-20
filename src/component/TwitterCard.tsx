@@ -9,7 +9,7 @@ const TwitterCard = ({ roadmap }: Props) => {
   return (
     <Head>
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:title' content='ProadMaps' />
+      <meta name='twitter:title' content={`${roadmap.title} | ProadMaps`} />
       <meta
         name='twitter:description'
         content='プログラミング学習のロードマップ/学習記録 共有サイトです。'

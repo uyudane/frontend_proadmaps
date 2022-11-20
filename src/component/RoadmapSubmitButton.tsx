@@ -5,9 +5,11 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import roadmapState from 'recoil/atoms/roadmapState';
 import stepsState from 'recoil/atoms/stepsState';
 import tokenState from 'recoil/atoms/tokenState';
+import userState from 'recoil/atoms/userState';
 import { postRoadmap, editRoadmap } from 'services/roadmaps';
 
 const RoadmapSubmitButton = () => {
+  const current_user = useRecoilValue(userState); // RecoilのTokneを取得する
   const router = useRouter();
   const token = useRecoilValue(tokenState);
   const roadmap = useRecoilValue(roadmapState);
@@ -46,22 +48,22 @@ const RoadmapSubmitButton = () => {
   };
 
   const execSubmit = async () => {
-    let result = '';
+    let result = undefined;
     switch (router.pathname) {
       case '/roadmap/new':
-        result = (await execPostRoadmap()) as string;
+        result = await execPostRoadmap();
         break;
       case '/drafts/[id]/edit':
-        result = (await execEditRoadmap()) as string;
+        result = await execEditRoadmap();
         break;
       default:
         return;
     }
-    if (result === 'OK') {
+    if (result.id) {
       resetRoadmap();
       resetSteps();
       router.push({
-        pathname: `/`,
+        pathname: `/${current_user.sub}/roadmaps/${result.id}`,
         query: { successMessage: 'ロードマップを投稿しました' },
       });
     } else {
