@@ -1,8 +1,10 @@
 import { Box, Grid } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import AuthUserAndHiddenItem from 'component/AuthUserAndHiddenItem';
 import Meta from 'component/Meta';
+import RequestTweetDialog from 'component/RequestTweetDialog';
 import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
 import RoadmapIntroduction from 'component/RoadmapIntroduction';
 import StepCard from 'component/StepCard';
@@ -17,9 +19,19 @@ type Props = {
 
 const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
   const router = useRouter();
+  // ロードマップ投稿時のTwitter投稿依頼ダイアログの開閉に使用
+  const [open, setOpen] = useState(true);
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
+
+  // ロードマップ作成、更新後のアラートメッセージの有無で、Twitter投稿依頼ダイアログの有無を制御
+  const successMessage = router.query.successMessage || null;
+
+  // ロードマップ投稿時のTwitter投稿依頼ダイアログの開閉に使用
+  const dialogClose = () => {
+    setOpen(false);
+  };
 
   // step_number順に表示されるステップの順番を並び替える
   const stepData = [...roadmap.steps];
@@ -29,6 +41,10 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
     <>
       <Meta pageTitle='ロードマップ詳細' />
       <TwitterCard {...{ roadmap }} />
+      {/* Twitter投稿依頼ダイアログ */}
+      {successMessage && open && (
+        <RequestTweetDialog open={open} onClose={dialogClose} roadmap={roadmap} />
+      )}
       <AuthUserAndHiddenItem user={roadmap.user}>
         <RoadmapEditDeleteButton roadmap={roadmap} />
       </AuthUserAndHiddenItem>

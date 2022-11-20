@@ -12,8 +12,9 @@ const RoadmapTweetButton = ({ roadmap }: Props) => {
   return (
     <>
       <TwitterShareButton
-        url={`${process.env['NEXT_PUBLIC_BASE_URL']}${router.asPath}`}
+        url={`${process.env['NEXT_PUBLIC_BASE_URL']}/${router.query.sub}/roadmaps/${router.query.id}`}
         title={`${roadmap.title} | ProadMaps`}
+        hashtags={['ProadMaps']}
       >
         <TwitterIcon size={40} round={true} />
       </TwitterShareButton>
