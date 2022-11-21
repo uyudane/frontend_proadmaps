@@ -54,7 +54,6 @@ export const useUsersAdmin = () => {
     return res.data;
   };
   const { data, error } = useSWR<UserFullData[], Error>(usersIndexAdmin, fetcher);
-  console.log(data);
   return {
     users: data,
     isLoading: !error && !data,

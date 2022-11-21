@@ -1,4 +1,5 @@
 import { Box, Grid } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -22,7 +23,11 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
   // ロードマップ投稿時のTwitter投稿依頼ダイアログの開閉に使用
   const [open, setOpen] = useState(true);
   if (router.isFallback) {
-    return <h3>Loading...</h3>;
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
 
   // ロードマップ作成、更新後のアラートメッセージの有無で、Twitter投稿依頼ダイアログの有無を制御

@@ -1,4 +1,5 @@
 import { Grid, Typography, Link, Box } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useURLData } from 'services/roadmaps';
 
 type Props = {
@@ -7,9 +8,13 @@ type Props = {
 
 const OgpCard = ({ url }: Props) => {
   const { urlData, isLoading, isError } = useURLData(url);
-  if (isLoading) return <div></div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   if (isError) return <div></div>;
-  console.log(urlData.image);
   return (
     <>
       <Box sx={{ maxWidth: 'sm', border: 1, m: 1 }}>
@@ -30,7 +35,7 @@ const OgpCard = ({ url }: Props) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <img src={urlData.image} height={100} width={150} alt={'ogp_imgae'} />
+                  <img src={urlData.image} height={100} width={150} alt={'imgae'} />
                 </Grid>
               </Grid>
             </Link>

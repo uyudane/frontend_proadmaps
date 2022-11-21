@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
@@ -47,7 +48,11 @@ const EditRoadmapPage: NextPage<Props> = ({ roadmap }: Props) => {
   };
 
   if (!authentication) {
-    return <h3>ローディング</h3>;
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
   return (
     <>

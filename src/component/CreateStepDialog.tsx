@@ -181,7 +181,7 @@ const CreateStepDialog = ({
                         )}
                       />
                       <Button variant='outlined' onClick={getURL} sx={{ width: '20%' }}>
-                        タイトルを読み込む
+                        タイトルを読み込む(数秒かかります)
                       </Button>
                     </Grid>
                   </Grid>

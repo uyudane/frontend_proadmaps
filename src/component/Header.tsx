@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -278,7 +279,9 @@ function ResponsiveAppBar() {
                 </>
               ) : // ログイン確認中はローディングを出す
               isLoading ? (
-                <div>Loading...</div>
+                <div>
+                  <CircularProgress sx={{ color: '#eeeeee' }} />
+                </div>
               ) : (
                 <MenuItem key='login' onClick={loginWithRedirect}>
                   <Typography textAlign='center'>Login</Typography>
