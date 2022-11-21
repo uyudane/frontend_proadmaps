@@ -2,11 +2,8 @@ import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import tokenState from 'recoil/atoms/tokenState';
-import type { RoadmapAndSteps, RoadmapFullData, User, UserFullData } from 'types';
+import type { RoadmapFullData, UserFullData } from 'types';
 import {
-  roadmapsIndex,
-  roadmapsShowUpdateDelete,
-  ogpShow,
   roadmapsIndexAdmin,
   roadmapsDeleteAdmin,
   usersIndexAdmin,
@@ -63,4 +60,18 @@ export const useUsersAdmin = () => {
     isLoading: !error && !data,
     isError: error,
   };
+};
+
+export const deleteUserAdmin = async (sub: string, token: string) => {
+  try {
+    const res = await axios.delete(usersDeleteAdmin(String(sub)), {
+      data: { param: '' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.statusText; // 0Kが返る想定
+  } catch (error) {
+    return error;
+  }
 };

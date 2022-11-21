@@ -27,5 +27,5 @@ export const roadmapsDeleteAdmin = (RoadmapId: string) =>
 
 // Admin(ユーザー)
 export const usersIndexAdmin = `${DEFAULT_API_LOCALHOST}/admin/users`;
-export const usersDeleteAdmin = (UserId: string) =>
-  `${DEFAULT_API_LOCALHOST}/admin/users/${UserId}`;
+export const usersDeleteAdmin = (UserSub: string) =>
+  `${DEFAULT_API_LOCALHOST}/admin/users/${UserSub}`;
