@@ -102,11 +102,11 @@ const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const roadmaps = await getRoadmaps();
   const tags = await getTags();
 
-  return { props: { ...{ roadmaps, tags } } };
+  return { props: { ...{ roadmaps, tags } }, revalidate: 5 };
 };
 
 export default Home;
