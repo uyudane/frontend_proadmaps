@@ -6,6 +6,7 @@ import CreateRoadmapInfo from './CreateRoadmapInfo';
 import RoadmapCancelButton from './RoadmapCancelButton';
 import Meta from 'component/Meta';
 import roadmapState from 'recoil/atoms/roadmapState';
+import { getTags } from 'services/tags';
 import type { Tag, RoadmapWhenCreating } from 'types';
 
 type Props = {
@@ -13,6 +14,16 @@ type Props = {
 };
 
 const CreateRoadmap = ({ handleNext }: Props) => {
+  // タグの入力例を設定(過去に使用されたタグ)
+  const [tagTemplate, setTagTemplate] = useState<string[]>([]);
+  useEffect(() => {
+    const execGetTags = async () => {
+      const tags = await getTags();
+      setTagTemplate(tags.map((tag: Tag) => tag.name));
+    };
+    execGetTags();
+  }, []);
+
   // tagの初期値の設定について、MUIのAutocompleteのmultipleを使用していたところ、
   // リロードすると「Hydration failed because the initial UI does not match what was rendered on the server」のエラーが出力。
   // おそらく、タグを表現しているチップが原因でサーバ側とクライアントでレンダリング結果が不一致となっているため、
@@ -53,23 +64,6 @@ const CreateRoadmap = ({ handleNext }: Props) => {
     });
     handleNext();
   };
-
-  const tagTemplate = [
-    'Ruby',
-    'Rails',
-    'PHP',
-    'Laravel',
-    'Python',
-    'Django',
-    'データベース',
-    'Vue.js',
-    'Nuxt.js',
-    'React',
-    'Next.js',
-    'HTML',
-    'CSS',
-    'JavaScript',
-  ];
 
   return (
     <>
