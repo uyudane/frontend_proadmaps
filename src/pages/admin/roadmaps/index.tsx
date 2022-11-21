@@ -3,9 +3,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import AdminRoadmapDeleteButton from 'component/AdminRoadmapDeleteButton';
 import Meta from 'component/Meta';
+import useAuthAdminAndRedirect from 'hooks/useAuthAdminAndRedirect';
 import { useRoadmapsAdmin } from 'services/admin';
 
 const AdminRoadmapsPage = () => {
+  useAuthAdminAndRedirect();
   const { roadmaps, isLoading, isError } = useRoadmapsAdmin();
   if (isLoading) return <div>ローディング</div>;
   if (isError) return <div>エラー</div>;
