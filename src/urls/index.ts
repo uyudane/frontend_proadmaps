@@ -19,3 +19,13 @@ export const likeDelete = (Id: string) => `${DEFAULT_API_LOCALHOST}/likes/${Id}`
 
 // いいね(ロードマップ)
 export const tagsGet = `${DEFAULT_API_LOCALHOST}/tags`;
+
+// Admin(ロードマップ)
+export const roadmapsIndexAdmin = `${DEFAULT_API_LOCALHOST}/admin/roadmaps`;
+export const roadmapsDeleteAdmin = (RoadmapId: string) =>
+  `${DEFAULT_API_LOCALHOST}/admin/roadmaps/${RoadmapId}`;
+
+// Admin(ユーザー)
+export const usersIndexAdmin = `${DEFAULT_API_LOCALHOST}/admin/users`;
+export const usersDeleteAdmin = (UserId: string) =>
+  `${DEFAULT_API_LOCALHOST}/admin/users/${UserId}`;
