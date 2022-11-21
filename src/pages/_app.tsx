@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import createEmotionCache from '../createEmotionCache';
 import theme from '../theme';
+import GoogleAnalytics from 'component/GoogleAnalytics';
 import Layout from 'component/Layout';
 
 const clientSideEmotionCache = createEmotionCache();
@@ -34,6 +35,7 @@ const MyApp = (props: MyAppProps) => {
           <CssBaseline />
           <RecoilRoot>
             <Layout>
+              {process.env.NODE_ENV == 'production' && <GoogleAnalytics />}
               <Component {...pageProps} />
             </Layout>
           </RecoilRoot>
