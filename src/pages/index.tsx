@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil'; // Auth0の認証情報をグローバルステートに保存
 import tokenState from '../recoil/atoms/tokenState'; // Auth0の認証情報をグローバルステートに保存
 import userState from '../recoil/atoms/userState'; // Auth0の認証情報をグローバルステートに保存
+import HomeTwitterCard from 'component/HomeTwitterCard';
 import Meta from 'component/Meta';
 import RoadmapCard from 'component/RoadmapCard';
 import SearchModeTabs from 'component/SearchModeTabs';
@@ -73,6 +74,7 @@ const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
   return (
     <>
       <Meta pageTitle='トップ' />
+      <HomeTwitterCard />
       <SearchModeTabs {...{ setFreeSearchWord, setSearchTags, tags }} />
       <br />
       <Container maxWidth='lg'>
