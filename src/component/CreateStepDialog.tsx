@@ -67,7 +67,7 @@ const CreateStepDialog = ({
   // 実施年月の年の部分の選択肢を作成
   const setYearOption = () => {
     const list = [];
-    for (let i = 2000; i <= new Date().getFullYear(); i++) {
+    for (let i = 2010; i <= new Date().getFullYear(); i++) {
       list.push(
         <MenuItem key={`year${i}`} value={`${i}年`}>
           {i}年
