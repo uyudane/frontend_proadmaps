@@ -25,6 +25,8 @@ const RoadmapLikeButton = ({ roadmap }: Props) => {
 
   // いいねの実施有無を格納
   const [isLiked, setIsLiked] = useState<boolean | null>(null);
+  console.log('先頭');
+  console.log(isLiked);
 
   useEffect(() => {
     // いいねをしているかどうかを判定
@@ -33,7 +35,9 @@ const RoadmapLikeButton = ({ roadmap }: Props) => {
       typeof (roadmap as RoadmapFullData).likes?.find((like) => like.user_sub === user.sub) !==
         'undefined',
     );
-  }, [roadmap]);
+    console.log('useEffect');
+    console.log(isLiked);
+  }, []);
 
   // いいねをする
   const execPostLike = async () => {
