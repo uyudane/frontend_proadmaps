@@ -33,7 +33,7 @@ const RoadmapLikeButton = ({ roadmap }: Props) => {
       typeof (roadmap as RoadmapFullData).likes?.find((like) => like.user_sub === user.sub) !==
         'undefined',
     );
-  }, []);
+  }, [roadmap]);
 
   // いいねをする
   const execPostLike = async () => {

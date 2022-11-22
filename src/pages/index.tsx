@@ -106,7 +106,7 @@ export const getStaticProps = async () => {
   const roadmaps = await getRoadmaps();
   const tags = await getTags();
 
-  return { props: { ...{ roadmaps, tags } }, revalidate: 5 };
+  return { props: { ...{ roadmaps, tags } }, revalidate: 1 };
 };
 
 export default Home;

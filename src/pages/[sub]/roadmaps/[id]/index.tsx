@@ -91,7 +91,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     // console.log(roadmap.response.statusText); // 「Not Found」
     // roadmap.user.subでエラーになり、エラー処理に渡る
     if (roadmap.user.sub === params.sub) {
-      return { props: { roadmap: roadmap }, revalidate: 5 };
+      return { props: { roadmap: roadmap }, revalidate: 1 };
     } else {
       return { notFound: true };
     }
