@@ -1,5 +1,6 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import { Button, Container, Stack, TextField, Grid, Box, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -54,7 +55,12 @@ const SettingProfilePage: NextPage = () => {
       });
     }
   };
-  if (isLoading) return <div>ローディング</div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   if (isError) return <div>エラー</div>;
   return (
     <>

@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import AdminRoadmapDeleteButton from 'component/AdminRoadmapDeleteButton';
@@ -9,7 +10,12 @@ import { useRoadmapsAdmin } from 'services/admin';
 const AdminRoadmapsPage = () => {
   useAuthAdminAndRedirect();
   const { roadmaps, isLoading, isError } = useRoadmapsAdmin();
-  if (isLoading) return <div>ローディング</div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   if (isError) return <div>エラー</div>;
   return (
     <>

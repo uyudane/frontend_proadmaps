@@ -2,6 +2,7 @@ import { withAuthenticationRequired } from '@auth0/auth0-react';
 import FolderIcon from '@mui/icons-material/Folder';
 import { Grid, Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import CircularProgress from '@mui/material/CircularProgress';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -14,7 +15,12 @@ import { useMyUser } from 'services/users';
 const DraftPage: NextPage = () => {
   const { user, isLoading, isError } = useMyUser();
 
-  if (isLoading) return <div>ローディング</div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   if (isError) return <div>エラー</div>;
   // エラーにならない時点でuserが取得できている想定
   const draftRoadmaps = user!.roadmaps.filter((roadmap) => roadmap.is_published == false);

@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import AdminUserDeleteButton from 'component/AdminUserDeleteButton';
@@ -9,7 +10,12 @@ import { useUsersAdmin } from 'services/admin';
 const AdminUsersPage = () => {
   useAuthAdminAndRedirect();
   const { users, isLoading, isError } = useUsersAdmin();
-  if (isLoading) return <div>ローディング</div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   if (isError) return <div>エラー</div>;
   return (
     <>

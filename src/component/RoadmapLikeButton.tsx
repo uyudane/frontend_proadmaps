@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -63,10 +64,14 @@ const RoadmapLikeButton = ({ roadmap }: Props) => {
           <FavoriteIcon sx={{ fontSize: 40 }} />
         </IconButton>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <CircularProgress />
+        </div>
       ) : isAuthenticated ? (
         typeof isLiked === 'undefined' ? (
-          <p>loading...</p>
+          <div>
+            <CircularProgress />
+          </div>
         ) : isLiked ? (
           // ログイン済みの場合は、いいね有無で色、アクションを変える。
           <IconButton aria-label='favorite' onClick={execDeleteLike}>
