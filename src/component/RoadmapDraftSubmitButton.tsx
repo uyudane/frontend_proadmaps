@@ -24,15 +24,15 @@ const RoadmapDraftSubmitButton = () => {
     is_published: false,
   };
   const execDraftRoadmap = async () => {
-    let result = '';
+    let result = undefined;
     // 新規作成時はpost
     if (roadmap.id === null) {
-      result = (await postRoadmap(baseParams, token)) as string;
+      result = await postRoadmap(baseParams, token);
     } else {
       // 下書き時はedit
-      result = (await editRoadmap(baseParams, token)) as string;
+      result = await editRoadmap(baseParams, token);
     }
-    if (result === 'OK') {
+    if (result.id) {
       resetRoadmap();
       resetSteps();
       router.push({
