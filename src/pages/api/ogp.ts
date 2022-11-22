@@ -36,7 +36,8 @@ const ogp = async (req: NextApiRequest, res: NextApiResponse) => {
         if (pro.match('title')) metaData.title = metas[i].getAttribute('content') as string;
         if (pro.match('description'))
           metaData.description = metas[i].getAttribute('content') as string;
-        if (pro.match('image')) metaData.image = metas[i].getAttribute('content') as string;
+        if (pro.match('image') && !pro.match('image:width') && !pro.match('image:height'))
+          metaData.image = metas[i].getAttribute('content') as string;
       }
     }
   } catch (error) {
