@@ -1,3 +1,4 @@
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -49,4 +50,6 @@ const CreateRoadmapPage: NextPage = () => {
   );
 };
 
-export default CreateRoadmapPage;
+export default withAuthenticationRequired(CreateRoadmapPage, {
+  onRedirecting: () => <div>このページを開くにはログインが必要です。</div>,
+});
