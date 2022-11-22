@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import RequireLoginDialog from './RequireLoginDialog';
 import tokenState from 'recoil/atoms/tokenState';
-import userState from 'recoil/atoms/userState';
 import { postLike, deleteLike } from 'services/likes';
+import { getMyUser } from 'services/users';
 import { RoadmapFullData, Roadmap } from 'types';
 
 type Props = {
@@ -19,24 +19,27 @@ type Props = {
 const RoadmapLikeButton = ({ roadmap }: Props) => {
   const { isAuthenticated, isLoading } = useAuth0();
   const token = useRecoilValue(tokenState);
-  const user = useRecoilValue(userState);
   // パスでロードマップ作成/編集を判断するのに使用
   const router = useRouter();
 
   // いいねの実施有無を格納
   const [isLiked, setIsLiked] = useState<boolean | null>(null);
-  console.log('先頭');
-  console.log(isLiked);
 
   useEffect(() => {
-    // いいねをしているかどうかを判定
-    // 確認画面でRoadmapが渡っている場合+いいねがない場合は、undefindeになる。
-    setIsLiked(
-      typeof (roadmap as RoadmapFullData).likes?.find((like) => like.user_sub === user.sub) !==
-        'undefined',
-    );
-    console.log('useEffect');
-    console.log(isLiked);
+    const checkLiked = async () => {
+      try {
+        const user_data = await getMyUser(token);
+        // いいねをしているかどうかを判定
+        // 確認画面でRoadmapが渡っている場合+いいねがない場合は、undefindeになる。
+        setIsLiked(
+          typeof user_data.likes.find((like: any) => like.roadmap_id === roadmap.id) !==
+            'undefined',
+        );
+      } catch (e: unknown) {
+        setIsLiked(false);
+      }
+    };
+    checkLiked();
   }, []);
 
   // いいねをする
