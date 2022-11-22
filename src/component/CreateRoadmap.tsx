@@ -14,12 +14,33 @@ type Props = {
 };
 
 const CreateRoadmap = ({ handleNext }: Props) => {
-  // タグの入力例を設定(過去に使用されたタグ)
+  // タグの入力例を設定
   const [tagTemplate, setTagTemplate] = useState<string[]>([]);
   useEffect(() => {
     const execGetTags = async () => {
-      const tags = await getTags();
-      setTagTemplate(tags.map((tag: Tag) => tag.name));
+      // 過去に使用されたタグ
+      const usedTags = await getTags();
+      const usedTagsArray = usedTags.map((tag: Tag) => tag.name);
+      // テンプレートとして追加したいタグ
+      const template = [
+        'Ruby',
+        'Rails',
+        'PHP',
+        'Laravel',
+        'Python',
+        'Django',
+        'データベース',
+        'Vue.js',
+        'Nuxt.js',
+        'React',
+        'Next.js',
+        'HTML',
+        'CSS',
+        'JavaScript',
+        '初学者',
+      ];
+      // テンプレートのタグと使用されたタグを結合して、重複を排除
+      setTagTemplate(Array.from(new Set(template.concat(usedTagsArray))));
     };
     execGetTags();
   }, []);
