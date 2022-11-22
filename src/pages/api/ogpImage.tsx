@@ -26,29 +26,6 @@ const ogpImage = async (req: NextRequest) => {
           position: 'relative',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            position: 'absolute',
-            width: '100%',
-            backgroundColor: '#eeeeee',
-            left: 0,
-            top: 0,
-            paddingLeft: 30,
-          }}
-        >
-          <h2
-            style={{
-              color: '#143F6B',
-              fontSize: 40,
-              textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            }}
-          >
-            ProadMaps
-          </h2>
-        </div>
         <h2
           style={{
             width: '100%',
@@ -62,6 +39,29 @@ const ogpImage = async (req: NextRequest) => {
         >
           {title}
         </h2>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            position: 'absolute',
+            width: '100%',
+            backgroundColor: '#eeeeee',
+            right: 0,
+            bottom: 0,
+            paddingRight: 30,
+          }}
+        >
+          <h2
+            style={{
+              color: '#143F6B',
+              fontSize: 40,
+              textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            ProadMaps
+          </h2>
+        </div>
       </div>
     ),
     {
