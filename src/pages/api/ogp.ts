@@ -27,17 +27,35 @@ const ogp = async (req: NextApiRequest, res: NextApiResponse) => {
     const res = await axios.get(encodedUri, { headers: headers });
     const html = res.data;
     const dom = new JSDOM(html);
-    const metas = dom.window.document.head.querySelectorAll('meta');
     // 必要なデータのみを抽出
-    for (let i = 0; i < metas.length; i++) {
-      const pro = metas[i].getAttribute('property');
-      if (typeof pro == 'string') {
-        if (pro.match('site_name')) metaData.site_name = metas[i].getAttribute('content') as string;
-        if (pro.match('title')) metaData.title = metas[i].getAttribute('content') as string;
-        if (pro.match('description'))
-          metaData.description = metas[i].getAttribute('content') as string;
-        if (pro.match('image') && !pro.match('image:width') && !pro.match('image:height'))
-          metaData.image = metas[i].getAttribute('content') as string;
+    // Amazonは特殊(propertyではなくname属性かつ、head外にmetatagが存在)だったため、処理を変える
+    if (targetUrl.match(/amazon.co/)) {
+      // imageがmetaになかったため、imageだけはクラス名で絞って最初に出てきた画像がトップの画像になる(っぽい)。
+      const image = dom.window.document.getElementsByClassName('a-dynamic-image');
+      metaData.image = image[0].getAttribute('src') as string;
+      const metas = dom.window.document.querySelectorAll('meta');
+      metaData.site_name = '書籍';
+      for (let i = 0; i < metas.length; i++) {
+        const pro = metas[i].getAttribute('name');
+        if (typeof pro == 'string') {
+          if (pro.match('title')) metaData.title = metas[i].getAttribute('content') as string;
+          if (pro.match('description'))
+            metaData.description = metas[i].getAttribute('content') as string;
+        }
+      }
+    } else {
+      const metas = dom.window.document.head.querySelectorAll('meta');
+      for (let i = 0; i < metas.length; i++) {
+        const pro = metas[i].getAttribute('property');
+        if (typeof pro == 'string') {
+          if (pro.match('site_name'))
+            metaData.site_name = metas[i].getAttribute('content') as string;
+          if (pro.match('title')) metaData.title = metas[i].getAttribute('content') as string;
+          if (pro.match('description'))
+            metaData.description = metas[i].getAttribute('content') as string;
+          if (pro.match('image') && !pro.match('image:width') && !pro.match('image:height'))
+            metaData.image = metas[i].getAttribute('content') as string;
+        }
       }
     }
   } catch (error) {
