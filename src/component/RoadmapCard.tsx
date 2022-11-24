@@ -45,12 +45,12 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
           </Grid>
         ) : (
           <Grid container alignItems='center'>
-            <Grid item xs={1.5}>
+            <Grid item xs={3} md={1.5}>
               <IconButton onClick={toProfile}>
                 <Avatar alt='Remy Sharp' src={user.avatar} />
               </IconButton>
             </Grid>
-            <Grid item xs={7.5}>
+            <Grid item xs={9} md={7.5}>
               <Link href={`/${user.sub}`}>
                 <Typography
                   variant='body1'
@@ -62,7 +62,7 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
                 </Typography>
               </Link>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <Typography variant='body2'>{roadmap.created_date}</Typography>
             </Grid>
           </Grid>

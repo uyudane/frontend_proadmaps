@@ -52,7 +52,7 @@ const ProfilePageTabs = ({ usersRoadmaps, likedRoadmaps }: Props) => {
           ) : (
             <Grid container direction='row' spacing={2}>
               {usersRoadmaps.map((roadmap, i) => (
-                <Grid item xs={6} key={`roadmap-card${i}`}>
+                <Grid item xs={12} md={6} key={`roadmap-card${i}`}>
                   <Box display='flex' justifyContent='center'>
                     <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
                   </Box>
@@ -67,7 +67,7 @@ const ProfilePageTabs = ({ usersRoadmaps, likedRoadmaps }: Props) => {
           ) : (
             <Grid container direction='row' spacing={2}>
               {likedRoadmaps.map((roadmap, i) => (
-                <Grid item xs={6} key={`roadmap-card${i}`}>
+                <Grid item xs={12} md={6} key={`roadmap-card${i}`}>
                   <Box display='flex' justifyContent='center'>
                     <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
                   </Box>

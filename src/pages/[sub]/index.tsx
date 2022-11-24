@@ -23,7 +23,7 @@ const UserPage: NextPage<Props> = ({ user, usersRoadmaps, likedRoadmaps }: Props
       <Meta pageTitle='プロフィール' />
       <Grid container>
         <Grid item xs={12}></Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12} md={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
               <UserIcon user={user} />
@@ -39,7 +39,7 @@ const UserPage: NextPage<Props> = ({ user, usersRoadmaps, likedRoadmaps }: Props
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
+        <Grid item xs={12} md={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
           <ProfilePageTabs {...{ user, usersRoadmaps, likedRoadmaps }} />
         </Grid>
       </Grid>

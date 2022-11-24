@@ -66,7 +66,7 @@ const SettingProfilePage: NextPage = () => {
     <>
       <Meta pageTitle='プロフィール編集' />
       <Grid container>
-        <Grid item xs={2}>
+        <Grid item xs={12} md={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
               <UserIcon user={user as UserFullData} />
