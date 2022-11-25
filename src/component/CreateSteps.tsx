@@ -37,7 +37,6 @@ const CreateSteps = ({ handleNext, handleBack }: Props) => {
 
   return (
     <>
-      ステップの作成
       <CreateStepDialog {...{ open, handleClose, getStepId }} />
       <DndProvider backend={HTML5Backend}>
         <DndStepContainer {...{ handleClickOpen }} />

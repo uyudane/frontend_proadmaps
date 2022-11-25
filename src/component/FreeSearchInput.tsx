@@ -28,8 +28,8 @@ const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: Props) => {
   return (
     <>
       <Grid container alignItems='center' justifyContent='center'>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+        <Grid item xs={0} md={2}></Grid>
+        <Grid item xs={9} md={8}>
           <Controller
             name='searchWord'
             control={control}
@@ -37,12 +37,12 @@ const FreeSearchInput = ({ setSearchTags, setFreeSearchWord }: Props) => {
               <TextField
                 {...field}
                 sx={{ width: '100%', bgcolor: '#ffffff' }}
-                placeholder='ロードマップのタイトル/概要を検索します。'
+                placeholder='タイトル/概要を検索します。'
               />
             )}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2} md={2}>
           <Button
             onClick={handleSubmit(onSubmit)}
             color='primary'
