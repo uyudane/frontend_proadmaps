@@ -167,22 +167,11 @@ function ResponsiveAppBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem
-                    key={page.name}
-                    onClick={
-                      isAuthenticated
-                        ? () => {
-                            resetRoadmap();
-                            resetSteps();
-                            router.push(page.link);
-                          }
-                        : dialogOpen
-                    }
-                  >
-                    <Typography textAlign='center'>{page.name}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem>
+                  <Typography variant='body2' textAlign='center'>
+                    ※ロードマップ作成/編集機能はPCのみになります
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
 
@@ -271,9 +260,23 @@ function ResponsiveAppBar() {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting) => (
-                      <MenuItem key={setting.name} onClick={setting.action}>
-                        <Typography textAlign='center'>{setting.name}</Typography>
-                      </MenuItem>
+                      <>
+                        {/* 下書き一覧は、スマホの時は表示させないようにする */}
+                        {setting.name === '下書き一覧' && (
+                          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                            <MenuItem key={setting.name} onClick={setting.action}>
+                              <Typography textAlign='center'>{setting.name}</Typography>
+                            </MenuItem>
+                          </Box>
+                        )}
+                        {setting.name !== '下書き一覧' && (
+                          <Box>
+                            <MenuItem key={setting.name} onClick={setting.action}>
+                              <Typography textAlign='center'>{setting.name}</Typography>
+                            </MenuItem>
+                          </Box>
+                        )}
+                      </>
                     ))}
                   </Menu>
                 </>

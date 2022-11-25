@@ -51,7 +51,9 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
         <RequestTweetDialog open={open} onClose={dialogClose} roadmap={roadmap} />
       )}
       <AuthUserAndHiddenItem user={roadmap.user}>
-        <RoadmapEditDeleteButton roadmap={roadmap} />
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <RoadmapEditDeleteButton roadmap={roadmap} />
+        </Box>
       </AuthUserAndHiddenItem>
       <Box sx={{ width: '100%' }}>
         <Box display='flex' justifyContent='center' alignItems='center'>

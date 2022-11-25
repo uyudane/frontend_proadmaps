@@ -15,7 +15,7 @@ type Props = {
 const StepCard = ({ step, index }: Props) => {
   return (
     <>
-      <Box sx={{ width: '80%', m: 2, border: 2 }}>
+      <Box sx={{ width: { xs: '100%', md: '80%' }, mb: 2, border: 2 }}>
         <Grid container sx={{ bgcolor: '#143F6B' }}>
           <Grid item xs={12}>
             <Typography variant='subtitle1' component='div' color='white'>
@@ -51,7 +51,7 @@ const StepCard = ({ step, index }: Props) => {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={5}>
+          <Grid item xs={12} md={5}>
             <Grid item xs={12}>
               <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
                 所要時間
@@ -69,24 +69,8 @@ const StepCard = ({ step, index }: Props) => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Grid item xs={12}>
-              <OgpCard url={step.url} />
-            </Grid>
-          </Grid>
-          <Grid item xs={1}>
-            <Grid container direction='column' justifyContent='center' alignItems='flex-end'>
-              <Grid item>
-                <IconButton aria-label='add to favorites'>
-                  <FavoriteIcon fontSize='small' />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <IconButton aria-label='share'>
-                  <ShareIcon fontSize='small' />
-                </IconButton>
-              </Grid>
-            </Grid>
+          <Grid item xs={12} md={6}>
+            <OgpCard url={step.url} />
           </Grid>
         </Grid>
       </Box>

@@ -66,7 +66,7 @@ const SettingProfilePage: NextPage = () => {
     <>
       <Meta pageTitle='プロフィール編集' />
       <Grid container>
-        <Grid item xs={2}>
+        <Grid item xs={12} md={2}>
           <Grid container alignItems='center' justifyContent='center' direction='column'>
             <Grid item>
               <UserIcon user={user as UserFullData} />
@@ -78,7 +78,7 @@ const SettingProfilePage: NextPage = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
+        <Grid item xs={12} md={10} sx={{ pt: 2, pb: 4, bgcolor: '#eeeeee' }}>
           <Container maxWidth='md' sx={{ pt: 1 }}>
             <Stack spacing={4}>
               <Grid container>
@@ -147,12 +147,33 @@ const SettingProfilePage: NextPage = () => {
             </Stack>
           </Container>
         </Grid>
-        <Grid item xs={2}>
-          <Grid container alignItems='center' justifyContent='center' direction='column'>
-            <Grid item>
-              <UserDeleteButton />
+        <Grid item xs={12} md={2}>
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            <Grid container alignItems='center' justifyContent='center' direction='column'>
+              <Grid item>
+                <UserDeleteButton />
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
+          <Box
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+            }}
+          >
+            <Grid container alignItems='flex-end' justifyContent='flex-end' direction='column'>
+              <Grid item>
+                <br />
+                <br />
+                <br />
+                <br />
+                <UserDeleteButton />
+              </Grid>
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
     </>

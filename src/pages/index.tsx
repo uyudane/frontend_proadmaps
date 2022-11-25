@@ -80,7 +80,7 @@ const Home: NextPage<Props> = ({ roadmaps, tags }: Props) => {
       <Container maxWidth='lg'>
         <Grid container direction='row' spacing={4}>
           {outputRoadmap.map((roadmap: RoadmapFullData, i: number) => (
-            <Grid item xs={6} key={`roadmap-card${i}`}>
+            <Grid item xs={12} md={6} key={`roadmap-card${i}`}>
               <Box display='flex' justifyContent='center'>
                 <RoadmapCard roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
               </Box>

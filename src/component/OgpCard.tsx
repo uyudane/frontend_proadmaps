@@ -27,14 +27,14 @@ const OgpCard = ({ url }: Props) => {
                 </Typography>
               </Grid>
               <Grid container>
-                <Grid item xs={8}>
+                <Grid item xs={12} md={8}>
                   <Typography variant='body2' component='div'>
                     {urlData.site_name}
                     <br />
                     {urlData.description}
                   </Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <img src={urlData.image} height={100} width={150} alt={'imgae'} />
                 </Grid>
               </Grid>
