@@ -44,6 +44,8 @@ const ConvertRoadmapIntoMarkdownButton = ({ roadmap, steps }: Props) => {
         </DialogTitle>
         <DialogContent dividers>
           <Typography>{`# ${roadmap.title}`}</Typography>
+          <Typography>{'**概要**'}</Typography>
+          <Typography>{`${roadmap.introduction}`}</Typography>
           <Typography>{'**タグ**'}</Typography>
           <Typography>{`${roadmap.tags.map((tag) => tag.name).join(',')}`}</Typography>
           <Typography>{'**開始時スキル**'}</Typography>
