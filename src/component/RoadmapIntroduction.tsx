@@ -70,7 +70,14 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
                 {roadmap.title}
               </Typography>
             </Grid>
-            <Grid item xs={12}></Grid>
+            <Grid item xs={12}>
+              <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
+                概要
+              </Typography>
+              <Typography variant='body1' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
+                {roadmap.introduction}
+              </Typography>
+            </Grid>
             <Grid item xs={12}>
               <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
                 タグ
@@ -95,14 +102,6 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
               </Typography>
               <Typography variant='body1' sx={{ mb: 0.5 }} lineHeight={1.5}>
                 {steps.length}
-              </Typography>
-            </Grid>
-            <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
-              概要
-            </Typography>
-            <Grid item xs={12}>
-              <Typography variant='body1' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
-                {roadmap.introduction}
               </Typography>
             </Grid>
           </Grid>
