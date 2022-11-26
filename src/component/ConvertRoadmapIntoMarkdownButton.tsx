@@ -5,18 +5,16 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import * as React from 'react';
-import { RoadmapFullData } from 'types';
+import { RoadmapFullData, Step } from 'types';
 
 type Props = {
   roadmap: RoadmapFullData;
+  steps: Step[];
 };
 
-const ConvertRoadmapIntoMarkdownButton = ({ roadmap }: Props) => {
-  const router = useRouter();
-
+const ConvertRoadmapIntoMarkdownButton = ({ roadmap, steps }: Props) => {
   // Markdownダイアログに使用
   const [open, setOpen] = useState(false);
 
@@ -53,7 +51,23 @@ const ConvertRoadmapIntoMarkdownButton = ({ roadmap }: Props) => {
           <Typography>{'**終了時スキル**'}</Typography>
           <Typography>{`${roadmap.end_skill}`}</Typography>
           <Typography>{'**総ステップ数**'}</Typography>
-          <Typography>{`${roadmap.steps.length}`}</Typography>
+          <Typography>{`${steps.length}`}</Typography>
+          {steps.map((step, i) => (
+            <React.Fragment key={`step-${i}`}>
+              <Typography>{`## ${step.title}`}</Typography>
+              <Typography>{'**紹介文/コメント**'}</Typography>
+              <Typography>{`${step.introduction}`}</Typography>
+              <Typography>{'**所要時間**'}</Typography>
+              <Typography>{`${step.required_time}`}</Typography>
+              <Typography>{'**実施年月**'}</Typography>
+              <Typography>{`${step.year}${step.month}`}</Typography>
+              <Typography>{'**コンテンツURL**'}</Typography>
+              <Typography>{`${step.url}`}</Typography>
+            </React.Fragment>
+          ))}
+          <Typography>以上です。</Typography>
+          <Typography>{`このロードマップ/学習記録は[ProadMaps](https://proadmaps.com/${roadmap.user.sub}/roadmaps/${roadmap.id})(プログラミング学習のロードマップ/学習記録 共有サイト)で作成しました。`}</Typography>
+          <Typography>{`https://proadmaps.com/${roadmap.user.sub}/roadmaps/${roadmap.id}`}</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
