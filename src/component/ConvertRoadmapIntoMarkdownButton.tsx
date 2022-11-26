@@ -54,7 +54,7 @@ const ConvertRoadmapIntoMarkdownButton = ({ roadmap, steps }: Props) => {
           <Typography>{`${steps.length}`}</Typography>
           {steps.map((step, i) => (
             <React.Fragment key={`step-${i}`}>
-              <Typography>{`## ${step.title}`}</Typography>
+              <Typography>{`## ステップ${i + 1} ${step.title}`}</Typography>
               <Typography>{'**紹介文/コメント**'}</Typography>
               <Typography>{`${step.introduction}`}</Typography>
               <Typography>{'**所要時間**'}</Typography>
@@ -66,7 +66,12 @@ const ConvertRoadmapIntoMarkdownButton = ({ roadmap, steps }: Props) => {
             </React.Fragment>
           ))}
           <Typography>以上です。</Typography>
-          <Typography>{`このロードマップ/学習記録は[ProadMaps](https://proadmaps.com/${roadmap.user.sub}/roadmaps/${roadmap.id})(プログラミング学習のロードマップ/学習記録 共有サイト)で作成しました。`}</Typography>
+          <Typography>{`このロードマップ/学習記録は[ProadMaps](https://proadmaps.com/${roadmap.user.sub}/roadmaps/${roadmap.id})で作成しました。`}</Typography>
+          <Typography>
+            {
+              'ロードマップの作成、共有から、作成したロードマップをマークダウンで出力ができるので、Qiita等の外部サイトや、個人ブログへの転記にも便利です。'
+            }
+          </Typography>
           <Typography>{`https://proadmaps.com/${roadmap.user.sub}/roadmaps/${roadmap.id}`}</Typography>
         </DialogContent>
         <DialogActions>
