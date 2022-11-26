@@ -70,8 +70,7 @@ const ConvertRoadmapIntoMarkdownButton = ({ roadmap, steps }: Props) => {
           <Typography>{`https://proadmaps.com/${roadmap.user.sub}/roadmaps/${roadmap.id}`}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>閉じる</Button>
         </DialogActions>
       </Dialog>
     </>
