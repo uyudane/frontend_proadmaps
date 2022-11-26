@@ -33,34 +33,49 @@ const DraftPage: NextPage = () => {
             {draftRoadmaps.length > 0 ? (
               <>
                 <Typography variant='h6'>下書きロードマップ一覧</Typography>
+                <Box
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                  <Typography color='red' variant='body2'>
+                    ※下書き編集/削除機能はPCのみになります。
+                  </Typography>
+                </Box>
                 <br />
                 {draftRoadmaps.map((roadmap) => (
                   <ListItem sx={{ border: 0.1, borderColor: 'grey.500', p: 3 }} key={roadmap.id}>
                     <Grid container alignItems='center' justifyContent='center' direction='row'>
-                      <Grid item xs={1}>
+                      <Grid item xs={3} md={1}>
                         <ListItemAvatar>
                           <Avatar>
                             <FolderIcon />
                           </Avatar>
                         </ListItemAvatar>
                       </Grid>
-                      <Grid item xs={10}>
+                      <Grid item xs={9} md={10}>
                         <ListItemText
                           primary={roadmap.title}
                           secondary={roadmap.introduction}
                           sx={{ wordWrap: 'break-word' }}
                         />
                       </Grid>
-                      <Grid item xs={1}>
-                        <Grid
-                          container
-                          alignItems='center'
-                          justifyContent='center'
-                          direction='column'
-                        >
-                          <RoadmapEditDeleteButton roadmap={roadmap} />
+                      <Box
+                        sx={{
+                          display: { xs: 'none', md: 'block' },
+                        }}
+                      >
+                        <Grid item xs={0} md={1}>
+                          <Grid
+                            container
+                            alignItems='center'
+                            justifyContent='center'
+                            direction='column'
+                          >
+                            <RoadmapEditDeleteButton roadmap={roadmap} />
+                          </Grid>
                         </Grid>
-                      </Grid>
+                      </Box>
                     </Grid>
                   </ListItem>
                 ))}

@@ -1,8 +1,5 @@
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import { Grid, Link } from '@mui/material';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import OgpCard from './OgpCard';
 import { Step } from 'types';

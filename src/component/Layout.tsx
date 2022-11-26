@@ -19,7 +19,7 @@ const Layout = ({ children }: Props) => {
       {successMessage && <Alert severity='success'>{successMessage}</Alert>}
       {errorMessage && <Alert severity='error'>{errorMessage}</Alert>}
       {/* Containerはもともと左右にpaddingが設定されているため、上下にのみpaddingをつける */}
-      <Container maxWidth='xl' sx={{ pt: 3, pb: 3 }}>
+      <Container maxWidth='xl' sx={{ pt: { xs: 0, md: 2 }, pb: 3 }}>
         <main>{children}</main>
       </Container>
       <Footer />

@@ -11,7 +11,7 @@ import CreateRoadmap from 'component/CreateRoadmap';
 import CreateSteps from 'component/CreateSteps';
 import Meta from 'component/Meta';
 
-const steps = ['ロードマップ/学習記録の概要', 'ステップ', '確認'];
+const steps = ['ロードマップ/学習記録の概要作成', 'ステップ作成', '確認'];
 
 const CreateRoadmapPage: NextPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -41,7 +41,7 @@ const CreateRoadmapPage: NextPage = () => {
             );
           })}
         </Stepper>
-        <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+        <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1} / 3</Typography>
         {activeStep === 0 && <CreateRoadmap {...{ handleNext }} />}
         {activeStep === 1 && <CreateSteps {...{ handleNext, handleBack }} />}
         {activeStep === 2 && <ConfirmRoadmap {...{ handleBack }} />}

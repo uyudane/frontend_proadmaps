@@ -260,23 +260,9 @@ function ResponsiveAppBar() {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting) => (
-                      <>
-                        {/* 下書き一覧は、スマホの時は表示させないようにする */}
-                        {setting.name === '下書き一覧' && (
-                          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-                            <MenuItem key={setting.name} onClick={setting.action}>
-                              <Typography textAlign='center'>{setting.name}</Typography>
-                            </MenuItem>
-                          </Box>
-                        )}
-                        {setting.name !== '下書き一覧' && (
-                          <Box>
-                            <MenuItem key={setting.name} onClick={setting.action}>
-                              <Typography textAlign='center'>{setting.name}</Typography>
-                            </MenuItem>
-                          </Box>
-                        )}
-                      </>
+                      <MenuItem key={setting.name} onClick={setting.action}>
+                        <Typography textAlign='center'>{setting.name}</Typography>
+                      </MenuItem>
                     ))}
                   </Menu>
                 </>

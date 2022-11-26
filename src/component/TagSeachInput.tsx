@@ -32,8 +32,8 @@ const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: Props) => {
   return (
     <>
       <Grid container alignItems='center' justifyContent='center'>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+        <Grid item xs={0} md={2}></Grid>
+        <Grid item xs={9} md={8}>
           <Controller
             name='tags'
             control={control}
@@ -46,7 +46,7 @@ const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: Props) => {
                 getOptionLabel={(option) => option.name}
                 isOptionEqualToValue={(option, value) => option.name === value.name}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder='ロードマップのタグをAND検索します。' />
+                  <TextField {...params} placeholder='タグをAND検索します。' />
                 )}
                 autoSelect
                 onChange={(_, data) => field.onChange(data)}
@@ -54,7 +54,7 @@ const TagSearchInput = ({ setSearchTags, setFreeSearchWord, tags }: Props) => {
             )}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2} md={2}>
           <Button
             onClick={handleSubmit(onSubmit)}
             color='primary'

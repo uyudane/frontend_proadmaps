@@ -4,6 +4,7 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AuthUserAndHiddenItem from 'component/AuthUserAndHiddenItem';
+import ConvertRoadmapIntoMarkdownButton from 'component/ConvertRoadmapIntoMarkdownButton';
 import Meta from 'component/Meta';
 import RequestTweetDialog from 'component/RequestTweetDialog';
 import RoadmapEditDeleteButton from 'component/RoadmapEditDeleteButton';
@@ -53,6 +54,7 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
       <AuthUserAndHiddenItem user={roadmap.user}>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <RoadmapEditDeleteButton roadmap={roadmap} />
+          <ConvertRoadmapIntoMarkdownButton roadmap={roadmap} steps={orderedSteps} />
         </Box>
       </AuthUserAndHiddenItem>
       <Box sx={{ width: '100%' }}>

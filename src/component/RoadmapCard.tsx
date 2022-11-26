@@ -22,17 +22,17 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
   };
 
   return (
-    <Paper sx={{ border: 0.5, p: 1, width: '500px', borderRadius: '16px' }}>
+    <Paper sx={{ border: 0.5, p: 1, width: { xs: '100%', md: '520px' }, borderRadius: '16px' }}>
       <Grid container>
         {/* ロードマップ作成/編集ページの時はリンクにせず、それ以外の時はリンクにする */}
         {router.pathname === '/roadmap/new' || router.pathname === '/drafts/[id]/edit' ? (
-          <Grid container alignItems='center' spacing='8'>
-            <Grid item>
+          <Grid container alignItems='center'>
+            <Grid item xs={3} md={1.5}>
               <IconButton>
                 <Avatar alt='Remy Sharp' src={user.avatar} />
               </IconButton>
             </Grid>
-            <Grid item>
+            <Grid item xs={9} md={10.5}>
               <Typography
                 variant='body1'
                 sx={{ cursor: 'pointer' }}
@@ -113,7 +113,7 @@ const RoadmapCard = ({ roadmap, steps, user }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='body2'>
+          <Typography variant='body2' sx={{ wordWrap: 'break-word' }}>
             タグ:{' '}
             {roadmap.tags
               .map((tag) => tag.name)
