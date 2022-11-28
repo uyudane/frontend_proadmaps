@@ -54,9 +54,9 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
       <AuthUserAndHiddenItem user={roadmap.user}>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <RoadmapEditDeleteButton roadmap={roadmap} />
-          <ConvertRoadmapIntoMarkdownButton roadmap={roadmap} steps={orderedSteps} />
         </Box>
       </AuthUserAndHiddenItem>
+      <ConvertRoadmapIntoMarkdownButton roadmap={roadmap} steps={orderedSteps} />
       <Box sx={{ width: '100%' }}>
         <Box display='flex' justifyContent='center' alignItems='center'>
           <RoadmapIntroduction roadmap={roadmap} steps={roadmap.steps} user={roadmap.user} />
