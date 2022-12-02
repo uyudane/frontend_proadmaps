@@ -23,6 +23,8 @@ const CreateRoadmap = ({ handleNext }: Props) => {
       const usedTagsArray = usedTags.map((tag: Tag) => tag.name);
       // テンプレートとして追加したいタグ
       const template = [
+        'ロードマップ',
+        '学習記録',
         'Ruby',
         'Rails',
         'PHP',
