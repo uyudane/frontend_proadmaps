@@ -49,12 +49,15 @@ const RoadmapSubmitButton = () => {
 
   const execSubmit = async () => {
     let result = undefined;
+    let message = '';
     switch (router.pathname) {
       case '/roadmap/new':
         result = await execPostRoadmap();
+        message = 'ロードマップを投稿しました';
         break;
       case '/drafts/[id]/edit':
         result = await execEditRoadmap();
+        message = 'ロードマップの更新をDBに反映しました。リロードすることで画面に反映されます。';
         break;
       default:
         return;
@@ -64,7 +67,7 @@ const RoadmapSubmitButton = () => {
       resetSteps();
       router.push({
         pathname: `/${current_user.sub}/roadmaps/${result.id}`,
-        query: { successMessage: 'ロードマップを投稿しました' },
+        query: { successMessage: message },
       });
     } else {
       // バックエンドから200以外が返ってきた際に、エラーを伝える
