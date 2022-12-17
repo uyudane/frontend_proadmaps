@@ -66,9 +66,24 @@ const RoadmapIntroduction = ({ roadmap, steps, user }: Props) => {
               </Grid>
             )}
             <Grid item xs={12}>
-              <Typography variant='h4' component='div' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
-                {roadmap.title}
-              </Typography>
+              <Box
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                <Typography variant='h5' component='div' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
+                  {roadmap.title}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: { xs: 'none', md: 'block' },
+                }}
+              >
+                <Typography variant='h4' component='div' sx={{ mb: 0.5, wordWrap: 'break-word' }}>
+                  {roadmap.title}
+                </Typography>
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <Typography variant='subtitle1' component='div' sx={{ fontWeight: 'bold' }}>
