@@ -42,7 +42,10 @@ const RoadmapEditDeleteButton = ({ roadmap }: Props) => {
       setOpen(false);
       router.push({
         pathname: deletedRedirectPath,
-        query: { successMessage: 'ロードマップを削除しました' },
+        query: {
+          successMessage:
+            'ロードマップの削除をDBに反映しました。リロードすることで画面に反映されます。',
+        },
       });
     } else {
       setOpen(false);
