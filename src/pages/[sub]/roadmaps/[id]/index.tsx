@@ -45,7 +45,7 @@ const RoadmapDeteilPage: NextPage<Props> = ({ roadmap }: Props) => {
   const orderedSteps = stepData.sort((a, b) => (a.step_number! > b.step_number! ? 1 : -1));
   return (
     <>
-      <Meta pageTitle='ロードマップ詳細' />
+      <Meta pageTitle={roadmap.title} pageDesc={roadmap.introduction} />
       <RoadmapTwitterCard {...{ roadmap }} />
       {/* Twitter投稿依頼ダイアログ */}
       {successMessage && open && (
