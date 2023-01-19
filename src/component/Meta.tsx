@@ -6,11 +6,12 @@ import { siteMeta } from 'lib/constants';
 type Props = {
   pageTitle?: string;
   pageDesc?: string;
+  roadmapTitle?: string; // ロードマップ詳細の時だけ渡ってきて、imgの作成に使用
 };
 
 const { siteTitle, siteDesc, siteUrl, siteLocale, siteType, siteIcon } = siteMeta;
 
-const Meta = ({ pageTitle, pageDesc }: Props) => {
+const Meta = ({ pageTitle, pageDesc, roadmapTitle }: Props) => {
   // ページタイトル
   const title = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
 
@@ -21,11 +22,13 @@ const Meta = ({ pageTitle, pageDesc }: Props) => {
   const router = useRouter();
   const url = `${siteUrl}${router.asPath}`;
 
-  // OGP画像
-  const img = siteImg.src;
-  const imgW = String(siteImg.width);
-  const imgH = String(siteImg.height);
-  const imgUrl = `${siteUrl}${img}`;
+  // OGP画像(ロードマップ詳細(roadmapTitleが渡っている時とそれ以外で書き分けている))
+  const img = roadmapTitle ? '' : siteImg.src;
+  const imgUrl = roadmapTitle
+    ? `${siteUrl}/api/ogpImage?title=${roadmapTitle}`
+    : `${siteUrl}${img}`;
+  const imgW = roadmapTitle ? '1200' : String(siteImg.width);
+  const imgH = roadmapTitle ? '630' : String(siteImg.height);
 
   return (
     <Head>
